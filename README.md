@@ -21,6 +21,7 @@ Download the repository (**Code → Download ZIP**). The files you need are in t
 | `dist/fonts/SlideMarks-Regular.ttf` | Installing on Windows, macOS or Linux |
 | `dist/web/` | Websites: `SlideMarks-Regular.woff2` + `slidemarks.css` |
 | `dist/svg/` | One SVG per glyph, for design tools |
+| `dist/screen-readers/` | Optional pronunciation packs for VoiceOver, NVDA and JAWS |
 
 ## Install the font
 
@@ -38,9 +39,17 @@ SlideMarks symbols live in the Unicode Private Use Area. **They only appear as t
 - **Word on Windows:** type the code point from the [glyph reference](docs/glyphs.md) (e.g. `E002`), then press **Alt+X**. Set the character's font to SlideMarks.
 - **Copy and paste** works too. If the pasted character shows as an empty box, set its font to SlideMarks.
 
+**Arrows and comparison signs also work as ordinary characters.** With SlideMarks applied, `→ ← ↑ ↓ ↔ ≤ ≥ ≠` and friends draw the SlideMarks versions. Prefer these: screen readers can name standard characters (results vary by reader, so see the [test results](docs/accessibility.md#test-results)), and they still make sense if the font is missing. The glyph reference lists them under *Standard Unicode*.
+
 ### Tables
 
 The easiest workflow: select the table cells or columns that will hold symbols and set their font to **SlideMarks** *first*. Anything you insert or paste there then shows correctly. Use the normal alignment buttons; the glyphs are designed to center in a cell.
+
+### Accessibility
+
+Screen readers can't describe most symbols on their own, so **pair each symbol with text**: put the value next to it (a Harvey ball followed by "75%", a check followed by "Done"), or add a legend.
+
+Screen-reader users can also install a **pronunciation pack** (`dist/screen-readers/`) so each symbol is spoken by its meaning, e.g. "Harvey ball 50 percent". See [docs/accessibility.md](docs/accessibility.md) for the packs and for authoring patterns in PowerPoint, Word, PDF and the web.
 
 ### Size and color
 
@@ -64,19 +73,20 @@ Copy `dist/web/` into your site and include the stylesheet:
 ```html
 <link rel="stylesheet" href="web/slidemarks.css">
 
-<!-- by class -->
-<span class="slidemarks sm-harvey-75" aria-hidden="true"></span>
+<!-- decorative: the text carries the meaning -->
+<span class="slidemarks sm-harvey-75" aria-hidden="true"></span> 75% complete
 
-<!-- or by character -->
-<span class="slidemarks" aria-hidden="true">&#xE003;</span> 75% complete
+<!-- meaningful on its own: give it a role and a name -->
+<span class="slidemarks sm-harvey-75" role="img" aria-label="Harvey ball 75 percent"></span>
 ```
 
-Every glyph has a class `sm-<id>`; the ids are listed in the [glyph reference](docs/glyphs.md). The font is self-hosted, so the site makes no third-party requests. If a symbol carries meaning, give it a real text label (as above) rather than relying on the glyph alone.
+Every glyph has a class `sm-<id>`; the ids and default spoken labels are listed in the [glyph reference](docs/glyphs.md). Glyph classes are decorative by default; see [accessibility](docs/accessibility.md#web). The font is self-hosted, so the site makes no third-party requests.
 
 ## Limitations
 
 - **Google Slides** and the **web versions of Office** may not use the embedded font and can show empty boxes instead.
 - Copy and paste carries the *character*, not the font. Set the destination to SlideMarks.
+- Screen readers can't read most SlideMarks symbols (see [accessibility](docs/accessibility.md)); pair symbols with text.
 - Office add-ins for one-click insertion are planned but not available yet.
 
 ## License

@@ -17,7 +17,7 @@ from lxml import etree
 
 from .font import FAMILY
 from .office_fonts import font_key_for, obfuscate_odttf
-from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, families
+from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, alias_rows, families, preferred_char, visible_text
 
 TEXT_FONT = "Calibri"
 DARK = "14161A"
@@ -114,6 +114,35 @@ def render(manifest, ttf_path: Path, out_path: Path):
             _cell(t.cell(r, 0), label, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT, color=fg, fill=bg)
             for c, gid in enumerate(ids, start=1):
                 _cell(t.cell(r, c), ch[gid], FAMILY, size, color=fg, fill=bg)
+
+    by_id = {s["id"]: s for s in symbols}
+
+    # Accessibility · symbol plus visible text
+    _heading(doc, "Accessible scorecard · 12pt",
+             "Each symbol is paired with visible text in the same cell. Screen readers read the text; the glyph adds the visual.")
+    t = doc.add_table(rows=len(SCORECARD_ROWS) + 1, cols=len(SCORECARD_HEADER), style="Table Grid")
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    for c, h in enumerate(SCORECARD_HEADER):
+        _cell(t.cell(0, c), h, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT if c == 0 else WD_ALIGN_PARAGRAPH.CENTER, bold=True)
+    for r, (label, *ids) in enumerate(SCORECARD_ROWS, start=1):
+        _cell(t.cell(r, 0), label, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT)
+        for c, gid in enumerate(ids, start=1):
+            cell = t.cell(r, c)
+            _cell(cell, preferred_char(by_id[gid]), FAMILY, 12)
+            _add_run(cell.paragraphs[0], f" {visible_text(by_id[gid])}", TEXT_FONT, 10)
+
+    # Accessibility · encoding test
+    _heading(doc, "Encoding test",
+             "Both glyph columns use SlideMarks and must look identical. Read each row with a screen reader and record what it says.")
+    pairs = alias_rows(manifest)
+    t = doc.add_table(rows=len(pairs) + 1, cols=4, style="Table Grid")
+    for c, h in enumerate(("Glyph", "PUA", "Standard", "Unicode name of the standard character")):
+        _cell(t.cell(0, c), h, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT if c in (0, 3) else WD_ALIGN_PARAGRAPH.CENTER, bold=True)
+    for r, (sym, pua, alias, uname) in enumerate(pairs, start=1):
+        _cell(t.cell(r, 0), sym["name"], TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT)
+        _cell(t.cell(r, 1), pua, FAMILY, 18)
+        _cell(t.cell(r, 2), alias, FAMILY, 18)
+        _cell(t.cell(r, 3), f"U+{ord(alias):04X} {uname}", TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT)
 
     # 3 · Size ladder: glyphs inline with body text
     _heading(doc, "Size ladder", "Glyphs mixed with Calibri text in one paragraph. Check baseline and cap alignment at each size.")

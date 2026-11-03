@@ -37,16 +37,23 @@ def render(tokens, manifest, svg_paths: dict, docs_dir: Path):
         "",
         "Glyphs marked *candidate* may change or be removed before 1.0. All others keep their code points.",
         "",
+        "**Standard Unicode**: where a glyph has an exact standard equivalent, the font also answers to that character. "
+        "Prefer it: it looks identical with SlideMarks applied, still means the right thing if the font is missing, "
+        "and screen readers know its name. See [accessibility](accessibility.md).",
+        "",
         "| Family | |",
         "|---|---|",
     ]
     out += [f"| [{title}](#{_anchor(title)}) | {len(members)} glyphs |" for _, title, members in fams]
     for _, title, members in fams:
-        out += ["", f"## {title}", "", "| | Name | Code point | CSS class | Status |", "|---|---|---|---|---|"]
+        out += ["", f"## {title}", "",
+                "| | Name | Code point | Standard Unicode | Spoken label | CSS class | Status |",
+                "|---|---|---|---|---|---|---|"]
         for s in members:
+            std = ", ".join(f"`U+{a}`" for a in s["unicodeAliases"]) or "—"
             out.append(
-                f"| <img src=\"glyphs/{s['id']}.svg\" width=\"32\" height=\"32\" alt=\"\"> | {s['name']} | `U+{s['codepoint']}` "
-                f"| `sm-{s['id']}` | {s['status']} |"
+                f"| <img src=\"glyphs/{s['id']}.svg\" width=\"32\" height=\"32\" alt=\"{escape(s['spokenLabel'])}\"> | {s['name']} "
+                f"| `U+{s['codepoint']}` | {std} | {s['spokenLabel']} | `sm-{s['id']}` | {s['status']} |"
             )
     (docs_dir / "glyphs.md").write_text("\n".join(out) + "\n")
     _overview(tokens, fams, svg_paths, docs_dir / "preview.svg")

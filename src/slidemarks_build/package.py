@@ -12,6 +12,8 @@ fonts/SlideMarks-Regular.ttf   Install this font (Windows: right-click > Install
                                macOS: double-click > Install Font).
 web/                           SlideMarks-Regular.woff2 + slidemarks.css for websites.
 svg/                           One SVG per glyph, for design tools.
+screen-readers/                Optional packs so VoiceOver, NVDA and JAWS speak each symbol's
+                               meaning (e.g. "Harvey ball 50 percent").
 glyphs.md                      Every glyph with its name and code point.
 SHA256SUMS                     Checksums for the files above.
 
@@ -22,7 +24,7 @@ Full instructions: https://github.com/pjaol/SlideMarks#readme
 def build_zip(root: Path, manifest) -> Path:
     version = manifest["manifestVersion"]
     dist = root / "dist"
-    files = sorted(p for sub in ("fonts", "web", "svg") for p in (dist / sub).rglob("*") if p.is_file())
+    files = sorted(p for sub in ("fonts", "web", "svg", "screen-readers") for p in (dist / sub).rglob("*") if p.is_file())
     entries = {f"{p.relative_to(dist)}": p.read_bytes() for p in files}
     entries["glyphs.md"] = (root / "docs/glyphs.md").read_text().replace("](glyphs/", "](svg/").replace('src="glyphs/', 'src="svg/').encode()
     entries["README.txt"] = USER_README.format(version=version).encode()

@@ -50,6 +50,8 @@ def build_font(tokens, manifest, out_dir: Path) -> dict:
     glyphs = {".notdef": _notdef(tokens), "space": TTGlyphPen(None).glyph()}
     glyphs.update({glyph_name(s["id"]): _tt_glyph(outlines[s["id"]]) for s in symbols})
     cmap = {0x20: "space"} | {int(s["codepoint"], 16): glyph_name(s["id"]) for s in symbols}
+    # Standard Unicode aliases point at the same glyph: one outline, two code points.
+    cmap |= {int(a, 16): glyph_name(s["id"]) for s in symbols for a in s["unicodeAliases"]}
 
     fb = FontBuilder(tokens["unitsPerEm"], isTTF=True)
     fb.setupGlyphOrder(glyph_order)
@@ -81,12 +83,11 @@ def build_font(tokens, manifest, out_dir: Path) -> dict:
         fsType=tokens["fsType"],
         fsSelection=0x40 | 0x80,  # REGULAR | USE_TYPO_METRICS
         achVendID="NONE",
-        ulUnicodeRange1=1,  # Basic Latin (space)
-        ulUnicodeRange2=1 << (60 - 32),  # Private Use Area
         ulCodePageRange1=1,  # Latin 1, so Office lists the font normally
         sxHeight=0, sCapHeight=700, usDefaultChar=0, usBreakChar=0x20,
         usFirstCharIndex=0x20, usLastCharIndex=max(cmap),
     )
+    fb.font["OS/2"].recalcUnicodeRanges(fb.font)  # PUA plus the alias blocks (arrows, math operators)
     fb.setupPost(keepGlyphNames=True)
 
     (out_dir / "fonts").mkdir(exist_ok=True)

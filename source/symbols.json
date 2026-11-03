@@ -104,7 +104,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "Harvey ball 0 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-25",
@@ -122,7 +125,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "Harvey ball 25 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-50",
@@ -140,7 +146,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "Harvey ball 50 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-75",
@@ -158,7 +167,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "Harvey ball 75 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-100",
@@ -176,7 +188,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "Harvey ball 100 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-10",
@@ -195,7 +210,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 10 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-20",
@@ -214,7 +232,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 20 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-30",
@@ -233,7 +254,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 30 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-40",
@@ -252,7 +276,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 40 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-60",
@@ -271,7 +298,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 60 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-70",
@@ -290,7 +320,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 70 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-80",
@@ -309,7 +342,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 80 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "harvey-90",
@@ -328,7 +364,10 @@
       },
       "geometryGroup": "harvey-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "Harvey ball 90 percent",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "progress-0-4",
@@ -347,7 +386,10 @@
       },
       "geometryGroup": "progress-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "progress 0 of 4",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "progress-1-4",
@@ -366,7 +408,10 @@
       },
       "geometryGroup": "progress-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "progress 1 of 4",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "progress-2-4",
@@ -385,7 +430,10 @@
       },
       "geometryGroup": "progress-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "progress 2 of 4",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "progress-3-4",
@@ -404,7 +452,10 @@
       },
       "geometryGroup": "progress-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "progress 3 of 4",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "progress-4-4",
@@ -423,7 +474,10 @@
       },
       "geometryGroup": "progress-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "progress 4 of 4",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-left",
@@ -440,7 +494,12 @@
       },
       "geometryGroup": "arrow-cardinal",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "left arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2190"
+      ]
     },
     {
       "id": "arrow-right",
@@ -457,7 +516,12 @@
       },
       "geometryGroup": "arrow-cardinal",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "right arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2192"
+      ]
     },
     {
       "id": "arrow-up",
@@ -474,7 +538,12 @@
       },
       "geometryGroup": "arrow-cardinal",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "up arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2191"
+      ]
     },
     {
       "id": "arrow-down",
@@ -491,7 +560,12 @@
       },
       "geometryGroup": "arrow-cardinal",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "down arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2193"
+      ]
     },
     {
       "id": "arrow-ne",
@@ -509,7 +583,12 @@
       },
       "geometryGroup": "arrow-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up-right arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2197"
+      ]
     },
     {
       "id": "arrow-nw",
@@ -527,7 +606,12 @@
       },
       "geometryGroup": "arrow-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up-left arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2196"
+      ]
     },
     {
       "id": "arrow-se",
@@ -545,7 +629,12 @@
       },
       "geometryGroup": "arrow-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "down-right arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2198"
+      ]
     },
     {
       "id": "arrow-sw",
@@ -563,7 +652,12 @@
       },
       "geometryGroup": "arrow-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "down-left arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2199"
+      ]
     },
     {
       "id": "arrow-left-right",
@@ -582,7 +676,12 @@
       },
       "geometryGroup": "arrow-bi-cardinal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "left-right arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2194"
+      ]
     },
     {
       "id": "arrow-up-down",
@@ -601,7 +700,12 @@
       },
       "geometryGroup": "arrow-bi-cardinal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up-down arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2195"
+      ]
     },
     {
       "id": "arrow-ne-sw",
@@ -620,7 +724,12 @@
       },
       "geometryGroup": "arrow-bi-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up-right and down-left arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2922"
+      ]
     },
     {
       "id": "arrow-nw-se",
@@ -639,7 +748,12 @@
       },
       "geometryGroup": "arrow-bi-diagonal",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up-left and down-right arrow",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2921"
+      ]
     },
     {
       "id": "arrow-right-thin",
@@ -658,7 +772,10 @@
       },
       "geometryGroup": "arrow-thin",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "thin right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-left-thin",
@@ -677,7 +794,10 @@
       },
       "geometryGroup": "arrow-thin",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "thin left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-up-thin",
@@ -696,7 +816,10 @@
       },
       "geometryGroup": "arrow-thin",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "thin up arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-down-thin",
@@ -715,7 +838,10 @@
       },
       "geometryGroup": "arrow-thin",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "thin down arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-right-heavy",
@@ -734,7 +860,10 @@
       },
       "geometryGroup": "arrow-heavy",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-left-heavy",
@@ -753,7 +882,10 @@
       },
       "geometryGroup": "arrow-heavy",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-up-heavy",
@@ -772,7 +904,10 @@
       },
       "geometryGroup": "arrow-heavy",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy up arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-down-heavy",
@@ -791,7 +926,10 @@
       },
       "geometryGroup": "arrow-heavy",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy down arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-right-short",
@@ -810,7 +948,10 @@
       },
       "geometryGroup": "arrow-short",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "short right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-left-short",
@@ -829,7 +970,10 @@
       },
       "geometryGroup": "arrow-short",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "short left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-right-long",
@@ -849,7 +993,10 @@
       "geometryGroup": "arrow-long",
       "status": "draft",
       "introduced": "0.1.0",
-      "frameException": "long arrows extend past the frame by design"
+      "frameException": "long arrows extend past the frame by design",
+      "spokenLabel": "long right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-left-long",
@@ -869,7 +1016,10 @@
       "geometryGroup": "arrow-long",
       "status": "draft",
       "introduced": "0.1.0",
-      "frameException": "long arrows extend past the frame by design"
+      "frameException": "long arrows extend past the frame by design",
+      "spokenLabel": "long left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-turn-right",
@@ -887,7 +1037,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "turn right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-turn-left",
@@ -906,7 +1059,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "turn left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-uturn-right",
@@ -924,7 +1080,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "U-turn right arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-uturn-left",
@@ -943,7 +1102,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "U-turn left arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-loop-cw",
@@ -961,7 +1123,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "clockwise loop arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-loop-ccw",
@@ -980,7 +1145,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "counter-clockwise loop arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-return",
@@ -998,7 +1166,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "return arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "arrow-branch",
@@ -1016,7 +1187,10 @@
       },
       "geometryGroup": "arrow-curved",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "branch arrow",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-right",
@@ -1034,7 +1208,10 @@
       },
       "geometryGroup": "chevron-single",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "right chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-left",
@@ -1052,7 +1229,10 @@
       },
       "geometryGroup": "chevron-single",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "left chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-up",
@@ -1070,7 +1250,10 @@
       },
       "geometryGroup": "chevron-single",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "up chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-down",
@@ -1088,7 +1271,10 @@
       },
       "geometryGroup": "chevron-single",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "down chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-double-right",
@@ -1107,7 +1293,10 @@
       },
       "geometryGroup": "chevron-double",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "double right chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-double-left",
@@ -1126,7 +1315,10 @@
       },
       "geometryGroup": "chevron-double",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "double left chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-filled-right",
@@ -1145,7 +1337,10 @@
       },
       "geometryGroup": "chevron-filled",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "filled right chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "chevron-filled-left",
@@ -1164,7 +1359,10 @@
       },
       "geometryGroup": "chevron-filled",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "filled left chevron",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "status-check",
@@ -1181,7 +1379,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "check mark",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-cross",
@@ -1198,7 +1399,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "cross",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "dot-empty",
@@ -1217,7 +1421,10 @@
       },
       "geometryGroup": "rating-dot",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "empty rating dot",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "dot-filled",
@@ -1237,7 +1444,10 @@
       },
       "geometryGroup": "rating-dot",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "filled rating dot",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-check-heavy",
@@ -1255,7 +1465,10 @@
       },
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy check mark",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-cross-heavy",
@@ -1273,7 +1486,10 @@
       },
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "heavy cross",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-minus",
@@ -1289,7 +1505,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "minus",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-plus",
@@ -1305,7 +1524,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "plus",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-question",
@@ -1321,7 +1543,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "question mark",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "status-exclamation",
@@ -1337,7 +1562,10 @@
       "params": {},
       "geometryGroup": "status-mark",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "exclamation mark",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "circle-check",
@@ -1355,7 +1583,10 @@
       },
       "geometryGroup": "status-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "check mark in circle",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "circle-cross",
@@ -1373,7 +1604,10 @@
       },
       "geometryGroup": "status-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "cross in circle",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "circle-minus",
@@ -1391,7 +1625,10 @@
       },
       "geometryGroup": "status-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "minus in circle",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "circle-question",
@@ -1409,7 +1646,10 @@
       },
       "geometryGroup": "status-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "question mark in circle",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "circle-exclamation",
@@ -1427,7 +1667,10 @@
       },
       "geometryGroup": "status-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "exclamation mark in circle",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "square-empty",
@@ -1445,7 +1688,10 @@
       },
       "geometryGroup": "rating-square",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "empty rating square",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "square-filled",
@@ -1463,7 +1709,10 @@
       },
       "geometryGroup": "rating-square",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "filled rating square",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "diamond-empty",
@@ -1481,7 +1730,10 @@
       },
       "geometryGroup": "rating-diamond",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "empty rating diamond",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "diamond-filled",
@@ -1499,7 +1751,10 @@
       },
       "geometryGroup": "rating-diamond",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "filled rating diamond",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "rag-ring-dot",
@@ -1517,7 +1772,10 @@
       },
       "geometryGroup": "rating-dot",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "RAG ring with centre dot",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "rag-half",
@@ -1535,7 +1793,10 @@
       },
       "geometryGroup": "rating-dot",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "RAG half-filled dot",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-up",
@@ -1553,7 +1814,10 @@
       },
       "geometryGroup": "trend-line",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "rising trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-down",
@@ -1572,7 +1836,10 @@
       },
       "geometryGroup": "trend-line",
       "status": "draft",
-      "introduced": "0.0.1"
+      "introduced": "0.0.1",
+      "spokenLabel": "falling trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-flat",
@@ -1590,7 +1857,10 @@
       },
       "geometryGroup": "trend-flat",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "flat trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-up-sharp",
@@ -1608,7 +1878,10 @@
       },
       "geometryGroup": "trend-sharp",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "sharply rising trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-down-sharp",
@@ -1627,7 +1900,10 @@
       },
       "geometryGroup": "trend-sharp",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "sharply falling trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "trend-oscillating",
@@ -1645,7 +1921,10 @@
       },
       "geometryGroup": "trend-wave",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "oscillating trend",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "priority-1",
@@ -1664,7 +1943,10 @@
       },
       "geometryGroup": "priority-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "priority 1",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "priority-2",
@@ -1683,7 +1965,10 @@
       },
       "geometryGroup": "priority-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "priority 2",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "priority-3",
@@ -1702,7 +1987,10 @@
       },
       "geometryGroup": "priority-circle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "priority 3",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "flag",
@@ -1717,7 +2005,10 @@
       "params": {},
       "geometryGroup": "priority-symbol",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "flag",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "star-outline",
@@ -1734,7 +2025,10 @@
       },
       "geometryGroup": "star",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "empty star",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "star-filled",
@@ -1752,7 +2046,10 @@
       },
       "geometryGroup": "star",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "filled star",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "bookmark",
@@ -1767,7 +2064,10 @@
       "params": {},
       "geometryGroup": "priority-symbol",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "bookmark",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "pin",
@@ -1782,7 +2082,10 @@
       "params": {},
       "geometryGroup": "priority-symbol",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "pin",
+      "needsContext": true,
+      "unicodeAliases": []
     },
     {
       "id": "compare-equals",
@@ -1800,7 +2103,12 @@
       },
       "geometryGroup": "compare",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "equals",
+      "needsContext": false,
+      "unicodeAliases": [
+        "003D"
+      ]
     },
     {
       "id": "compare-not-equals",
@@ -1818,7 +2126,12 @@
       },
       "geometryGroup": "compare",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "not equal to",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2260"
+      ]
     },
     {
       "id": "compare-approx",
@@ -1836,7 +2149,12 @@
       },
       "geometryGroup": "compare",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "approximately equal to",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2248"
+      ]
     },
     {
       "id": "compare-greater",
@@ -1854,7 +2172,12 @@
       },
       "geometryGroup": "compare-angle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "greater than",
+      "needsContext": false,
+      "unicodeAliases": [
+        "003E"
+      ]
     },
     {
       "id": "compare-less",
@@ -1872,7 +2195,12 @@
       },
       "geometryGroup": "compare-angle",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "less than",
+      "needsContext": false,
+      "unicodeAliases": [
+        "003C"
+      ]
     },
     {
       "id": "compare-greater-equal",
@@ -1890,7 +2218,12 @@
       },
       "geometryGroup": "compare-angle-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "greater than or equal to",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2265"
+      ]
     },
     {
       "id": "compare-less-equal",
@@ -1908,7 +2241,12 @@
       },
       "geometryGroup": "compare-angle-bar",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "less than or equal to",
+      "needsContext": false,
+      "unicodeAliases": [
+        "2264"
+      ]
     },
     {
       "id": "compare-delta",
@@ -1926,7 +2264,10 @@
       },
       "geometryGroup": "compare",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "delta, change",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-process",
@@ -1944,7 +2285,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "process box",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-rounded",
@@ -1962,7 +2306,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "rounded process box",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-decision",
@@ -1980,7 +2327,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "decision diamond",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-terminator",
@@ -1998,7 +2348,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "terminator",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-database",
@@ -2016,7 +2369,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "database",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "node-connector",
@@ -2034,7 +2390,10 @@
       },
       "geometryGroup": "workflow-node",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "connector",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-bullet-small",
@@ -2051,7 +2410,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "small bullet",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-bullet-medium",
@@ -2068,7 +2430,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "medium bullet",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-bullet-large",
@@ -2085,7 +2450,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "large bullet",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-bullet-open",
@@ -2102,7 +2470,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "open bullet",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-dash",
@@ -2119,7 +2490,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "dash",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-separator-vertical",
@@ -2136,7 +2510,10 @@
       },
       "geometryGroup": "marker",
       "status": "draft",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "vertical separator",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "marker-separator-horizontal",
@@ -2154,7 +2531,10 @@
       "geometryGroup": "marker",
       "status": "draft",
       "introduced": "0.1.0",
-      "frameException": "spans the full advance so repeated glyphs join"
+      "frameException": "spans the full advance so repeated glyphs join",
+      "spokenLabel": "horizontal separator",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "user",
@@ -2171,7 +2551,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "user",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "users",
@@ -2188,7 +2571,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "users",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "lock",
@@ -2205,7 +2591,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "lock",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "unlock",
@@ -2222,7 +2611,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "unlock",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "clock",
@@ -2239,7 +2631,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "clock",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "calendar",
@@ -2256,7 +2651,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "calendar",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "link",
@@ -2273,7 +2671,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "link",
+      "needsContext": false,
+      "unicodeAliases": []
     },
     {
       "id": "unlink",
@@ -2290,7 +2691,10 @@
       },
       "geometryGroup": "ownership",
       "status": "candidate",
-      "introduced": "0.1.0"
+      "introduced": "0.1.0",
+      "spokenLabel": "unlink",
+      "needsContext": false,
+      "unicodeAliases": []
     }
   ]
 }

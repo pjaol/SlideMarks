@@ -1,8 +1,14 @@
-"""Web package: @font-face + utility classes generated from the manifest (PRD F-08)."""
+"""Web package: @font-face + utility classes generated from the manifest (PRD F-08).
+
+Glyph classes are decorative by default: the second `content` declaration gives the
+generated character empty alternative text, so screen readers don't announce a
+private-use character. Browsers without CSS alt-text support ignore that line and
+keep the first. Meaningful symbols must be named in the HTML (see docs/accessibility.md)."""
 
 from pathlib import Path
 
 from .font import FAMILY, STYLE
+from .manifest import preferred_codepoint
 
 
 def render_css(manifest, out_path: Path):
@@ -27,5 +33,6 @@ def render_css(manifest, out_path: Path):
         "",
     ]
     for s in manifest["symbols"]:
-        lines.append(f".sm-{s['id']}::before {{ content: \"\\{s['codepoint']}\"; }}")
+        cp = preferred_codepoint(s)
+        lines.append(f".sm-{s['id']}::before {{ content: \"\\{cp}\"; content: \"\\{cp}\" / \"\"; }}")
     out_path.write_text("\n".join(lines) + "\n")

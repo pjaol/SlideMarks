@@ -13,7 +13,7 @@ from pptx.util import Emu, Inches, Pt
 
 from .office_fonts import ttf_to_eot
 from .font import FAMILY
-from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, families
+from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, alias_rows, families, preferred_char, visible_text
 
 TEXT_FONT = "Calibri"
 DARK = RGBColor(0x14, 0x16, 0x1A)
@@ -53,6 +53,17 @@ def _cell(cell, text, typeface, size_pt, align=PP_ALIGN.CENTER, color=None, fill
     if fill is not None:
         cell.fill.solid()
         cell.fill.fore_color.rgb = fill
+
+
+def _labelled_cell(cell, symbol, size_pt):
+    """Glyph run (SlideMarks) followed by a visible text run (Calibri) in one paragraph."""
+    tf = cell.text_frame
+    tf.clear()
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    _add_run(p, preferred_char(symbol), FAMILY, size_pt)
+    _add_run(p, f" {visible_text(symbol)}", TEXT_FONT, size_pt * 0.8)
+    cell.vertical_anchor = MSO_ANCHOR.MIDDLE
 
 
 def _title(slide, text, sub=None):
@@ -111,6 +122,41 @@ def render(manifest, ttf_path: Path, out_path: Path):
             _cell(t.cell(r, 0), label, TEXT_FONT, 14, align=PP_ALIGN.LEFT, color=fg, fill=bg)
             for c, gid in enumerate(ids, start=1):
                 _cell(t.cell(r, c), ch[gid], FAMILY, size, color=fg, fill=bg)
+
+    by_id = {s["id"]: s for s in symbols}
+
+    # Accessibility · symbol plus visible text, so meaning survives without the glyph
+    slide = prs.slides.add_slide(blank)
+    _title(slide, "Accessible scorecard · 14pt",
+           "Each symbol is paired with visible text in the same cell. Screen readers read the text; the glyph adds the visual.")
+    t = _table(slide, len(rows) + 1, len(header), Inches(1.5), Inches(0.55))
+    t.columns[0].width = Inches(2.6)
+    for c in range(1, len(header)):
+        t.columns[c].width = Inches(1.94)
+    for c, h in enumerate(header):
+        _cell(t.cell(0, c), h, TEXT_FONT, 14, align=PP_ALIGN.LEFT if c == 0 else PP_ALIGN.CENTER, bold=True)
+    for r, (label, *ids) in enumerate(rows, start=1):
+        _cell(t.cell(r, 0), label, TEXT_FONT, 14, align=PP_ALIGN.LEFT)
+        for c, gid in enumerate(ids, start=1):
+            _labelled_cell(t.cell(r, c), by_id[gid], 14)
+
+    # Accessibility · encoding test: PUA vs standard alias, both in SlideMarks
+    pairs = alias_rows(manifest)
+    for start in range(0, len(pairs), 10):
+        chunk = pairs[start:start + 10]
+        slide = prs.slides.add_slide(blank)
+        _title(slide, f"Encoding test ({start // 10 + 1}/{-(-len(pairs) // 10)})",
+               "Both glyph columns use SlideMarks and must look identical. Read each row with a screen reader and record what it says.")
+        t = _table(slide, len(chunk) + 1, 4, Inches(1.4), Inches(0.5))
+        for c, wdt in enumerate((3.1, 1.6, 1.6, 6.0)):
+            t.columns[c].width = Inches(wdt)
+        for c, h in enumerate(("Glyph", "PUA", "Standard", "Unicode name of the standard character")):
+            _cell(t.cell(0, c), h, TEXT_FONT, 12, align=PP_ALIGN.LEFT if c in (0, 3) else PP_ALIGN.CENTER, bold=True)
+        for r, (sym, pua, alias, uname) in enumerate(chunk, start=1):
+            _cell(t.cell(r, 0), sym["name"], TEXT_FONT, 12, align=PP_ALIGN.LEFT)
+            _cell(t.cell(r, 1), pua, FAMILY, 20)
+            _cell(t.cell(r, 2), alias, FAMILY, 20)
+            _cell(t.cell(r, 3), f"U+{ord(alias):04X} {uname}", TEXT_FONT, 12, align=PP_ALIGN.LEFT)
 
     # 3 · Size ladder: each family inline with Calibri text, split across slides to fit
     for pt in LADDER_PT:

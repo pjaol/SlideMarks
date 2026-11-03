@@ -31,6 +31,7 @@ Status: v0.1.0 draft (2026-11-03). Values live in `source/design-tokens.json`, a
 | D11 | Long arrows and the horizontal separator may leave the frame (`frameException`) | Long arrows need the length; the separator spans the full advance so repeated glyphs join into one rule |
 | D12 | Trend oscillating ends in the shared arrowhead, pointing level after two even swings | Every trend carries a head; ending level keeps it neutral instead of reading as falling. Its repeated swings separate it from trend flat (one wiggle, then level) |
 | D13 | Circled 1 is centered on its stem, not its ink box | Ink-box centering let the flag pull the stem right of center; numerals are judged by their main stroke |
+| D14 | Arrows and comparison operators are also mapped from their standard Unicode code points; the missing-font empty-box rule is relaxed for those glyphs only | Screen readers can name standard characters but never PUA ones; a system arrow keeps the meaning when the font is missing. See ADR 0002 and `docs/accessibility.md` |
 
 ## Code point blocks
 
@@ -48,6 +49,8 @@ Status: v0.1.0 draft (2026-11-03). Values live in `source/design-tokens.json`, a
 | E0B0–E0B7 | Simple markers |
 | E0B8–E0BF | Ownership & action |
 | E0C0–E0FF | Reserved; never reuse a removed glyph's code point |
+
+Some glyphs are also reachable through standard Unicode aliases (D14). Those aliases are listed per glyph in `source/symbols.json` and `docs/glyphs.md`.
 
 The Phase 0 glyphs kept their original code points. Code points are stable from here on, even before 1.0.
 
