@@ -1,6 +1,6 @@
 # SlideMarks design goals
 
-Status: **proposed** (2026-11-03). Derived from `SlideMarks_Requirements_v0.1.md` and the Phase 0 spike. The review sheet (`review/specimen.html`) is how each goal is checked.
+Status: **accepted** (2026-11-03). Derived from `SlideMarks_Requirements_v0.1.md` and the Phase 0 spike. The review sheet (`review/specimen.html`) is how each goal is checked.
 
 The one-line test: **a reader should never notice which glyphs came from which family.** Anything in a table cell should look like it was drawn by one hand, at one weight, on one grid.
 
@@ -35,9 +35,5 @@ No shadows, gradients, decorative detail or emoji styling. Simple geometry that 
 The same tokens and manifest always produce byte-identical fonts. The SVG previews and font outlines come from the same geometry, and code points never move once released.
 *Checked by:* source-vs-font overlay; reproducible build hash; manifest validation.
 
-## Open design questions surfaced by the spike
-- **Check vs cross weight.** The cross covers about 19% of the frame and the check about 11%, and the cross reads heavier. Decide whether to shrink the cross or enlarge the check.
-- **Vertical alignment against text.** The glyph center (420) sits above cap-height center (350). Judge this in real PowerPoint tables before freezing it (PRD §5.1).
-- **Stroke weight.** Is 56 too heavy at 36 pt or too light at 10 pt? The PRD's starting value was 48.
-- **Trend arrowheads.** The heads read slightly blunt at small sizes. Consider a shorter head or a smaller head angle for this family only.
-- **Dots vs Harvey 0%.** The empty dot and the Harvey 0% ball differ only in size. Confirm both are needed and that their purposes are distinct.
+## Decisions
+The questions raised by the Phase 0 spike are resolved in `docs/design-system.md` (D1–D11).

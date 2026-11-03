@@ -32,6 +32,8 @@ def measure(ttf_path: Path, tokens, manifest) -> list[dict]:
             "id": s["id"],
             "category": s["category"],
             "group": s["geometryGroup"],
+            "status": s["status"],
+            "frameException": s.get("frameException"),
             "advance": hmtx[name][0],
             "bounds": (x0, y0, x1, y1),
             "size": (x1 - x0, y1 - y0),
@@ -47,7 +49,13 @@ def measure(ttf_path: Path, tokens, manifest) -> list[dict]:
 def _check(records, tokens):
     cx, cy = tokens["center"]["x"], tokens["center"]["y"]
     rules = tokens["geometryGroups"]
+    f = tokens["frame"]
     for r in records:
+        if not r["frameException"]:
+            x0, y0, x1, y1 = r["bounds"]
+            over = max(f["xMin"] - x0, f["yMin"] - y0, x1 - f["xMax"], y1 - f["yMax"])
+            if over > TOLERANCE:
+                r["findings"].append(f"ink exceeds the frame by {over:.0f} units")
         if r["advance"] != tokens["advanceWidth"]:
             r["findings"].append(f"advance {r['advance']} ≠ {tokens['advanceWidth']}")
         dx, dy = r["center"][0] - cx, r["center"][1] - cy

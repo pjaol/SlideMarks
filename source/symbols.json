@@ -1,23 +1,2296 @@
 {
-  "manifestVersion": "0.0.1",
+  "manifestVersion": "0.1.0",
+  "families": [
+    {
+      "id": "harvey",
+      "title": "Harvey balls",
+      "block": "E000-E00F"
+    },
+    {
+      "id": "progress",
+      "title": "Progress segments",
+      "block": "E010-E01F"
+    },
+    {
+      "id": "arrows",
+      "title": "Direction arrows",
+      "block": "E020-E02F"
+    },
+    {
+      "id": "arrows-bidirectional",
+      "title": "Bidirectional arrows",
+      "block": "E020-E04F"
+    },
+    {
+      "id": "arrows-variants",
+      "title": "Arrow variants",
+      "block": "E020-E04F"
+    },
+    {
+      "id": "arrows-curved",
+      "title": "Curved & workflow arrows",
+      "block": "E020-E04F"
+    },
+    {
+      "id": "chevrons",
+      "title": "Chevrons",
+      "block": "E020-E04F"
+    },
+    {
+      "id": "status",
+      "title": "Checks & outcomes",
+      "block": "E050-E05F"
+    },
+    {
+      "id": "status-circle",
+      "title": "Circular statuses",
+      "block": "E050-E05F"
+    },
+    {
+      "id": "rating",
+      "title": "Rating dots",
+      "block": "E060-E06F"
+    },
+    {
+      "id": "rag",
+      "title": "RAG indicators",
+      "block": "E060-E06F"
+    },
+    {
+      "id": "trend",
+      "title": "Trend indicators",
+      "block": "E070-E07F"
+    },
+    {
+      "id": "priority",
+      "title": "Priority & emphasis",
+      "block": "E080-E08F"
+    },
+    {
+      "id": "comparison",
+      "title": "Business comparisons",
+      "block": "E090-E09F"
+    },
+    {
+      "id": "workflow",
+      "title": "Decision & workflow nodes",
+      "block": "E0A0-E0AF"
+    },
+    {
+      "id": "markers",
+      "title": "Simple markers",
+      "block": "E0B0-E0B7"
+    },
+    {
+      "id": "ownership",
+      "title": "Ownership & action",
+      "block": "E0B8-E0BF"
+    }
+  ],
   "symbols": [
-    {"id": "harvey-0",   "codepoint": "E000", "name": "Harvey ball 0%",   "category": "harvey", "tags": ["rating", "empty", "none", "0 percent"],     "builder": "harvey", "params": {"fraction": 0.0},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
-    {"id": "harvey-25",  "codepoint": "E001", "name": "Harvey ball 25%",  "category": "harvey", "tags": ["rating", "quarter", "25 percent"],          "builder": "harvey", "params": {"fraction": 0.25}, "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
-    {"id": "harvey-50",  "codepoint": "E002", "name": "Harvey ball 50%",  "category": "harvey", "tags": ["rating", "half", "50 percent"],             "builder": "harvey", "params": {"fraction": 0.5},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
-    {"id": "harvey-75",  "codepoint": "E003", "name": "Harvey ball 75%",  "category": "harvey", "tags": ["rating", "three quarters", "75 percent"],   "builder": "harvey", "params": {"fraction": 0.75}, "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
-    {"id": "harvey-100", "codepoint": "E004", "name": "Harvey ball 100%", "category": "harvey", "tags": ["rating", "full", "complete", "100 percent"], "builder": "harvey", "params": {"fraction": 1.0},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
-
-    {"id": "arrow-left",  "codepoint": "E020", "name": "Arrow left",  "category": "arrows", "tags": ["direction", "back", "west"],  "builder": "arrow", "params": {"rotateDeg": 180}, "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
-    {"id": "arrow-right", "codepoint": "E021", "name": "Arrow right", "category": "arrows", "tags": ["direction", "next", "east"],  "builder": "arrow", "params": {"rotateDeg": 0},   "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
-    {"id": "arrow-up",    "codepoint": "E022", "name": "Arrow up",    "category": "arrows", "tags": ["direction", "increase", "north"], "builder": "arrow", "params": {"rotateDeg": 90},  "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
-    {"id": "arrow-down",  "codepoint": "E023", "name": "Arrow down",  "category": "arrows", "tags": ["direction", "decrease", "south"], "builder": "arrow", "params": {"rotateDeg": 270}, "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
-
-    {"id": "status-check",  "codepoint": "E050", "name": "Check",        "category": "status", "tags": ["yes", "done", "pass", "tick"],     "builder": "check",  "params": {}, "geometryGroup": "status-mark", "status": "draft", "introduced": "0.0.1"},
-    {"id": "status-cross",  "codepoint": "E051", "name": "Cross",        "category": "status", "tags": ["no", "fail", "x", "reject"],       "builder": "cross",  "params": {}, "geometryGroup": "status-mark", "status": "draft", "introduced": "0.0.1"},
-    {"id": "dot-empty",     "codepoint": "E052", "name": "Empty circle", "category": "status", "tags": ["rating", "dot", "off", "open"],    "builder": "dot",    "params": {"filled": false}, "geometryGroup": "status-dot", "status": "draft", "introduced": "0.0.1"},
-    {"id": "dot-filled",    "codepoint": "E053", "name": "Filled circle","category": "status", "tags": ["rating", "dot", "on", "bullet"],   "builder": "dot",    "params": {"filled": true},  "geometryGroup": "status-dot", "status": "draft", "introduced": "0.0.1"},
-
-    {"id": "trend-up",   "codepoint": "E070", "name": "Trend rising",  "category": "trend", "tags": ["growth", "increase", "chart"], "builder": "trend", "params": {"direction": "up"},   "geometryGroup": "trend-line", "status": "draft", "introduced": "0.0.1"},
-    {"id": "trend-down", "codepoint": "E071", "name": "Trend falling", "category": "trend", "tags": ["decline", "decrease", "chart"], "builder": "trend", "params": {"direction": "down"}, "geometryGroup": "trend-line", "status": "draft", "introduced": "0.0.1"}
+    {
+      "id": "harvey-0",
+      "codepoint": "E000",
+      "name": "Harvey ball 0%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "0 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.0
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "harvey-25",
+      "codepoint": "E001",
+      "name": "Harvey ball 25%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "25 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.25
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "harvey-50",
+      "codepoint": "E002",
+      "name": "Harvey ball 50%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "50 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.5
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "harvey-75",
+      "codepoint": "E003",
+      "name": "Harvey ball 75%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "75 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.75
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "harvey-100",
+      "codepoint": "E004",
+      "name": "Harvey ball 100%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "100 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 1.0
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "harvey-10",
+      "codepoint": "E005",
+      "name": "Harvey ball 10%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "10 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.1
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-20",
+      "codepoint": "E006",
+      "name": "Harvey ball 20%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "20 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.2
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-30",
+      "codepoint": "E007",
+      "name": "Harvey ball 30%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "30 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.3
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-40",
+      "codepoint": "E008",
+      "name": "Harvey ball 40%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "40 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.4
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-60",
+      "codepoint": "E009",
+      "name": "Harvey ball 60%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "60 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.6
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-70",
+      "codepoint": "E00A",
+      "name": "Harvey ball 70%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "70 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.7
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-80",
+      "codepoint": "E00B",
+      "name": "Harvey ball 80%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "80 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.8
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "harvey-90",
+      "codepoint": "E00C",
+      "name": "Harvey ball 90%",
+      "category": "harvey",
+      "tags": [
+        "rating",
+        "score",
+        "decile",
+        "90 percent"
+      ],
+      "builder": "harvey",
+      "params": {
+        "fraction": 0.9
+      },
+      "geometryGroup": "harvey-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "progress-0-4",
+      "codepoint": "E010",
+      "name": "Progress 0 of 4",
+      "category": "progress",
+      "tags": [
+        "progress",
+        "segments",
+        "bar",
+        "0/4"
+      ],
+      "builder": "progress",
+      "params": {
+        "filled": 0
+      },
+      "geometryGroup": "progress-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "progress-1-4",
+      "codepoint": "E011",
+      "name": "Progress 1 of 4",
+      "category": "progress",
+      "tags": [
+        "progress",
+        "segments",
+        "bar",
+        "1/4"
+      ],
+      "builder": "progress",
+      "params": {
+        "filled": 1
+      },
+      "geometryGroup": "progress-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "progress-2-4",
+      "codepoint": "E012",
+      "name": "Progress 2 of 4",
+      "category": "progress",
+      "tags": [
+        "progress",
+        "segments",
+        "bar",
+        "2/4"
+      ],
+      "builder": "progress",
+      "params": {
+        "filled": 2
+      },
+      "geometryGroup": "progress-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "progress-3-4",
+      "codepoint": "E013",
+      "name": "Progress 3 of 4",
+      "category": "progress",
+      "tags": [
+        "progress",
+        "segments",
+        "bar",
+        "3/4"
+      ],
+      "builder": "progress",
+      "params": {
+        "filled": 3
+      },
+      "geometryGroup": "progress-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "progress-4-4",
+      "codepoint": "E014",
+      "name": "Progress 4 of 4",
+      "category": "progress",
+      "tags": [
+        "progress",
+        "segments",
+        "bar",
+        "4/4"
+      ],
+      "builder": "progress",
+      "params": {
+        "filled": 4
+      },
+      "geometryGroup": "progress-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-left",
+      "codepoint": "E020",
+      "name": "Arrow left",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "left"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 180
+      },
+      "geometryGroup": "arrow-cardinal",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "arrow-right",
+      "codepoint": "E021",
+      "name": "Arrow right",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "right"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0
+      },
+      "geometryGroup": "arrow-cardinal",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "arrow-up",
+      "codepoint": "E022",
+      "name": "Arrow up",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "up"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 90
+      },
+      "geometryGroup": "arrow-cardinal",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "arrow-down",
+      "codepoint": "E023",
+      "name": "Arrow down",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "down"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 270
+      },
+      "geometryGroup": "arrow-cardinal",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "arrow-ne",
+      "codepoint": "E024",
+      "name": "Arrow north-east",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "diagonal",
+        "north-east"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 45
+      },
+      "geometryGroup": "arrow-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-nw",
+      "codepoint": "E025",
+      "name": "Arrow north-west",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "diagonal",
+        "north-west"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 135
+      },
+      "geometryGroup": "arrow-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-se",
+      "codepoint": "E026",
+      "name": "Arrow south-east",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "diagonal",
+        "south-east"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 315
+      },
+      "geometryGroup": "arrow-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-sw",
+      "codepoint": "E027",
+      "name": "Arrow south-west",
+      "category": "arrows",
+      "tags": [
+        "direction",
+        "diagonal",
+        "south-west"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 225
+      },
+      "geometryGroup": "arrow-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-left-right",
+      "codepoint": "E028",
+      "name": "Arrow left-right",
+      "category": "arrows-bidirectional",
+      "tags": [
+        "direction",
+        "bidirectional",
+        "both ways"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0,
+        "heads": "both"
+      },
+      "geometryGroup": "arrow-bi-cardinal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-up-down",
+      "codepoint": "E029",
+      "name": "Arrow up-down",
+      "category": "arrows-bidirectional",
+      "tags": [
+        "direction",
+        "bidirectional",
+        "both ways"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 90,
+        "heads": "both"
+      },
+      "geometryGroup": "arrow-bi-cardinal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-ne-sw",
+      "codepoint": "E02A",
+      "name": "Arrow north-east/south-west",
+      "category": "arrows-bidirectional",
+      "tags": [
+        "direction",
+        "bidirectional",
+        "both ways"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 45,
+        "heads": "both"
+      },
+      "geometryGroup": "arrow-bi-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-nw-se",
+      "codepoint": "E02B",
+      "name": "Arrow north-west/south-east",
+      "category": "arrows-bidirectional",
+      "tags": [
+        "direction",
+        "bidirectional",
+        "both ways"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 135,
+        "heads": "both"
+      },
+      "geometryGroup": "arrow-bi-diagonal",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-right-thin",
+      "codepoint": "E02C",
+      "name": "Arrow right thin",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "right",
+        "thin"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0,
+        "weight": "thin"
+      },
+      "geometryGroup": "arrow-thin",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-left-thin",
+      "codepoint": "E02D",
+      "name": "Arrow left thin",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "left",
+        "thin"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 180,
+        "weight": "thin"
+      },
+      "geometryGroup": "arrow-thin",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-up-thin",
+      "codepoint": "E02E",
+      "name": "Arrow up thin",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "up",
+        "thin"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 90,
+        "weight": "thin"
+      },
+      "geometryGroup": "arrow-thin",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-down-thin",
+      "codepoint": "E02F",
+      "name": "Arrow down thin",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "down",
+        "thin"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 270,
+        "weight": "thin"
+      },
+      "geometryGroup": "arrow-thin",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-right-heavy",
+      "codepoint": "E030",
+      "name": "Arrow right heavy",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "right",
+        "heavy"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0,
+        "weight": "heavy"
+      },
+      "geometryGroup": "arrow-heavy",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-left-heavy",
+      "codepoint": "E031",
+      "name": "Arrow left heavy",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "left",
+        "heavy"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 180,
+        "weight": "heavy"
+      },
+      "geometryGroup": "arrow-heavy",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-up-heavy",
+      "codepoint": "E032",
+      "name": "Arrow up heavy",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "up",
+        "heavy"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 90,
+        "weight": "heavy"
+      },
+      "geometryGroup": "arrow-heavy",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-down-heavy",
+      "codepoint": "E033",
+      "name": "Arrow down heavy",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "down",
+        "heavy"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 270,
+        "weight": "heavy"
+      },
+      "geometryGroup": "arrow-heavy",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-right-short",
+      "codepoint": "E034",
+      "name": "Arrow right short",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "right",
+        "short"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0,
+        "length": "short"
+      },
+      "geometryGroup": "arrow-short",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-left-short",
+      "codepoint": "E035",
+      "name": "Arrow left short",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "left",
+        "short"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 180,
+        "length": "short"
+      },
+      "geometryGroup": "arrow-short",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-right-long",
+      "codepoint": "E036",
+      "name": "Arrow right long",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "right",
+        "long"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 0,
+        "length": "long"
+      },
+      "geometryGroup": "arrow-long",
+      "status": "draft",
+      "introduced": "0.1.0",
+      "frameException": "long arrows extend past the frame by design"
+    },
+    {
+      "id": "arrow-left-long",
+      "codepoint": "E037",
+      "name": "Arrow left long",
+      "category": "arrows-variants",
+      "tags": [
+        "direction",
+        "left",
+        "long"
+      ],
+      "builder": "arrow",
+      "params": {
+        "rotateDeg": 180,
+        "length": "long"
+      },
+      "geometryGroup": "arrow-long",
+      "status": "draft",
+      "introduced": "0.1.0",
+      "frameException": "long arrows extend past the frame by design"
+    },
+    {
+      "id": "arrow-turn-right",
+      "codepoint": "E038",
+      "name": "Turn right",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "turn"
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-turn-left",
+      "codepoint": "E039",
+      "name": "Turn left",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "turn",
+        "mirror": true
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-uturn-right",
+      "codepoint": "E03A",
+      "name": "U-turn right",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "uturn"
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-uturn-left",
+      "codepoint": "E03B",
+      "name": "U-turn left",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "uturn",
+        "mirror": true
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-loop-cw",
+      "codepoint": "E03C",
+      "name": "Loop clockwise",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "loop"
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-loop-ccw",
+      "codepoint": "E03D",
+      "name": "Loop counter-clockwise",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "loop",
+        "mirror": true
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-return",
+      "codepoint": "E03E",
+      "name": "Return",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "return"
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "arrow-branch",
+      "codepoint": "E03F",
+      "name": "Branch",
+      "category": "arrows-curved",
+      "tags": [
+        "workflow",
+        "curved",
+        "flow"
+      ],
+      "builder": "curved",
+      "params": {
+        "kind": "branch"
+      },
+      "geometryGroup": "arrow-curved",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-right",
+      "codepoint": "E040",
+      "name": "Chevron right",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 0
+      },
+      "geometryGroup": "chevron-single",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-left",
+      "codepoint": "E041",
+      "name": "Chevron left",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 180
+      },
+      "geometryGroup": "chevron-single",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-up",
+      "codepoint": "E042",
+      "name": "Chevron up",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 90
+      },
+      "geometryGroup": "chevron-single",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-down",
+      "codepoint": "E043",
+      "name": "Chevron down",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 270
+      },
+      "geometryGroup": "chevron-single",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-double-right",
+      "codepoint": "E044",
+      "name": "Double chevron right",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 0,
+        "kind": "double"
+      },
+      "geometryGroup": "chevron-double",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-double-left",
+      "codepoint": "E045",
+      "name": "Double chevron left",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 180,
+        "kind": "double"
+      },
+      "geometryGroup": "chevron-double",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-filled-right",
+      "codepoint": "E046",
+      "name": "Filled chevron right",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 0,
+        "kind": "filled"
+      },
+      "geometryGroup": "chevron-filled",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "chevron-filled-left",
+      "codepoint": "E047",
+      "name": "Filled chevron left",
+      "category": "chevrons",
+      "tags": [
+        "flow",
+        "next",
+        "chevron"
+      ],
+      "builder": "chevron",
+      "params": {
+        "rotateDeg": 180,
+        "kind": "filled"
+      },
+      "geometryGroup": "chevron-filled",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-check",
+      "codepoint": "E050",
+      "name": "Check",
+      "category": "status",
+      "tags": [
+        "yes",
+        "done",
+        "pass",
+        "tick"
+      ],
+      "builder": "check",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "status-cross",
+      "codepoint": "E051",
+      "name": "Cross",
+      "category": "status",
+      "tags": [
+        "no",
+        "fail",
+        "x",
+        "reject"
+      ],
+      "builder": "cross",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "dot-empty",
+      "codepoint": "E052",
+      "name": "Empty dot",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "dot",
+        "off",
+        "open"
+      ],
+      "builder": "dot",
+      "params": {
+        "filled": false
+      },
+      "geometryGroup": "rating-dot",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "dot-filled",
+      "codepoint": "E053",
+      "name": "Filled dot",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "dot",
+        "on",
+        "bullet",
+        "rag"
+      ],
+      "builder": "dot",
+      "params": {
+        "filled": true
+      },
+      "geometryGroup": "rating-dot",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "status-check-heavy",
+      "codepoint": "E054",
+      "name": "Heavy check",
+      "category": "status",
+      "tags": [
+        "yes",
+        "done",
+        "bold"
+      ],
+      "builder": "check",
+      "params": {
+        "weight": "heavy"
+      },
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-cross-heavy",
+      "codepoint": "E055",
+      "name": "Heavy cross",
+      "category": "status",
+      "tags": [
+        "no",
+        "fail",
+        "bold"
+      ],
+      "builder": "cross",
+      "params": {
+        "weight": "heavy"
+      },
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-minus",
+      "codepoint": "E056",
+      "name": "Minus",
+      "category": "status",
+      "tags": [
+        "neutral",
+        "none",
+        "n/a"
+      ],
+      "builder": "minus",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-plus",
+      "codepoint": "E057",
+      "name": "Plus",
+      "category": "status",
+      "tags": [
+        "add",
+        "positive",
+        "more"
+      ],
+      "builder": "plus",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-question",
+      "codepoint": "E058",
+      "name": "Question",
+      "category": "status",
+      "tags": [
+        "unknown",
+        "tbd",
+        "query"
+      ],
+      "builder": "question",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "status-exclamation",
+      "codepoint": "E059",
+      "name": "Exclamation",
+      "category": "status",
+      "tags": [
+        "warning",
+        "attention",
+        "risk"
+      ],
+      "builder": "exclamation",
+      "params": {},
+      "geometryGroup": "status-mark",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "circle-check",
+      "codepoint": "E05A",
+      "name": "Circle check",
+      "category": "status-circle",
+      "tags": [
+        "status",
+        "circle",
+        "check"
+      ],
+      "builder": "circled",
+      "params": {
+        "mark": "check"
+      },
+      "geometryGroup": "status-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "circle-cross",
+      "codepoint": "E05B",
+      "name": "Circle cross",
+      "category": "status-circle",
+      "tags": [
+        "status",
+        "circle",
+        "cross"
+      ],
+      "builder": "circled",
+      "params": {
+        "mark": "cross"
+      },
+      "geometryGroup": "status-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "circle-minus",
+      "codepoint": "E05C",
+      "name": "Circle minus",
+      "category": "status-circle",
+      "tags": [
+        "status",
+        "circle",
+        "minus"
+      ],
+      "builder": "circled",
+      "params": {
+        "mark": "minus"
+      },
+      "geometryGroup": "status-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "circle-question",
+      "codepoint": "E05D",
+      "name": "Circle question",
+      "category": "status-circle",
+      "tags": [
+        "status",
+        "circle",
+        "question"
+      ],
+      "builder": "circled",
+      "params": {
+        "mark": "question"
+      },
+      "geometryGroup": "status-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "circle-exclamation",
+      "codepoint": "E05E",
+      "name": "Circle exclamation",
+      "category": "status-circle",
+      "tags": [
+        "status",
+        "circle",
+        "exclamation"
+      ],
+      "builder": "circled",
+      "params": {
+        "mark": "exclamation"
+      },
+      "geometryGroup": "status-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "square-empty",
+      "codepoint": "E060",
+      "name": "Empty square",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "square",
+        "off"
+      ],
+      "builder": "square",
+      "params": {
+        "filled": false
+      },
+      "geometryGroup": "rating-square",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "square-filled",
+      "codepoint": "E061",
+      "name": "Filled square",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "square",
+        "on"
+      ],
+      "builder": "square",
+      "params": {
+        "filled": true
+      },
+      "geometryGroup": "rating-square",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "diamond-empty",
+      "codepoint": "E062",
+      "name": "Empty diamond",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "diamond",
+        "off"
+      ],
+      "builder": "diamond",
+      "params": {
+        "filled": false
+      },
+      "geometryGroup": "rating-diamond",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "diamond-filled",
+      "codepoint": "E063",
+      "name": "Filled diamond",
+      "category": "rating",
+      "tags": [
+        "rating",
+        "diamond",
+        "on"
+      ],
+      "builder": "diamond",
+      "params": {
+        "filled": true
+      },
+      "geometryGroup": "rating-diamond",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "rag-ring-dot",
+      "codepoint": "E064",
+      "name": "RAG ring with dot",
+      "category": "rag",
+      "tags": [
+        "rag",
+        "status",
+        "target"
+      ],
+      "builder": "rag",
+      "params": {
+        "kind": "ring-dot"
+      },
+      "geometryGroup": "rating-dot",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "rag-half",
+      "codepoint": "E065",
+      "name": "RAG half-filled",
+      "category": "rag",
+      "tags": [
+        "rag",
+        "status",
+        "partial"
+      ],
+      "builder": "rag",
+      "params": {
+        "kind": "half"
+      },
+      "geometryGroup": "rating-dot",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "trend-up",
+      "codepoint": "E070",
+      "name": "Trend rising",
+      "category": "trend",
+      "tags": [
+        "growth",
+        "increase",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "rising"
+      },
+      "geometryGroup": "trend-line",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "trend-down",
+      "codepoint": "E071",
+      "name": "Trend falling",
+      "category": "trend",
+      "tags": [
+        "decline",
+        "decrease",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "rising",
+        "mirror": true
+      },
+      "geometryGroup": "trend-line",
+      "status": "draft",
+      "introduced": "0.0.1"
+    },
+    {
+      "id": "trend-flat",
+      "codepoint": "E072",
+      "name": "Trend flat",
+      "category": "trend",
+      "tags": [
+        "stable",
+        "flat",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "flat"
+      },
+      "geometryGroup": "trend-flat",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "trend-up-sharp",
+      "codepoint": "E073",
+      "name": "Trend sharply rising",
+      "category": "trend",
+      "tags": [
+        "growth",
+        "spike",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "sharpRising"
+      },
+      "geometryGroup": "trend-sharp",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "trend-down-sharp",
+      "codepoint": "E074",
+      "name": "Trend sharply falling",
+      "category": "trend",
+      "tags": [
+        "decline",
+        "drop",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "sharpRising",
+        "mirror": true
+      },
+      "geometryGroup": "trend-sharp",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "trend-oscillating",
+      "codepoint": "E075",
+      "name": "Trend oscillating",
+      "category": "trend",
+      "tags": [
+        "volatile",
+        "oscillating",
+        "chart"
+      ],
+      "builder": "trend",
+      "params": {
+        "shape": "oscillating"
+      },
+      "geometryGroup": "trend-wave",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "priority-1",
+      "codepoint": "E080",
+      "name": "Priority 1",
+      "category": "priority",
+      "tags": [
+        "priority",
+        "rank",
+        "number",
+        "1"
+      ],
+      "builder": "circled_digit",
+      "params": {
+        "digit": 1
+      },
+      "geometryGroup": "priority-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "priority-2",
+      "codepoint": "E081",
+      "name": "Priority 2",
+      "category": "priority",
+      "tags": [
+        "priority",
+        "rank",
+        "number",
+        "2"
+      ],
+      "builder": "circled_digit",
+      "params": {
+        "digit": 2
+      },
+      "geometryGroup": "priority-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "priority-3",
+      "codepoint": "E082",
+      "name": "Priority 3",
+      "category": "priority",
+      "tags": [
+        "priority",
+        "rank",
+        "number",
+        "3"
+      ],
+      "builder": "circled_digit",
+      "params": {
+        "digit": 3
+      },
+      "geometryGroup": "priority-circle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "flag",
+      "codepoint": "E083",
+      "name": "Flag",
+      "category": "priority",
+      "tags": [
+        "flag",
+        "milestone"
+      ],
+      "builder": "flag",
+      "params": {},
+      "geometryGroup": "priority-symbol",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "star-outline",
+      "codepoint": "E084",
+      "name": "Star outline",
+      "category": "priority",
+      "tags": [
+        "star",
+        "favourite"
+      ],
+      "builder": "star",
+      "params": {
+        "filled": false
+      },
+      "geometryGroup": "star",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "star-filled",
+      "codepoint": "E085",
+      "name": "Star filled",
+      "category": "priority",
+      "tags": [
+        "star",
+        "favourite",
+        "highlight"
+      ],
+      "builder": "star",
+      "params": {
+        "filled": true
+      },
+      "geometryGroup": "star",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "bookmark",
+      "codepoint": "E086",
+      "name": "Bookmark",
+      "category": "priority",
+      "tags": [
+        "bookmark",
+        "save"
+      ],
+      "builder": "bookmark",
+      "params": {},
+      "geometryGroup": "priority-symbol",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "pin",
+      "codepoint": "E087",
+      "name": "Pin",
+      "category": "priority",
+      "tags": [
+        "pin",
+        "location"
+      ],
+      "builder": "pin",
+      "params": {},
+      "geometryGroup": "priority-symbol",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-equals",
+      "codepoint": "E090",
+      "name": "Equals",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "equals"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "equals"
+      },
+      "geometryGroup": "compare",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-not-equals",
+      "codepoint": "E091",
+      "name": "Not equals",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "not-equals"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "not-equals"
+      },
+      "geometryGroup": "compare",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-approx",
+      "codepoint": "E092",
+      "name": "Approximately",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "approx"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "approx"
+      },
+      "geometryGroup": "compare",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-greater",
+      "codepoint": "E093",
+      "name": "Greater than",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "greater"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "greater"
+      },
+      "geometryGroup": "compare-angle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-less",
+      "codepoint": "E094",
+      "name": "Less than",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "less"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "less"
+      },
+      "geometryGroup": "compare-angle",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-greater-equal",
+      "codepoint": "E095",
+      "name": "Greater or equal",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "greater-equal"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "greater-equal"
+      },
+      "geometryGroup": "compare-angle-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-less-equal",
+      "codepoint": "E096",
+      "name": "Less or equal",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "less-equal"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "less-equal"
+      },
+      "geometryGroup": "compare-angle-bar",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "compare-delta",
+      "codepoint": "E097",
+      "name": "Delta",
+      "category": "comparison",
+      "tags": [
+        "compare",
+        "math",
+        "delta"
+      ],
+      "builder": "comparison",
+      "params": {
+        "kind": "delta"
+      },
+      "geometryGroup": "compare",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-process",
+      "codepoint": "E0A0",
+      "name": "Process",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "process"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "process"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-rounded",
+      "codepoint": "E0A1",
+      "name": "Rounded process",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "rounded"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "rounded"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-decision",
+      "codepoint": "E0A2",
+      "name": "Decision",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "decision"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "decision"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-terminator",
+      "codepoint": "E0A3",
+      "name": "Terminator",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "terminator"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "terminator"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-database",
+      "codepoint": "E0A4",
+      "name": "Database",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "database"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "database"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "node-connector",
+      "codepoint": "E0A5",
+      "name": "Connector",
+      "category": "workflow",
+      "tags": [
+        "workflow",
+        "flowchart",
+        "connector"
+      ],
+      "builder": "workflow",
+      "params": {
+        "kind": "connector"
+      },
+      "geometryGroup": "workflow-node",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-bullet-small",
+      "codepoint": "E0B0",
+      "name": "Bullet small",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "bullet-small"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "bullet-small"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-bullet-medium",
+      "codepoint": "E0B1",
+      "name": "Bullet medium",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "bullet-medium"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "bullet-medium"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-bullet-large",
+      "codepoint": "E0B2",
+      "name": "Bullet large",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "bullet-large"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "bullet-large"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-bullet-open",
+      "codepoint": "E0B3",
+      "name": "Open bullet",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "bullet-open"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "bullet-open"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-dash",
+      "codepoint": "E0B4",
+      "name": "Dash",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "dash"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "dash"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-separator-vertical",
+      "codepoint": "E0B5",
+      "name": "Vertical separator",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "separator-vertical"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "separator-vertical"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "marker-separator-horizontal",
+      "codepoint": "E0B6",
+      "name": "Horizontal separator",
+      "category": "markers",
+      "tags": [
+        "marker",
+        "separator-horizontal"
+      ],
+      "builder": "marker",
+      "params": {
+        "kind": "separator-horizontal"
+      },
+      "geometryGroup": "marker",
+      "status": "draft",
+      "introduced": "0.1.0",
+      "frameException": "spans the full advance so repeated glyphs join"
+    },
+    {
+      "id": "user",
+      "codepoint": "E0B8",
+      "name": "User",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "user"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "user"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "users",
+      "codepoint": "E0B9",
+      "name": "Users",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "users"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "users"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "lock",
+      "codepoint": "E0BA",
+      "name": "Lock",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "lock"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "lock"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "unlock",
+      "codepoint": "E0BB",
+      "name": "Unlock",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "unlock"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "unlock"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "clock",
+      "codepoint": "E0BC",
+      "name": "Clock",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "clock"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "clock"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "calendar",
+      "codepoint": "E0BD",
+      "name": "Calendar",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "calendar"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "calendar"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "link",
+      "codepoint": "E0BE",
+      "name": "Link",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "link"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "link"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    },
+    {
+      "id": "unlink",
+      "codepoint": "E0BF",
+      "name": "Unlink",
+      "category": "ownership",
+      "tags": [
+        "action",
+        "unlink"
+      ],
+      "builder": "ownership",
+      "params": {
+        "kind": "unlink"
+      },
+      "geometryGroup": "ownership",
+      "status": "candidate",
+      "introduced": "0.1.0"
+    }
   ]
 }

@@ -1,7 +1,6 @@
 """Word specimen: the same checks as the PowerPoint deck, in Word tables and
 paragraphs, with the font embedded so no install is needed."""
 
-from collections import defaultdict
 from pathlib import Path
 
 from docx import Document
@@ -18,7 +17,7 @@ from lxml import etree
 
 from .font import FAMILY
 from .office_fonts import font_key_for, obfuscate_odttf
-from .specimen_content import CATEGORY_TITLES, LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS
+from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, families
 
 TEXT_FONT = "Calibri"
 DARK = "14161A"
@@ -80,9 +79,7 @@ def render(manifest, ttf_path: Path, out_path: Path):
 
     symbols = manifest["symbols"]
     ch = {s["id"]: chr(int(s["codepoint"], 16)) for s in symbols}
-    cats = defaultdict(list)
-    for s in symbols:
-        cats[s["category"]].append(s)
+    fams = families(manifest)
 
     p = doc.add_paragraph()
     _add_run(p, "SlideMarks Word specimen", TEXT_FONT, 22, bold=True)
@@ -93,13 +90,13 @@ def render(manifest, ttf_path: Path, out_path: Path):
              TEXT_FONT, 10, color=MUTED)
 
     # 1 · Families
-    for size in (14, 24):
+    for size in (14, 20):
         _heading(doc, f"Families · {size}pt", "Each family in one row of centred table cells. Compare outer size, centre and weight.")
-        width = max(len(m) for m in cats.values())
-        t = doc.add_table(rows=len(cats), cols=width + 1, style="Table Grid")
+        width = max(len(m) for _, _, m in fams)
+        t = doc.add_table(rows=len(fams), cols=width + 1, style="Table Grid")
         t.alignment = WD_TABLE_ALIGNMENT.CENTER
-        for r, (cat, members) in enumerate(cats.items()):
-            _cell(t.cell(r, 0), CATEGORY_TITLES.get(cat, cat), TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT)
+        for r, (_, title, members) in enumerate(fams):
+            _cell(t.cell(r, 0), title, TEXT_FONT, 9, align=WD_ALIGN_PARAGRAPH.LEFT)
             for c in range(width):
                 _cell(t.cell(r, c + 1), ch[members[c]["id"]] if c < len(members) else "", FAMILY, size)
 
@@ -121,10 +118,13 @@ def render(manifest, ttf_path: Path, out_path: Path):
     # 3 · Size ladder: glyphs inline with body text
     _heading(doc, "Size ladder", "Glyphs mixed with Calibri text in one paragraph. Check baseline and cap alignment at each size.")
     for pt in LADDER_PT:
-        p = doc.add_paragraph()
-        _add_run(p, f"{pt}pt  Hx 50% ", TEXT_FONT, pt)
-        _add_run(p, " ".join(ch[s["id"]] for s in symbols), FAMILY, pt)
-        _add_run(p, " Done", TEXT_FONT, pt)
+        _add_run(doc.add_paragraph(), f"{pt}pt", TEXT_FONT, 10, bold=True, color=MUTED)
+        for _, title, members in fams:
+            p = doc.add_paragraph()
+            p.paragraph_format.space_after = Pt(2)
+            _add_run(p, "Hx 50% ", TEXT_FONT, pt)
+            _add_run(p, " ".join(ch[s["id"]] for s in members), FAMILY, pt)
+            _add_run(p, f" {title}", TEXT_FONT, pt)
 
     _embed_font(doc, ttf_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)

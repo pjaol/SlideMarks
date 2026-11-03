@@ -4,10 +4,9 @@ file opens offline from disk with no server and no network calls."""
 import base64
 import html
 import json
-from collections import defaultdict
 from pathlib import Path
 
-from .specimen_content import CATEGORY_TITLES, LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS
+from .specimen_content import LADDER_PT, SCORECARD_HEADER, SCORECARD_ROWS, families as family_list
 
 
 def _char(s) -> str:
@@ -35,6 +34,8 @@ def _guides_svg(t) -> str:
 def _cell(s, record, guides) -> str:
     flags = record["findings"]
     badge = f'<span class="badge bad" title="{html.escape("; ".join(flags))}">{len(flags)}</span>' if flags else '<span class="badge ok">✓</span>'
+    if s["status"] != "approved":
+        badge += f'<span class="badge st">{s["status"]}</span>'
     return (
         f'<figure class="cell" data-id="{s["id"]}">'
         f'<div class="em">{guides}<span class="sm glyph">{_char(s)}</span></div>'
@@ -46,31 +47,32 @@ def _cell(s, record, guides) -> str:
 def render(tokens, manifest, records, woff2_path: Path, svg_paths: dict, out_path: Path, build_info: dict):
     font_b64 = base64.b64encode(woff2_path.read_bytes()).decode()
     by_id = {r["id"]: r for r in records}
-    cats = defaultdict(list)
-    for s in manifest["symbols"]:
-        cats[s["category"]].append(s)
+    fams = family_list(manifest)
     guides = _guides_svg(tokens)
     vb = f'0 0 {tokens["advanceWidth"]} {tokens["unitsPerEm"]}'
 
     families = "".join(
-        f'<section class="family"><h3>{CATEGORY_TITLES.get(cat, cat)} <small>{len(members)}</small></h3>'
+        f'<section class="family" data-family="{fid}"><h3>{html.escape(title)} <small>{len(members)}</small></h3>'
         f'<div class="row">{"".join(_cell(s, by_id[s["id"]], guides) for s in members)}</div></section>'
-        for cat, members in cats.items()
+        for fid, title, members in fams
     )
 
     onion = "".join(
-        f'<figure class="onion-cell"><div class="em onion">{guides}'
+        f'<figure class="onion-cell" data-family="{fid}"><div class="em onion">{guides}'
         + "".join(f'<span class="sm glyph layer">{_char(s)}</span>' for s in members)
-        + f'</div><figcaption>{CATEGORY_TITLES.get(cat, cat)}</figcaption></figure>'
-        for cat, members in cats.items()
+        + f'</div><figcaption>{html.escape(title)}</figcaption></figure>'
+        for fid, title, members in fams
     )
 
-    all_chars = " ".join(_char(s) for s in manifest["symbols"])
+    family_runs = "".join(
+        f'<span class="sm" data-family="{fid}">{" ".join(_char(s) for s in members)} </span>' for fid, _, members in fams
+    )
     ladder = "".join(
         f'<div class="ladder-row" style="font-size:{pt}pt"><span class="pt">{pt}pt</span>'
-        f'<span class="txt">Hx 50%</span><span class="sm">{all_chars}</span><span class="txt">Done</span></div>'
+        f'<span class="txt">Hx 50%</span> {family_runs}<span class="txt">Done</span></div>'
         for pt in LADDER_PT
     )
+    family_options = "".join(f'<option value="{fid}">{html.escape(title)} ({len(m)})</option>' for fid, title, m in fams)
 
     g = {s["id"]: _char(s) for s in manifest["symbols"]}
     rows = [(label, *(g[i] for i in ids)) for label, *ids in SCORECARD_ROWS]
@@ -88,7 +90,7 @@ def render(tokens, manifest, records, woff2_path: Path, svg_paths: dict, out_pat
         )
 
     source_vs_font = "".join(
-        f'<figure class="cmp"><div class="em big"><span class="sm glyph">{_char(s)}</span>'
+        f'<figure class="cmp" data-family="{s["category"]}"><div class="em big"><span class="sm glyph">{_char(s)}</span>'
         f'<svg class="src" viewBox="{vb}"><path d="{svg_paths[s["id"]]}"/></svg></div>'
         f'<figcaption>{s["id"]}</figcaption></figure>'
         for s in manifest["symbols"]
@@ -98,11 +100,11 @@ def render(tokens, manifest, records, woff2_path: Path, svg_paths: dict, out_pat
         return " ".join(f"{v:.0f}" for v in b)
 
     metric_rows = "".join(
-        f'<tr class="{"bad" if r["findings"] else ""}"><td><span class="sm">{g[r["id"]]}</span></td><td>{r["id"]}</td>'
+        f'<tr class="{"bad" if r["findings"] else ""}" data-family="{r["category"]}"><td><span class="sm">{g[r["id"]]}</span></td><td>{r["id"]}</td>'
         f'<td>{r["group"]}</td><td>{r["advance"]}</td><td>{fmt_bounds(r["bounds"])}</td>'
         f'<td>{r["size"][0]:.0f}×{r["size"][1]:.0f}</td><td>{r["center"][0]:.0f}, {r["center"][1]:.0f}</td>'
         f'<td>{r["coverage"] * 100:.1f}%</td><td>{r["weightVsCategory"]:.2f}×</td>'
-        f'<td>{html.escape("; ".join(r["findings"])) or "—"}</td></tr>'
+        f'<td>{html.escape("; ".join(r["findings"])) or html.escape(r["frameException"] or "") or "—"}</td></tr>'
         for r in records
     )
     total_findings = sum(len(r["findings"]) for r in records)
@@ -122,6 +124,7 @@ def render(tokens, manifest, records, woff2_path: Path, svg_paths: dict, out_pat
         "TABLES": table(12) + table(18),
         "SOURCE_VS_FONT": source_vs_font,
         "METRICS": metric_rows,
+        "FAMILY_OPTIONS": family_options,
     }.items():
         page = page.replace("{{" + key + "}}", value)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -174,7 +177,9 @@ code { font: 11px ui-monospace, Menlo, monospace; }
 .onion-row { display: flex; gap: 24px; flex-wrap: wrap; }
 .onion { --size: 200px; }
 .onion .layer { opacity: .28; }
-.ladder-row { display: flex; align-items: baseline; gap: .4em; border-bottom: 1px solid var(--rule); padding: 4px 0; white-space: nowrap; overflow-x: auto; }
+.ladder-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4em; border-bottom: 1px solid var(--rule); padding: 4px 0; }
+[hidden] { display: none !important; }
+.badge.st { background: #a16207; }
 .ladder-row .pt { font: 11px ui-monospace, Menlo, monospace; color: var(--muted); width: 44px; flex: none; }
 .ladder-row .txt { font-family: Calibri, "Segoe UI", -apple-system, sans-serif; }
 .tables { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
@@ -203,6 +208,7 @@ details pre { background: var(--panel); padding: 12px; overflow: auto; font-size
   <h1>SlideMarks review · v{{VERSION}}</h1>
   <span>{{COUNT}} glyphs</span>
   <span class="status {{FINDINGS_CLASS}}">{{FINDINGS}} findings</span>
+  <label>Family <select id="family"><option value="">All</option>{{FAMILY_OPTIONS}}</select></label>
   <label><input type="checkbox" id="guides" checked> Guides</label>
   <label><input type="checkbox" id="dark"> Dark</label>
   <label>Size <input type="range" id="size" min="16" max="200" value="96"> <span id="size-val">96px</span></label>
@@ -251,6 +257,10 @@ $('dark').onchange = (e) => {
 $('size').oninput = (e) => {
   document.documentElement.style.setProperty('--size', e.target.value + 'px');
   $('size-val').textContent = e.target.value + 'px';
+};
+$('family').onchange = (e) => {
+  const v = e.target.value;
+  document.querySelectorAll('[data-family]').forEach((el) => { el.hidden = !!v && el.dataset.family !== v; });
 };
 $('ink').oninput = (e) => document.documentElement.style.setProperty('--glyph-ink', e.target.value);
 document.fonts.load('48px SlideMarks', '\\uE000').then((faces) => {

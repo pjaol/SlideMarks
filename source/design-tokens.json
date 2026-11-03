@@ -15,7 +15,10 @@
     "y": 420
   },
   "stroke": {
-    "regular": 56
+    "regular": 56,
+    "thin": 36,
+    "heavy": 84,
+    "$comment": "thin/heavy only for the explicit weight variants of arrows, checks and separators"
   },
   "harvey": {
     "diameter": 660,
@@ -42,13 +45,18 @@
     "$comment": "centerline points; ink extends stroke/2 beyond"
   },
   "cross": {
-    "halfSpan": 250
+    "halfSpan": 225,
+    "$comment": "reduced from 250 so the cross does not read heavier than the check (decision 2026-11-03)"
   },
   "arrow": {
-    "halfLength": 330,
+    "halfLength": {
+      "standard": 330,
+      "short": 220,
+      "long": 440
+    },
     "headLength": 225,
     "headAngleDeg": 45,
-    "$comment": "halfLength is the ink extent from center, caps included"
+    "$comment": "halfLength is the ink extent from center, caps included; long arrows intentionally exceed the frame"
   },
   "trend": {
     "rising": [
@@ -69,16 +77,171 @@
         605
       ]
     ],
-    "headLength": 190,
-    "$comment": "centerline points; falling is the vertical mirror about center.y"
+    "flat": [
+      [
+        200,
+        330
+      ],
+      [
+        390,
+        500
+      ],
+      [
+        560,
+        410
+      ],
+      [
+        800,
+        410
+      ]
+    ],
+    "sharpRising": [
+      [
+        260,
+        110
+      ],
+      [
+        400,
+        350
+      ],
+      [
+        500,
+        280
+      ],
+      [
+        700,
+        700
+      ]
+    ],
+    "oscillating": [
+      [
+        200,
+        330
+      ],
+      [
+        310,
+        510
+      ],
+      [
+        420,
+        330
+      ],
+      [
+        530,
+        510
+      ],
+      [
+        600,
+        420
+      ],
+      [
+        800,
+        420
+      ]
+    ],
+    "$comment": "centerline points; falling variants are vertical mirrors; every trend is ink-centered and ends in the shared arrowhead. Oscillating ends level so it reads as neutral, not falling."
   },
   "fsType": 0,
   "geometryGroups": {
-    "$comment": "identical-bounds: members share an exact ink box. same-footprint: members share box dimensions in any orientation (rotations/mirrors). optical: judged visually in the review sheet only.",
+    "$comment": "identical-bounds: members share an exact ink box. same-footprint: members share box dimensions in any orientation (rotations/mirrors). optical: judged visually in the review sheet only. Groups not listed are optical.",
     "harvey-circle": "identical-bounds",
-    "status-dot": "identical-bounds",
+    "progress-bar": "identical-bounds",
+    "rating-dot": "identical-bounds",
+    "rating-square": "identical-bounds",
+    "rating-diamond": "identical-bounds",
+    "status-circle": "identical-bounds",
+    "priority-circle": "identical-bounds",
+    "star": "identical-bounds",
+    "chevron-filled": "identical-bounds",
     "arrow-cardinal": "same-footprint",
+    "arrow-diagonal": "same-footprint",
+    "arrow-bi-cardinal": "same-footprint",
+    "arrow-bi-diagonal": "same-footprint",
+    "arrow-thin": "same-footprint",
+    "arrow-heavy": "same-footprint",
+    "arrow-short": "same-footprint",
+    "arrow-long": "same-footprint",
     "trend-line": "same-footprint",
-    "status-mark": "optical"
+    "trend-sharp": "same-footprint",
+    "chevron-single": "same-footprint",
+    "chevron-double": "same-footprint",
+    "compare-angle": "same-footprint",
+    "compare-angle-bar": "same-footprint"
+  },
+  "mark": {
+    "halfSpan": 270,
+    "dotRatio": 1.6,
+    "$comment": "plus/minus span; dots of ! and ? are 1.6x the stroke"
+  },
+  "circleMark": {
+    "scale": 0.56
+  },
+  "square": {
+    "side": 396,
+    "$comment": "optically matched to the 440 dot: squares read larger than circles"
+  },
+  "diamond": {
+    "halfDiagonal": 260
+  },
+  "rag": {
+    "centerDot": 90
+  },
+  "progress": {
+    "height": 240,
+    "gap": 36,
+    "emptyStroke": 36
+  },
+  "curved": {
+    "radius": 160,
+    "uturnRadius": 190
+  },
+  "loop": {
+    "radius": 230,
+    "startDeg": -30,
+    "sweepDeg": 270,
+    "headLength": 150,
+    "$comment": "clockwise sweep from startDeg; the ccw loop is the mirror. headLength is a documented exception: the shared 225 head is as long as the loop radius and collides with the arc"
+  },
+  "chevron": {
+    "armLength": 330,
+    "doubleOffset": 210
+  },
+  "star": {
+    "outerRadius": 316,
+    "innerRatio": 0.45
+  },
+  "pin": {
+    "radius": 200,
+    "headCenterY": 530,
+    "tipY": 110,
+    "holeRadius": 80
+  },
+  "comparison": {
+    "halfSpan": 250,
+    "gap": 110,
+    "waveAmplitude": 120
+  },
+  "workflow": {
+    "boxHeight": 460,
+    "cornerRadius": 110,
+    "pillHeight": 380,
+    "dbRadiusX": 250,
+    "dbRadiusY": 80,
+    "connectorDiameter": 320
+  },
+  "marker": {
+    "small": 80,
+    "medium": 130,
+    "large": 190,
+    "dashHalf": 200
+  },
+  "ownership": {
+    "knockoutGap": 40,
+    "link": {
+      "width": 340,
+      "height": 190,
+      "offset": 100,
+      "unlinkOffset": 195
+    }
   }
 }
