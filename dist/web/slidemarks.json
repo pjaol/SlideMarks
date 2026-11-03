@@ -1,0 +1,1578 @@
+{
+  "version": "0.1.0",
+  "fontFamily": "SlideMarks",
+  "families": [
+    {
+      "id": "harvey",
+      "title": "Harvey balls"
+    },
+    {
+      "id": "progress",
+      "title": "Progress segments"
+    },
+    {
+      "id": "arrows",
+      "title": "Direction arrows"
+    },
+    {
+      "id": "arrows-bidirectional",
+      "title": "Bidirectional arrows"
+    },
+    {
+      "id": "arrows-variants",
+      "title": "Arrow variants"
+    },
+    {
+      "id": "arrows-curved",
+      "title": "Curved & workflow arrows"
+    },
+    {
+      "id": "chevrons",
+      "title": "Chevrons"
+    },
+    {
+      "id": "status",
+      "title": "Checks & outcomes"
+    },
+    {
+      "id": "status-circle",
+      "title": "Circular statuses"
+    },
+    {
+      "id": "rating",
+      "title": "Rating dots"
+    },
+    {
+      "id": "rag",
+      "title": "RAG indicators"
+    },
+    {
+      "id": "trend",
+      "title": "Trend indicators"
+    },
+    {
+      "id": "priority",
+      "title": "Priority & emphasis"
+    },
+    {
+      "id": "comparison",
+      "title": "Business comparisons"
+    },
+    {
+      "id": "workflow",
+      "title": "Decision & workflow nodes"
+    },
+    {
+      "id": "markers",
+      "title": "Simple markers"
+    },
+    {
+      "id": "ownership",
+      "title": "Ownership & action"
+    }
+  ],
+  "symbols": {
+    "harvey-0": {
+      "name": "Harvey ball 0%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E000",
+      "puaCodepoint": "U+E000",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-0",
+      "spokenLabel": "Harvey ball 0 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-25": {
+      "name": "Harvey ball 25%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E001",
+      "puaCodepoint": "U+E001",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-25",
+      "spokenLabel": "Harvey ball 25 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-50": {
+      "name": "Harvey ball 50%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E002",
+      "puaCodepoint": "U+E002",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-50",
+      "spokenLabel": "Harvey ball 50 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-75": {
+      "name": "Harvey ball 75%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E003",
+      "puaCodepoint": "U+E003",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-75",
+      "spokenLabel": "Harvey ball 75 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-100": {
+      "name": "Harvey ball 100%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E004",
+      "puaCodepoint": "U+E004",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-100",
+      "spokenLabel": "Harvey ball 100 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-10": {
+      "name": "Harvey ball 10%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E005",
+      "puaCodepoint": "U+E005",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-10",
+      "spokenLabel": "Harvey ball 10 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-20": {
+      "name": "Harvey ball 20%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E006",
+      "puaCodepoint": "U+E006",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-20",
+      "spokenLabel": "Harvey ball 20 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-30": {
+      "name": "Harvey ball 30%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E007",
+      "puaCodepoint": "U+E007",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-30",
+      "spokenLabel": "Harvey ball 30 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-40": {
+      "name": "Harvey ball 40%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E008",
+      "puaCodepoint": "U+E008",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-40",
+      "spokenLabel": "Harvey ball 40 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-60": {
+      "name": "Harvey ball 60%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E009",
+      "puaCodepoint": "U+E009",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-60",
+      "spokenLabel": "Harvey ball 60 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-70": {
+      "name": "Harvey ball 70%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E00A",
+      "puaCodepoint": "U+E00A",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-70",
+      "spokenLabel": "Harvey ball 70 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-80": {
+      "name": "Harvey ball 80%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E00B",
+      "puaCodepoint": "U+E00B",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-80",
+      "spokenLabel": "Harvey ball 80 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "harvey-90": {
+      "name": "Harvey ball 90%",
+      "family": "harvey",
+      "char": "",
+      "codepoint": "U+E00C",
+      "puaCodepoint": "U+E00C",
+      "unicodeAliases": [],
+      "cssClass": "sm-harvey-90",
+      "spokenLabel": "Harvey ball 90 percent",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "progress-0-4": {
+      "name": "Progress 0 of 4",
+      "family": "progress",
+      "char": "",
+      "codepoint": "U+E010",
+      "puaCodepoint": "U+E010",
+      "unicodeAliases": [],
+      "cssClass": "sm-progress-0-4",
+      "spokenLabel": "progress 0 of 4",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "progress-1-4": {
+      "name": "Progress 1 of 4",
+      "family": "progress",
+      "char": "",
+      "codepoint": "U+E011",
+      "puaCodepoint": "U+E011",
+      "unicodeAliases": [],
+      "cssClass": "sm-progress-1-4",
+      "spokenLabel": "progress 1 of 4",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "progress-2-4": {
+      "name": "Progress 2 of 4",
+      "family": "progress",
+      "char": "",
+      "codepoint": "U+E012",
+      "puaCodepoint": "U+E012",
+      "unicodeAliases": [],
+      "cssClass": "sm-progress-2-4",
+      "spokenLabel": "progress 2 of 4",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "progress-3-4": {
+      "name": "Progress 3 of 4",
+      "family": "progress",
+      "char": "",
+      "codepoint": "U+E013",
+      "puaCodepoint": "U+E013",
+      "unicodeAliases": [],
+      "cssClass": "sm-progress-3-4",
+      "spokenLabel": "progress 3 of 4",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "progress-4-4": {
+      "name": "Progress 4 of 4",
+      "family": "progress",
+      "char": "",
+      "codepoint": "U+E014",
+      "puaCodepoint": "U+E014",
+      "unicodeAliases": [],
+      "cssClass": "sm-progress-4-4",
+      "spokenLabel": "progress 4 of 4",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "arrow-left": {
+      "name": "Arrow left",
+      "family": "arrows",
+      "char": "←",
+      "codepoint": "U+2190",
+      "puaCodepoint": "U+E020",
+      "unicodeAliases": [
+        "U+2190"
+      ],
+      "cssClass": "sm-arrow-left",
+      "spokenLabel": "left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-right": {
+      "name": "Arrow right",
+      "family": "arrows",
+      "char": "→",
+      "codepoint": "U+2192",
+      "puaCodepoint": "U+E021",
+      "unicodeAliases": [
+        "U+2192"
+      ],
+      "cssClass": "sm-arrow-right",
+      "spokenLabel": "right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-up": {
+      "name": "Arrow up",
+      "family": "arrows",
+      "char": "↑",
+      "codepoint": "U+2191",
+      "puaCodepoint": "U+E022",
+      "unicodeAliases": [
+        "U+2191"
+      ],
+      "cssClass": "sm-arrow-up",
+      "spokenLabel": "up arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-down": {
+      "name": "Arrow down",
+      "family": "arrows",
+      "char": "↓",
+      "codepoint": "U+2193",
+      "puaCodepoint": "U+E023",
+      "unicodeAliases": [
+        "U+2193"
+      ],
+      "cssClass": "sm-arrow-down",
+      "spokenLabel": "down arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-ne": {
+      "name": "Arrow north-east",
+      "family": "arrows",
+      "char": "↗",
+      "codepoint": "U+2197",
+      "puaCodepoint": "U+E024",
+      "unicodeAliases": [
+        "U+2197"
+      ],
+      "cssClass": "sm-arrow-ne",
+      "spokenLabel": "up-right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-nw": {
+      "name": "Arrow north-west",
+      "family": "arrows",
+      "char": "↖",
+      "codepoint": "U+2196",
+      "puaCodepoint": "U+E025",
+      "unicodeAliases": [
+        "U+2196"
+      ],
+      "cssClass": "sm-arrow-nw",
+      "spokenLabel": "up-left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-se": {
+      "name": "Arrow south-east",
+      "family": "arrows",
+      "char": "↘",
+      "codepoint": "U+2198",
+      "puaCodepoint": "U+E026",
+      "unicodeAliases": [
+        "U+2198"
+      ],
+      "cssClass": "sm-arrow-se",
+      "spokenLabel": "down-right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-sw": {
+      "name": "Arrow south-west",
+      "family": "arrows",
+      "char": "↙",
+      "codepoint": "U+2199",
+      "puaCodepoint": "U+E027",
+      "unicodeAliases": [
+        "U+2199"
+      ],
+      "cssClass": "sm-arrow-sw",
+      "spokenLabel": "down-left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-left-right": {
+      "name": "Arrow left-right",
+      "family": "arrows-bidirectional",
+      "char": "↔",
+      "codepoint": "U+2194",
+      "puaCodepoint": "U+E028",
+      "unicodeAliases": [
+        "U+2194"
+      ],
+      "cssClass": "sm-arrow-left-right",
+      "spokenLabel": "left-right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-up-down": {
+      "name": "Arrow up-down",
+      "family": "arrows-bidirectional",
+      "char": "↕",
+      "codepoint": "U+2195",
+      "puaCodepoint": "U+E029",
+      "unicodeAliases": [
+        "U+2195"
+      ],
+      "cssClass": "sm-arrow-up-down",
+      "spokenLabel": "up-down arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-ne-sw": {
+      "name": "Arrow north-east/south-west",
+      "family": "arrows-bidirectional",
+      "char": "⤢",
+      "codepoint": "U+2922",
+      "puaCodepoint": "U+E02A",
+      "unicodeAliases": [
+        "U+2922"
+      ],
+      "cssClass": "sm-arrow-ne-sw",
+      "spokenLabel": "up-right and down-left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-nw-se": {
+      "name": "Arrow north-west/south-east",
+      "family": "arrows-bidirectional",
+      "char": "⤡",
+      "codepoint": "U+2921",
+      "puaCodepoint": "U+E02B",
+      "unicodeAliases": [
+        "U+2921"
+      ],
+      "cssClass": "sm-arrow-nw-se",
+      "spokenLabel": "up-left and down-right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-right-thin": {
+      "name": "Arrow right thin",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E02C",
+      "puaCodepoint": "U+E02C",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-right-thin",
+      "spokenLabel": "thin right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-left-thin": {
+      "name": "Arrow left thin",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E02D",
+      "puaCodepoint": "U+E02D",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-left-thin",
+      "spokenLabel": "thin left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-up-thin": {
+      "name": "Arrow up thin",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E02E",
+      "puaCodepoint": "U+E02E",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-up-thin",
+      "spokenLabel": "thin up arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-down-thin": {
+      "name": "Arrow down thin",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E02F",
+      "puaCodepoint": "U+E02F",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-down-thin",
+      "spokenLabel": "thin down arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-right-heavy": {
+      "name": "Arrow right heavy",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E030",
+      "puaCodepoint": "U+E030",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-right-heavy",
+      "spokenLabel": "heavy right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-left-heavy": {
+      "name": "Arrow left heavy",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E031",
+      "puaCodepoint": "U+E031",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-left-heavy",
+      "spokenLabel": "heavy left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-up-heavy": {
+      "name": "Arrow up heavy",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E032",
+      "puaCodepoint": "U+E032",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-up-heavy",
+      "spokenLabel": "heavy up arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-down-heavy": {
+      "name": "Arrow down heavy",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E033",
+      "puaCodepoint": "U+E033",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-down-heavy",
+      "spokenLabel": "heavy down arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-right-short": {
+      "name": "Arrow right short",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E034",
+      "puaCodepoint": "U+E034",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-right-short",
+      "spokenLabel": "short right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-left-short": {
+      "name": "Arrow left short",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E035",
+      "puaCodepoint": "U+E035",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-left-short",
+      "spokenLabel": "short left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-right-long": {
+      "name": "Arrow right long",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E036",
+      "puaCodepoint": "U+E036",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-right-long",
+      "spokenLabel": "long right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-left-long": {
+      "name": "Arrow left long",
+      "family": "arrows-variants",
+      "char": "",
+      "codepoint": "U+E037",
+      "puaCodepoint": "U+E037",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-left-long",
+      "spokenLabel": "long left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-turn-right": {
+      "name": "Turn right",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E038",
+      "puaCodepoint": "U+E038",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-turn-right",
+      "spokenLabel": "turn right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-turn-left": {
+      "name": "Turn left",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E039",
+      "puaCodepoint": "U+E039",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-turn-left",
+      "spokenLabel": "turn left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-uturn-right": {
+      "name": "U-turn right",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03A",
+      "puaCodepoint": "U+E03A",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-uturn-right",
+      "spokenLabel": "U-turn right arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-uturn-left": {
+      "name": "U-turn left",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03B",
+      "puaCodepoint": "U+E03B",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-uturn-left",
+      "spokenLabel": "U-turn left arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-loop-cw": {
+      "name": "Loop clockwise",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03C",
+      "puaCodepoint": "U+E03C",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-loop-cw",
+      "spokenLabel": "clockwise loop arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-loop-ccw": {
+      "name": "Loop counter-clockwise",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03D",
+      "puaCodepoint": "U+E03D",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-loop-ccw",
+      "spokenLabel": "counter-clockwise loop arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-return": {
+      "name": "Return",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03E",
+      "puaCodepoint": "U+E03E",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-return",
+      "spokenLabel": "return arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "arrow-branch": {
+      "name": "Branch",
+      "family": "arrows-curved",
+      "char": "",
+      "codepoint": "U+E03F",
+      "puaCodepoint": "U+E03F",
+      "unicodeAliases": [],
+      "cssClass": "sm-arrow-branch",
+      "spokenLabel": "branch arrow",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-right": {
+      "name": "Chevron right",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E040",
+      "puaCodepoint": "U+E040",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-right",
+      "spokenLabel": "right chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-left": {
+      "name": "Chevron left",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E041",
+      "puaCodepoint": "U+E041",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-left",
+      "spokenLabel": "left chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-up": {
+      "name": "Chevron up",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E042",
+      "puaCodepoint": "U+E042",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-up",
+      "spokenLabel": "up chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-down": {
+      "name": "Chevron down",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E043",
+      "puaCodepoint": "U+E043",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-down",
+      "spokenLabel": "down chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-double-right": {
+      "name": "Double chevron right",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E044",
+      "puaCodepoint": "U+E044",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-double-right",
+      "spokenLabel": "double right chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-double-left": {
+      "name": "Double chevron left",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E045",
+      "puaCodepoint": "U+E045",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-double-left",
+      "spokenLabel": "double left chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-filled-right": {
+      "name": "Filled chevron right",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E046",
+      "puaCodepoint": "U+E046",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-filled-right",
+      "spokenLabel": "filled right chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "chevron-filled-left": {
+      "name": "Filled chevron left",
+      "family": "chevrons",
+      "char": "",
+      "codepoint": "U+E047",
+      "puaCodepoint": "U+E047",
+      "unicodeAliases": [],
+      "cssClass": "sm-chevron-filled-left",
+      "spokenLabel": "filled left chevron",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "status-check": {
+      "name": "Check",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E050",
+      "puaCodepoint": "U+E050",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-check",
+      "spokenLabel": "check mark",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-cross": {
+      "name": "Cross",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E051",
+      "puaCodepoint": "U+E051",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-cross",
+      "spokenLabel": "cross",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "dot-empty": {
+      "name": "Empty dot",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E052",
+      "puaCodepoint": "U+E052",
+      "unicodeAliases": [],
+      "cssClass": "sm-dot-empty",
+      "spokenLabel": "empty rating dot",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "dot-filled": {
+      "name": "Filled dot",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E053",
+      "puaCodepoint": "U+E053",
+      "unicodeAliases": [],
+      "cssClass": "sm-dot-filled",
+      "spokenLabel": "filled rating dot",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-check-heavy": {
+      "name": "Heavy check",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E054",
+      "puaCodepoint": "U+E054",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-check-heavy",
+      "spokenLabel": "heavy check mark",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-cross-heavy": {
+      "name": "Heavy cross",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E055",
+      "puaCodepoint": "U+E055",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-cross-heavy",
+      "spokenLabel": "heavy cross",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-minus": {
+      "name": "Minus",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E056",
+      "puaCodepoint": "U+E056",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-minus",
+      "spokenLabel": "minus",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-plus": {
+      "name": "Plus",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E057",
+      "puaCodepoint": "U+E057",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-plus",
+      "spokenLabel": "plus",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-question": {
+      "name": "Question",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E058",
+      "puaCodepoint": "U+E058",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-question",
+      "spokenLabel": "question mark",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "status-exclamation": {
+      "name": "Exclamation",
+      "family": "status",
+      "char": "",
+      "codepoint": "U+E059",
+      "puaCodepoint": "U+E059",
+      "unicodeAliases": [],
+      "cssClass": "sm-status-exclamation",
+      "spokenLabel": "exclamation mark",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "circle-check": {
+      "name": "Circle check",
+      "family": "status-circle",
+      "char": "",
+      "codepoint": "U+E05A",
+      "puaCodepoint": "U+E05A",
+      "unicodeAliases": [],
+      "cssClass": "sm-circle-check",
+      "spokenLabel": "check mark in circle",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "circle-cross": {
+      "name": "Circle cross",
+      "family": "status-circle",
+      "char": "",
+      "codepoint": "U+E05B",
+      "puaCodepoint": "U+E05B",
+      "unicodeAliases": [],
+      "cssClass": "sm-circle-cross",
+      "spokenLabel": "cross in circle",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "circle-minus": {
+      "name": "Circle minus",
+      "family": "status-circle",
+      "char": "",
+      "codepoint": "U+E05C",
+      "puaCodepoint": "U+E05C",
+      "unicodeAliases": [],
+      "cssClass": "sm-circle-minus",
+      "spokenLabel": "minus in circle",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "circle-question": {
+      "name": "Circle question",
+      "family": "status-circle",
+      "char": "",
+      "codepoint": "U+E05D",
+      "puaCodepoint": "U+E05D",
+      "unicodeAliases": [],
+      "cssClass": "sm-circle-question",
+      "spokenLabel": "question mark in circle",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "circle-exclamation": {
+      "name": "Circle exclamation",
+      "family": "status-circle",
+      "char": "",
+      "codepoint": "U+E05E",
+      "puaCodepoint": "U+E05E",
+      "unicodeAliases": [],
+      "cssClass": "sm-circle-exclamation",
+      "spokenLabel": "exclamation mark in circle",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "square-empty": {
+      "name": "Empty square",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E060",
+      "puaCodepoint": "U+E060",
+      "unicodeAliases": [],
+      "cssClass": "sm-square-empty",
+      "spokenLabel": "empty rating square",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "square-filled": {
+      "name": "Filled square",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E061",
+      "puaCodepoint": "U+E061",
+      "unicodeAliases": [],
+      "cssClass": "sm-square-filled",
+      "spokenLabel": "filled rating square",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "diamond-empty": {
+      "name": "Empty diamond",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E062",
+      "puaCodepoint": "U+E062",
+      "unicodeAliases": [],
+      "cssClass": "sm-diamond-empty",
+      "spokenLabel": "empty rating diamond",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "diamond-filled": {
+      "name": "Filled diamond",
+      "family": "rating",
+      "char": "",
+      "codepoint": "U+E063",
+      "puaCodepoint": "U+E063",
+      "unicodeAliases": [],
+      "cssClass": "sm-diamond-filled",
+      "spokenLabel": "filled rating diamond",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "rag-ring-dot": {
+      "name": "RAG ring with dot",
+      "family": "rag",
+      "char": "",
+      "codepoint": "U+E064",
+      "puaCodepoint": "U+E064",
+      "unicodeAliases": [],
+      "cssClass": "sm-rag-ring-dot",
+      "spokenLabel": "RAG ring with centre dot",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "rag-half": {
+      "name": "RAG half-filled",
+      "family": "rag",
+      "char": "",
+      "codepoint": "U+E065",
+      "puaCodepoint": "U+E065",
+      "unicodeAliases": [],
+      "cssClass": "sm-rag-half",
+      "spokenLabel": "RAG half-filled dot",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-up": {
+      "name": "Trend rising",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E070",
+      "puaCodepoint": "U+E070",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-up",
+      "spokenLabel": "rising trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-down": {
+      "name": "Trend falling",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E071",
+      "puaCodepoint": "U+E071",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-down",
+      "spokenLabel": "falling trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-flat": {
+      "name": "Trend flat",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E072",
+      "puaCodepoint": "U+E072",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-flat",
+      "spokenLabel": "flat trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-up-sharp": {
+      "name": "Trend sharply rising",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E073",
+      "puaCodepoint": "U+E073",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-up-sharp",
+      "spokenLabel": "sharply rising trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-down-sharp": {
+      "name": "Trend sharply falling",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E074",
+      "puaCodepoint": "U+E074",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-down-sharp",
+      "spokenLabel": "sharply falling trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "trend-oscillating": {
+      "name": "Trend oscillating",
+      "family": "trend",
+      "char": "",
+      "codepoint": "U+E075",
+      "puaCodepoint": "U+E075",
+      "unicodeAliases": [],
+      "cssClass": "sm-trend-oscillating",
+      "spokenLabel": "oscillating trend",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "priority-1": {
+      "name": "Priority 1",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E080",
+      "puaCodepoint": "U+E080",
+      "unicodeAliases": [],
+      "cssClass": "sm-priority-1",
+      "spokenLabel": "priority 1",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "priority-2": {
+      "name": "Priority 2",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E081",
+      "puaCodepoint": "U+E081",
+      "unicodeAliases": [],
+      "cssClass": "sm-priority-2",
+      "spokenLabel": "priority 2",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "priority-3": {
+      "name": "Priority 3",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E082",
+      "puaCodepoint": "U+E082",
+      "unicodeAliases": [],
+      "cssClass": "sm-priority-3",
+      "spokenLabel": "priority 3",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "flag": {
+      "name": "Flag",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E083",
+      "puaCodepoint": "U+E083",
+      "unicodeAliases": [],
+      "cssClass": "sm-flag",
+      "spokenLabel": "flag",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "star-outline": {
+      "name": "Star outline",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E084",
+      "puaCodepoint": "U+E084",
+      "unicodeAliases": [],
+      "cssClass": "sm-star-outline",
+      "spokenLabel": "empty star",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "star-filled": {
+      "name": "Star filled",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E085",
+      "puaCodepoint": "U+E085",
+      "unicodeAliases": [],
+      "cssClass": "sm-star-filled",
+      "spokenLabel": "filled star",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "bookmark": {
+      "name": "Bookmark",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E086",
+      "puaCodepoint": "U+E086",
+      "unicodeAliases": [],
+      "cssClass": "sm-bookmark",
+      "spokenLabel": "bookmark",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "pin": {
+      "name": "Pin",
+      "family": "priority",
+      "char": "",
+      "codepoint": "U+E087",
+      "puaCodepoint": "U+E087",
+      "unicodeAliases": [],
+      "cssClass": "sm-pin",
+      "spokenLabel": "pin",
+      "needsContext": true,
+      "status": "draft"
+    },
+    "compare-equals": {
+      "name": "Equals",
+      "family": "comparison",
+      "char": "=",
+      "codepoint": "U+003D",
+      "puaCodepoint": "U+E090",
+      "unicodeAliases": [
+        "U+003D"
+      ],
+      "cssClass": "sm-compare-equals",
+      "spokenLabel": "equals",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-not-equals": {
+      "name": "Not equals",
+      "family": "comparison",
+      "char": "≠",
+      "codepoint": "U+2260",
+      "puaCodepoint": "U+E091",
+      "unicodeAliases": [
+        "U+2260"
+      ],
+      "cssClass": "sm-compare-not-equals",
+      "spokenLabel": "not equal to",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-approx": {
+      "name": "Approximately",
+      "family": "comparison",
+      "char": "≈",
+      "codepoint": "U+2248",
+      "puaCodepoint": "U+E092",
+      "unicodeAliases": [
+        "U+2248"
+      ],
+      "cssClass": "sm-compare-approx",
+      "spokenLabel": "approximately equal to",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-greater": {
+      "name": "Greater than",
+      "family": "comparison",
+      "char": ">",
+      "codepoint": "U+003E",
+      "puaCodepoint": "U+E093",
+      "unicodeAliases": [
+        "U+003E"
+      ],
+      "cssClass": "sm-compare-greater",
+      "spokenLabel": "greater than",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-less": {
+      "name": "Less than",
+      "family": "comparison",
+      "char": "<",
+      "codepoint": "U+003C",
+      "puaCodepoint": "U+E094",
+      "unicodeAliases": [
+        "U+003C"
+      ],
+      "cssClass": "sm-compare-less",
+      "spokenLabel": "less than",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-greater-equal": {
+      "name": "Greater or equal",
+      "family": "comparison",
+      "char": "≥",
+      "codepoint": "U+2265",
+      "puaCodepoint": "U+E095",
+      "unicodeAliases": [
+        "U+2265"
+      ],
+      "cssClass": "sm-compare-greater-equal",
+      "spokenLabel": "greater than or equal to",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-less-equal": {
+      "name": "Less or equal",
+      "family": "comparison",
+      "char": "≤",
+      "codepoint": "U+2264",
+      "puaCodepoint": "U+E096",
+      "unicodeAliases": [
+        "U+2264"
+      ],
+      "cssClass": "sm-compare-less-equal",
+      "spokenLabel": "less than or equal to",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "compare-delta": {
+      "name": "Delta",
+      "family": "comparison",
+      "char": "",
+      "codepoint": "U+E097",
+      "puaCodepoint": "U+E097",
+      "unicodeAliases": [],
+      "cssClass": "sm-compare-delta",
+      "spokenLabel": "delta, change",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "node-process": {
+      "name": "Process",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A0",
+      "puaCodepoint": "U+E0A0",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-process",
+      "spokenLabel": "process box",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "node-rounded": {
+      "name": "Rounded process",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A1",
+      "puaCodepoint": "U+E0A1",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-rounded",
+      "spokenLabel": "rounded process box",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "node-decision": {
+      "name": "Decision",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A2",
+      "puaCodepoint": "U+E0A2",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-decision",
+      "spokenLabel": "decision diamond",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "node-terminator": {
+      "name": "Terminator",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A3",
+      "puaCodepoint": "U+E0A3",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-terminator",
+      "spokenLabel": "terminator",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "node-database": {
+      "name": "Database",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A4",
+      "puaCodepoint": "U+E0A4",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-database",
+      "spokenLabel": "database",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "node-connector": {
+      "name": "Connector",
+      "family": "workflow",
+      "char": "",
+      "codepoint": "U+E0A5",
+      "puaCodepoint": "U+E0A5",
+      "unicodeAliases": [],
+      "cssClass": "sm-node-connector",
+      "spokenLabel": "connector",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "marker-bullet-small": {
+      "name": "Bullet small",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B0",
+      "puaCodepoint": "U+E0B0",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-bullet-small",
+      "spokenLabel": "small bullet",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-bullet-medium": {
+      "name": "Bullet medium",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B1",
+      "puaCodepoint": "U+E0B1",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-bullet-medium",
+      "spokenLabel": "medium bullet",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-bullet-large": {
+      "name": "Bullet large",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B2",
+      "puaCodepoint": "U+E0B2",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-bullet-large",
+      "spokenLabel": "large bullet",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-bullet-open": {
+      "name": "Open bullet",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B3",
+      "puaCodepoint": "U+E0B3",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-bullet-open",
+      "spokenLabel": "open bullet",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-dash": {
+      "name": "Dash",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B4",
+      "puaCodepoint": "U+E0B4",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-dash",
+      "spokenLabel": "dash",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-separator-vertical": {
+      "name": "Vertical separator",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B5",
+      "puaCodepoint": "U+E0B5",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-separator-vertical",
+      "spokenLabel": "vertical separator",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "marker-separator-horizontal": {
+      "name": "Horizontal separator",
+      "family": "markers",
+      "char": "",
+      "codepoint": "U+E0B6",
+      "puaCodepoint": "U+E0B6",
+      "unicodeAliases": [],
+      "cssClass": "sm-marker-separator-horizontal",
+      "spokenLabel": "horizontal separator",
+      "needsContext": false,
+      "status": "draft"
+    },
+    "user": {
+      "name": "User",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0B8",
+      "puaCodepoint": "U+E0B8",
+      "unicodeAliases": [],
+      "cssClass": "sm-user",
+      "spokenLabel": "user",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "users": {
+      "name": "Users",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0B9",
+      "puaCodepoint": "U+E0B9",
+      "unicodeAliases": [],
+      "cssClass": "sm-users",
+      "spokenLabel": "users",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "lock": {
+      "name": "Lock",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BA",
+      "puaCodepoint": "U+E0BA",
+      "unicodeAliases": [],
+      "cssClass": "sm-lock",
+      "spokenLabel": "lock",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "unlock": {
+      "name": "Unlock",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BB",
+      "puaCodepoint": "U+E0BB",
+      "unicodeAliases": [],
+      "cssClass": "sm-unlock",
+      "spokenLabel": "unlock",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "clock": {
+      "name": "Clock",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BC",
+      "puaCodepoint": "U+E0BC",
+      "unicodeAliases": [],
+      "cssClass": "sm-clock",
+      "spokenLabel": "clock",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "calendar": {
+      "name": "Calendar",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BD",
+      "puaCodepoint": "U+E0BD",
+      "unicodeAliases": [],
+      "cssClass": "sm-calendar",
+      "spokenLabel": "calendar",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "link": {
+      "name": "Link",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BE",
+      "puaCodepoint": "U+E0BE",
+      "unicodeAliases": [],
+      "cssClass": "sm-link",
+      "spokenLabel": "link",
+      "needsContext": false,
+      "status": "candidate"
+    },
+    "unlink": {
+      "name": "Unlink",
+      "family": "ownership",
+      "char": "",
+      "codepoint": "U+E0BF",
+      "puaCodepoint": "U+E0BF",
+      "unicodeAliases": [],
+      "cssClass": "sm-unlink",
+      "spokenLabel": "unlink",
+      "needsContext": false,
+      "status": "candidate"
+    }
+  }
+}

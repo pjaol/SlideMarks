@@ -96,7 +96,7 @@ def build_font(tokens, manifest, out_dir: Path) -> dict:
     fb.save(str(ttf_path))
 
     woff2_path = out_dir / "web" / f"{FAMILY}-{STYLE}.woff2"
-    font = TTFont(str(ttf_path))
+    font = TTFont(str(ttf_path), recalcTimestamp=False)  # keep the fixed timestamp so WOFF2 is reproducible too
     font.flavor = "woff2"
     font.save(str(woff2_path))
 

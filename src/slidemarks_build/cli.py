@@ -28,6 +28,8 @@ def build(args) -> int:
     out = build_font(tokens, manifest, dist)
     records = measure(out["ttf"], tokens, manifest)
     web.render_css(manifest, dist / "web" / "slidemarks.css")
+    web.render_json(manifest, dist / "web" / "slidemarks.json")
+    web.render_example(manifest, dist / "web" / "example.html")
     reference.render(tokens, manifest, out["svg_paths"], ROOT / "docs")
     screen_readers.render(manifest, dist / "screen-readers")
 
@@ -39,7 +41,7 @@ def build(args) -> int:
 
     findings = [(r["id"], f) for r in records for f in r["findings"]]
     print(f"built {len(records)} glyphs → {out['ttf'].relative_to(ROOT)}, {out['woff2'].relative_to(ROOT)}")
-    print("web → dist/web/slidemarks.css · reference → docs/glyphs.md, docs/preview.svg")
+    print("web → dist/web/ (slidemarks.css, slidemarks.json, example.html) · reference → docs/glyphs.md, docs/preview.svg")
     print("screen readers → dist/screen-readers/ (VoiceOver, NVDA, JAWS)")
     print("review → review/specimen.html, review/specimen.pptx, review/specimen.docx")
     for gid, f in findings:

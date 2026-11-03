@@ -82,7 +82,29 @@ Glyph classes are **decorative by default**. The generated CSS gives each glyph 
 <span class="slidemarks sm-harvey-75" role="img" aria-label="Harvey ball 75 percent"></span>
 ```
 
-Don't rely on CSS generated content for meaning: some browser and screen-reader combinations don't expose it. And don't put `aria-label` on a plain `<span>` without `role="img"`, because ARIA ignores labels on generic elements. The manifest's `spokenLabel` (also in the glyph reference) is a sensible default name.
+Don't rely on CSS generated content for meaning: some browser and screen-reader combinations don't expose it. And don't put `aria-label` on a plain `<span>` without `role="img"`, because ARIA ignores labels on generic elements.
+
+**Labels as data.** `dist/web/slidemarks.json` lists every symbol by id with:
+- `char` (the preferred character);
+- `codepoint`, `puaCodepoint` and `unicodeAliases`;
+- `cssClass`;
+- `spokenLabel` (use it as the `aria-label`);
+- `needsContext`.
+
+Read labels from there instead of copying them by hand. `dist/web/example.html` shows the patterns above working, including a table with real header cells.
+
+**Users who override fonts.** Some readability tools and dyslexia extensions force one font on every page. User style sheets beat the `!important` in `slidemarks.css`, so SlideMarks glyphs then show as empty boxes or system symbols. This affects every icon font and can't be fixed in CSS. Where a symbol must always be visible, use the generated SVG instead, with a text alternative:
+
+```html
+<img src="svg/harvey-75.svg" alt="Harvey ball 75 percent" width="20" height="20">
+```
+
+Symbols already paired with visible text (pattern 1) still read correctly when the glyph is lost.
+
+**Contrast and color.**
+- Meaningful symbols need at least **3:1** contrast against their background (WCAG 1.4.11 Non-text Contrast). Check the lightest glyphs most carefully at small sizes: the **thin arrows** and the **empty progress segments** use the 36-unit thin stroke, and the **separators** are thin by design.
+- Color must never be the only signal (WCAG 1.4.1 Use of Color). A red and a green dot are the same glyph to a color-blind reader. The RAG family uses distinct shapes (ring, ring with dot, half, full) for this reason. Use shape or text, not tint alone.
+- Glyphs are text, so they follow the user's text color in high-contrast modes, such as Windows contrast themes and forced colors. Test this in your own pages; no extra CSS is needed for the glyph itself.
 
 ## Pronunciation packs
 
@@ -129,6 +151,21 @@ Use the **Encoding test** table in `review/specimen.pptx` / `.docx`. Each row sh
 4. Repeat for the **Accessible scorecard** to confirm the visible text is read with each cell.
 
 Priority environments: VoiceOver with PowerPoint and Word on macOS; NVDA and Narrator with PowerPoint and Word on Windows; then JAWS.
+
+**Web:** open `dist/web/example.html` from a local server (e.g. `python3 -m http.server` in `dist/web`). Check that:
+- decorative glyphs are silent;
+- named glyphs are announced by their label ("Harvey ball 75 percent");
+- table cells are read with their headers.
+
+Test VoiceOver with Safari 17.4+, NVDA with Firefox 128+ and Chrome, and Narrator with Edge.
+
+**Automated (every `uv run pytest`):** `tests/test_web_a11y.py` drives Chrome through [agent-browser](https://github.com/vercel-labs/agent-browser), the tool already used for visual review. It checks every glyph:
+- class-only glyphs put no private-use characters and no names into the accessibility tree;
+- every `role="img"` glyph is exposed with exactly its `spokenLabel`;
+- the example table cells carry their text and headers;
+- the example page passes an axe-core audit (agent-browser's built-in `a11y` command).
+
+This covers Chrome's accessibility tree, not what a screen reader actually says. The manual tests above are still needed. The tests skip where agent-browser isn't installed.
 
 ## Test results
 

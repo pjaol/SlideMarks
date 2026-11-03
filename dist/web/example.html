@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlideMarks 0.1.0 · accessible usage examples</title>
+<link rel="stylesheet" href="slidemarks.css">
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 52rem; margin: 2rem auto; padding: 0 1rem; color: #1f2328; }
+  code, pre { font: 13px ui-monospace, Menlo, monospace; }
+  pre { background: #f6f8fa; padding: .75rem; overflow-x: auto; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #d0d7de; padding: .4rem .8rem; text-align: left; }
+  .demo { font-size: 1.5rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>SlideMarks: accessible usage</h1>
+<p>Generated from <code>source/symbols.json</code>. Labels come from <code>slidemarks.json</code> (<code>spokenLabel</code>). See <code>docs/accessibility.md</code> for the reasoning.</p>
+
+<h2>1. Decorative: the text carries the meaning</h2>
+<p class="demo"><span class="slidemarks sm-harvey-75" aria-hidden="true"></span> 75% complete</p>
+<pre>&lt;span class="slidemarks sm-harvey-75" aria-hidden="true"&gt;&lt;/span&gt; 75% complete</pre>
+
+<h2>2. Meaningful on its own: role and name</h2>
+<p class="demo"><span class="slidemarks sm-harvey-75" role="img" aria-label="Harvey ball 75 percent"></span></p>
+<pre>&lt;span class=&quot;slidemarks sm-harvey-75&quot; role=&quot;img&quot; aria-label=&quot;Harvey ball 75 percent&quot;&gt;&lt;/span&gt;</pre>
+<p>Put <code>role="img"</code> on the element. <code>aria-label</code> on a plain <code>span</code> without a role is ignored.</p>
+
+<h2>3. Tables: symbol plus visible value, real header cells</h2>
+<table>
+  <caption>Capability scorecard</caption>
+  <thead><tr><th scope="col">Capability</th><th scope="col">Coverage</th><th scope="col">Supported</th><th scope="col">Trend</th></tr></thead>
+  <tbody>
+      <tr><th scope="row">Offline use</th><td><span class="slidemarks sm-harvey-75" aria-hidden="true"></span> 75%</td><td><span class="slidemarks sm-status-check" aria-hidden="true"></span> Yes</td><td><span class="slidemarks sm-trend-up" role="img" aria-label="rising trend"></span></td></tr>
+      <tr><th scope="row">Font embedding</th><td><span class="slidemarks sm-harvey-50" aria-hidden="true"></span> 50%</td><td><span class="slidemarks sm-status-check" aria-hidden="true"></span> Yes</td><td><span class="slidemarks sm-trend-flat" role="img" aria-label="flat trend"></span></td></tr>
+      <tr><th scope="row">Web support</th><td><span class="slidemarks sm-harvey-25" aria-hidden="true"></span> 25%</td><td><span class="slidemarks sm-status-cross" aria-hidden="true"></span> No</td><td><span class="slidemarks sm-trend-up" role="img" aria-label="rising trend"></span></td></tr>
+  </tbody>
+</table>
+<p>Coverage and Supported pair a decorative symbol with visible text. Trend has no visible text, so each symbol is named.</p>
+
+<h2>4. Contrast and color</h2>
+<p>Meaningful symbols need at least 3:1 contrast with their background (WCAG 1.4.11), and color must never be the only signal (WCAG 1.4.1). Use the shape (e.g. RAG ring, dot, half) or text, not red and green alone.</p>
+</main>
+</body>
+</html>

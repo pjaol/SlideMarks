@@ -19,7 +19,7 @@ Download the repository (**Code → Download ZIP**). The files you need are in t
 | File | Use it for |
 |---|---|
 | `dist/fonts/SlideMarks-Regular.ttf` | Installing on Windows, macOS or Linux |
-| `dist/web/` | Websites: `SlideMarks-Regular.woff2` + `slidemarks.css` |
+| `dist/web/` | Websites: `SlideMarks-Regular.woff2`, `slidemarks.css`, `slidemarks.json` (symbol data and labels), `example.html` |
 | `dist/svg/` | One SVG per glyph, for design tools |
 | `dist/screen-readers/` | Optional pronunciation packs for VoiceOver, NVDA and JAWS |
 
@@ -80,7 +80,12 @@ Copy `dist/web/` into your site and include the stylesheet:
 <span class="slidemarks sm-harvey-75" role="img" aria-label="Harvey ball 75 percent"></span>
 ```
 
-Every glyph has a class `sm-<id>`; the ids and default spoken labels are listed in the [glyph reference](docs/glyphs.md). Glyph classes are decorative by default; see [accessibility](docs/accessibility.md#web). The font is self-hosted, so the site makes no third-party requests.
+Every glyph has a class `sm-<id>`. Glyph classes are decorative by default.
+- `dist/web/slidemarks.json` lists every symbol with its character, code points, CSS class and spoken label, so you can label symbols from data.
+- `dist/web/example.html` shows the accessible patterns working.
+- See [accessibility](docs/accessibility.md#web) for font overrides, contrast and color.
+
+The font is self-hosted, so the site makes no third-party requests.
 
 ## Limitations
 

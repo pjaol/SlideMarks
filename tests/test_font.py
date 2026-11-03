@@ -36,6 +36,7 @@ def test_aliases_add_no_glyphs(built, manifest):
 def test_build_is_reproducible(tokens, manifest, built, tmp_path):
     again = build_font(tokens, manifest, tmp_path)
     assert again["ttf"].read_bytes() == built["ttf"].read_bytes()
+    assert again["woff2"].read_bytes() == built["woff2"].read_bytes()
 
 
 def test_no_consistency_findings(built, tokens, manifest):

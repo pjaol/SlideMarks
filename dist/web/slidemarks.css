@@ -13,7 +13,6 @@
   font-weight: 400;
   font-variant-ligatures: none;
   line-height: 1;
-  speak: never;
 }
 
 .sm-harvey-0::before { content: "\E000"; content: "\E000" / ""; }

@@ -10,14 +10,14 @@ Background reading:
 
 ## Setup
 
-Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/).
+Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/). The browser accessibility tests also use [agent-browser](https://github.com/vercel-labs/agent-browser) if it's installed, and skip otherwise.
 
 ```sh
 uv sync
 uv run slidemarks build            # compile the font and regenerate everything below
 uv run slidemarks build --strict   # also fail if there are any consistency findings
 uv run slidemarks package          # build, then write dist/SlideMarks-<version>.zip
-uv run pytest                      # manifest, alias, font, CSS and screen-reader pack tests
+uv run pytest                      # manifest, alias, font, CSS, screen-reader pack and browser a11y tests
 uv run slidemarks voiceover-merge <export.voprefs>   # add SlideMarks pronunciations to a VoiceOver export
 ```
 
@@ -26,7 +26,7 @@ uv run slidemarks voiceover-merge <export.voprefs>   # add SlideMarks pronunciat
 | Output | Audience | Notes |
 |---|---|---|
 | `dist/fonts/SlideMarks-Regular.ttf` | users | Desktop font |
-| `dist/web/SlideMarks-Regular.woff2`, `slidemarks.css` | users | Web font plus generated `sm-<id>` classes |
+| `dist/web/SlideMarks-Regular.woff2`, `slidemarks.css`, `slidemarks.json`, `example.html` | users | Web font, decorative `sm-<id>` classes, symbol data with spoken labels, accessible usage examples |
 | `dist/svg/*.svg` | users | Plain black glyph outlines for design tools |
 | `docs/glyphs.md`, `docs/glyphs/*.svg`, `docs/preview.svg` | users | Generated glyph reference and README image |
 | `dist/screen-readers/` | users | VoiceOver archive, NVDA add-on and JAWS symbol lines mapping each code point to its `spokenLabel` |
