@@ -1,0 +1,84 @@
+{
+  "$comment": "Font-unit metrics, y-up, baseline y=0. Every glyph is built from these values; change here, rebuild, review.",
+  "unitsPerEm": 1000,
+  "ascender": 800,
+  "descender": -200,
+  "advanceWidth": 1000,
+  "frame": {
+    "xMin": 170,
+    "xMax": 830,
+    "yMin": 90,
+    "yMax": 750
+  },
+  "center": {
+    "x": 500,
+    "y": 420
+  },
+  "stroke": {
+    "regular": 56
+  },
+  "harvey": {
+    "diameter": 660,
+    "wedgeGap": 0
+  },
+  "dot": {
+    "diameter": 440
+  },
+  "check": {
+    "points": [
+      [
+        205,
+        425
+      ],
+      [
+        405,
+        225
+      ],
+      [
+        795,
+        615
+      ]
+    ],
+    "$comment": "centerline points; ink extends stroke/2 beyond"
+  },
+  "cross": {
+    "halfSpan": 250
+  },
+  "arrow": {
+    "halfLength": 330,
+    "headLength": 225,
+    "headAngleDeg": 45,
+    "$comment": "halfLength is the ink extent from center, caps included"
+  },
+  "trend": {
+    "rising": [
+      [
+        200,
+        235
+      ],
+      [
+        400,
+        435
+      ],
+      [
+        530,
+        335
+      ],
+      [
+        800,
+        605
+      ]
+    ],
+    "headLength": 190,
+    "$comment": "centerline points; falling is the vertical mirror about center.y"
+  },
+  "fsType": 0,
+  "geometryGroups": {
+    "$comment": "identical-bounds: members share an exact ink box. same-footprint: members share box dimensions in any orientation (rotations/mirrors). optical: judged visually in the review sheet only.",
+    "harvey-circle": "identical-bounds",
+    "status-dot": "identical-bounds",
+    "arrow-cardinal": "same-footprint",
+    "trend-line": "same-footprint",
+    "status-mark": "optical"
+  }
+}

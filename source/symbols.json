@@ -1,0 +1,23 @@
+{
+  "manifestVersion": "0.0.1",
+  "symbols": [
+    {"id": "harvey-0",   "codepoint": "E000", "name": "Harvey ball 0%",   "category": "harvey", "tags": ["rating", "empty", "none", "0 percent"],     "builder": "harvey", "params": {"fraction": 0.0},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
+    {"id": "harvey-25",  "codepoint": "E001", "name": "Harvey ball 25%",  "category": "harvey", "tags": ["rating", "quarter", "25 percent"],          "builder": "harvey", "params": {"fraction": 0.25}, "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
+    {"id": "harvey-50",  "codepoint": "E002", "name": "Harvey ball 50%",  "category": "harvey", "tags": ["rating", "half", "50 percent"],             "builder": "harvey", "params": {"fraction": 0.5},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
+    {"id": "harvey-75",  "codepoint": "E003", "name": "Harvey ball 75%",  "category": "harvey", "tags": ["rating", "three quarters", "75 percent"],   "builder": "harvey", "params": {"fraction": 0.75}, "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
+    {"id": "harvey-100", "codepoint": "E004", "name": "Harvey ball 100%", "category": "harvey", "tags": ["rating", "full", "complete", "100 percent"], "builder": "harvey", "params": {"fraction": 1.0},  "geometryGroup": "harvey-circle", "status": "draft", "introduced": "0.0.1"},
+
+    {"id": "arrow-left",  "codepoint": "E020", "name": "Arrow left",  "category": "arrows", "tags": ["direction", "back", "west"],  "builder": "arrow", "params": {"rotateDeg": 180}, "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
+    {"id": "arrow-right", "codepoint": "E021", "name": "Arrow right", "category": "arrows", "tags": ["direction", "next", "east"],  "builder": "arrow", "params": {"rotateDeg": 0},   "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
+    {"id": "arrow-up",    "codepoint": "E022", "name": "Arrow up",    "category": "arrows", "tags": ["direction", "increase", "north"], "builder": "arrow", "params": {"rotateDeg": 90},  "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
+    {"id": "arrow-down",  "codepoint": "E023", "name": "Arrow down",  "category": "arrows", "tags": ["direction", "decrease", "south"], "builder": "arrow", "params": {"rotateDeg": 270}, "geometryGroup": "arrow-cardinal", "status": "draft", "introduced": "0.0.1"},
+
+    {"id": "status-check",  "codepoint": "E050", "name": "Check",        "category": "status", "tags": ["yes", "done", "pass", "tick"],     "builder": "check",  "params": {}, "geometryGroup": "status-mark", "status": "draft", "introduced": "0.0.1"},
+    {"id": "status-cross",  "codepoint": "E051", "name": "Cross",        "category": "status", "tags": ["no", "fail", "x", "reject"],       "builder": "cross",  "params": {}, "geometryGroup": "status-mark", "status": "draft", "introduced": "0.0.1"},
+    {"id": "dot-empty",     "codepoint": "E052", "name": "Empty circle", "category": "status", "tags": ["rating", "dot", "off", "open"],    "builder": "dot",    "params": {"filled": false}, "geometryGroup": "status-dot", "status": "draft", "introduced": "0.0.1"},
+    {"id": "dot-filled",    "codepoint": "E053", "name": "Filled circle","category": "status", "tags": ["rating", "dot", "on", "bullet"],   "builder": "dot",    "params": {"filled": true},  "geometryGroup": "status-dot", "status": "draft", "introduced": "0.0.1"},
+
+    {"id": "trend-up",   "codepoint": "E070", "name": "Trend rising",  "category": "trend", "tags": ["growth", "increase", "chart"], "builder": "trend", "params": {"direction": "up"},   "geometryGroup": "trend-line", "status": "draft", "introduced": "0.0.1"},
+    {"id": "trend-down", "codepoint": "E071", "name": "Trend falling", "category": "trend", "tags": ["decline", "decrease", "chart"], "builder": "trend", "params": {"direction": "down"}, "geometryGroup": "trend-line", "status": "draft", "introduced": "0.0.1"}
+  ]
+}
