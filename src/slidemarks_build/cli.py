@@ -1,4 +1,5 @@
-"""`slidemarks build` compiles the font and regenerates both review specimens."""
+"""`slidemarks build` compiles the font, web package, glyph reference and review
+specimens; `slidemarks package` also writes the release zip."""
 
 import argparse
 import json
@@ -6,7 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from . import specimen_docx, specimen_html, specimen_pptx
+from . import package, reference, specimen_docx, specimen_html, specimen_pptx, web
 from .font import build_font
 from .manifest import validate
 from .metrics import measure
@@ -26,6 +27,8 @@ def build(args) -> int:
     dist = ROOT / "dist"
     out = build_font(tokens, manifest, dist)
     records = measure(out["ttf"], tokens, manifest)
+    web.render_css(manifest, dist / "web" / "slidemarks.css")
+    reference.render(tokens, manifest, out["svg_paths"], ROOT / "docs")
 
     review = ROOT / "review"
     info = {"built": datetime.now().strftime("%Y-%m-%d %H:%M")}
@@ -35,11 +38,21 @@ def build(args) -> int:
 
     findings = [(r["id"], f) for r in records for f in r["findings"]]
     print(f"built {len(records)} glyphs → {out['ttf'].relative_to(ROOT)}, {out['woff2'].relative_to(ROOT)}")
+    print("web → dist/web/slidemarks.css · reference → docs/glyphs.md, docs/preview.svg")
     print("review → review/specimen.html, review/specimen.pptx, review/specimen.docx")
     for gid, f in findings:
         print(f"  ! {gid}: {f}")
     print(f"{len(findings)} consistency findings")
     return 1 if (findings and args.strict) else 0
+
+
+def package_cmd(args) -> int:
+    status = build(args)
+    if status:
+        return status
+    manifest = json.loads((ROOT / "source/symbols.json").read_text())
+    print(f"package → {package.build_zip(ROOT, manifest).relative_to(ROOT)}")
+    return 0
 
 
 def main():
@@ -48,5 +61,8 @@ def main():
     b = sub.add_parser("build", help="compile font and regenerate review specimens")
     b.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
     b.set_defaults(func=build)
+    p = sub.add_parser("package", help="build, then write the release zip to dist/")
+    p.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
+    p.set_defaults(func=package_cmd)
     args = parser.parse_args()
     sys.exit(args.func(args))

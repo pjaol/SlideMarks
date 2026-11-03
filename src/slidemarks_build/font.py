@@ -89,10 +89,12 @@ def build_font(tokens, manifest, out_dir: Path) -> dict:
     )
     fb.setupPost(keepGlyphNames=True)
 
-    ttf_path = out_dir / f"{FAMILY}-{STYLE}.ttf"
+    (out_dir / "fonts").mkdir(exist_ok=True)
+    (out_dir / "web").mkdir(exist_ok=True)
+    ttf_path = out_dir / "fonts" / f"{FAMILY}-{STYLE}.ttf"
     fb.save(str(ttf_path))
 
-    woff2_path = out_dir / f"{FAMILY}-{STYLE}.woff2"
+    woff2_path = out_dir / "web" / f"{FAMILY}-{STYLE}.woff2"
     font = TTFont(str(ttf_path))
     font.flavor = "woff2"
     font.save(str(woff2_path))

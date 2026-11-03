@@ -1,33 +1,88 @@
 # SlideMarks
 
-A presentation symbol font (122 glyphs across 17 families: Harvey balls, arrows, status marks, trends, comparisons and more) that behaves like text in Word and PowerPoint table cells. See `SlideMarks_Requirements_v0.1.md` for the full spec, `docs/design-goals.md` for the design principles, and `docs/design-system.md` for metrics, decisions and code point blocks.
+**Presentation symbols that behave like text.** Harvey balls, arrows, checks, ratings, trends and more for PowerPoint and Word tables. You can type, paste, resize, recolor and align them like any other character.
 
-## Build and review
+![All SlideMarks glyphs](docs/preview.svg)
 
-```sh
-uv run slidemarks build          # compile font + regenerate review specimens
-uv run slidemarks build --strict # fail if any consistency finding
+- **One consistent family.** Every Harvey ball has the same size, every arrow the same head, and every glyph the same stroke weight and center. Symbols line up in table cells without per-cell nudging.
+- **It's a font.** Change size and color with the normal text controls. Unfilled areas are transparent, so the cell background shows through.
+- **Works offline.** No account, add-in or internet connection needed.
+
+122 glyphs in 17 families. See the **[glyph reference](docs/glyphs.md)** for every symbol with its code point.
+
+> **Status:** pre-release (v0.1.0). Glyphs marked *candidate* in the reference may change or be removed before 1.0; all others keep their code points.
+
+## Download
+
+Download the repository (**Code → Download ZIP**). The files you need are in the `dist/` folder:
+
+| File | Use it for |
+|---|---|
+| `dist/fonts/SlideMarks-Regular.ttf` | Installing on Windows, macOS or Linux |
+| `dist/web/` | Websites: `SlideMarks-Regular.woff2` + `slidemarks.css` |
+| `dist/svg/` | One SVG per glyph, for design tools |
+
+## Install the font
+
+- **Windows:** right-click `SlideMarks-Regular.ttf` → **Install** (or **Install for all users**). Restart PowerPoint or Word.
+- **macOS:** double-click `SlideMarks-Regular.ttf` → **Install Font**. Restart PowerPoint or Word.
+- **Linux:** copy the file to `~/.local/share/fonts/` and run `fc-cache -f`.
+
+## Use it in PowerPoint and Word
+
+### Typing a symbol
+
+SlideMarks symbols live in the Unicode Private Use Area. **They only appear as the right shapes when the text is set to the SlideMarks font.**
+
+- **Insert → Symbol** (Windows: **Symbol → More Symbols**; Mac: **Advanced Symbol**). Choose **SlideMarks** as the font, then pick the glyph. Works in PowerPoint and Word on Windows and Mac.
+- **Word on Windows:** type the code point from the [glyph reference](docs/glyphs.md) (e.g. `E002`), then press **Alt+X**. Set the character's font to SlideMarks.
+- **Copy and paste** works too. If the pasted character shows as an empty box, set its font to SlideMarks.
+
+### Tables
+
+The easiest workflow: select the table cells or columns that will hold symbols and set their font to **SlideMarks** *first*. Anything you insert or paste there then shows correctly. Use the normal alignment buttons; the glyphs are designed to center in a cell.
+
+### Size and color
+
+Change them exactly as you would for text. The whole glyph takes the text color, and the unfilled parts (such as the empty part of a Harvey ball) stay transparent.
+
+## Sharing documents
+
+People who open your file need the font too. Either they install it, or you **embed it in the file**:
+
+- **Windows:** **File → Options → Save → Embed fonts in the file**, and choose **Embed all characters** so recipients can edit.
+- **Mac:** **PowerPoint / Word → Preferences → Save → Embed fonts in the file**.
+
+Embedding has been tested in PowerPoint and Word on Mac and Windows. PowerPoint for Mac drops embedded fonts when it re-saves a file unless that setting is on.
+
+If a recipient sees **empty boxes**, the font is missing. That's expected behavior for a symbol font: the box means "install or embed SlideMarks", not a different symbol.
+
+## Use it on a website
+
+Copy `dist/web/` into your site and include the stylesheet:
+
+```html
+<link rel="stylesheet" href="web/slidemarks.css">
+
+<!-- by class -->
+<span class="slidemarks sm-harvey-75" aria-hidden="true"></span>
+
+<!-- or by character -->
+<span class="slidemarks" aria-hidden="true">&#xE003;</span> 75% complete
 ```
 
-Outputs:
+Every glyph has a class `sm-<id>`; the ids are listed in the [glyph reference](docs/glyphs.md). The font is self-hosted, so the site makes no third-party requests. If a symbol carries meaning, give it a real text label (as above) rather than relying on the glyph alone.
 
-| Path | What |
-|---|---|
-| `dist/SlideMarks-Regular.ttf` / `.woff2` | The font |
-| `dist/svg/*.svg` | Per-glyph SVG generated from the same geometry |
-| `review/specimen.html` | Review sheet: families with guides, onion skin, size ladder, tables, source-vs-font, measurements. Opens offline. |
-| `review/specimen.pptx` | Same checks in real PowerPoint tables. The font is embedded (uncompressed EOT in `ppt/fonts/font1.fntdata`), so no install is needed. Verified in PowerPoint for Mac and Windows without the font installed, 2026-11-03. |
-| `review/specimen.docx` | The same families, scorecards and size ladder in Word. The font is embedded as an obfuscated `.odttf` (ECMA-376 §17.8.1). Verified in Word for Mac and Windows without the font installed, 2026-11-03. |
+## Limitations
 
-## Where things live
+- **Google Slides** and the **web versions of Office** may not use the embedded font and can show empty boxes instead.
+- Copy and paste carries the *character*, not the font. Set the destination to SlideMarks.
+- Office add-ins for one-click insertion are planned but not available yet.
 
-- `source/design-tokens.json`: every dimension (frame, center, stroke, family parameters). Change here to restyle a family.
-- `source/symbols.json`: immutable ids, PUA code points, names, tags, and which builder draws each glyph.
-- `src/slidemarks_build/glyphs.py`: one builder per family (see `docs/adr/0001-parametric-glyph-source.md`).
+## License
 
-## Adding a glyph
+Not yet decided. Please don't redistribute until a license is published here.
 
-1. Add an entry to `source/symbols.json`, with a new code point in its family's block. Never reuse a code point.
-2. Use an existing builder with new params, or add a builder to `glyphs.py` driven by tokens.
-3. Run `uv run slidemarks build`, open `review/specimen.html`, pick the family in the **Family** filter, and check the onion skin and size ladder.
-4. If a glyph must leave the frame, add a `frameException` with the reason. Don't loosen the check.
+## Contributing
+
+Building the font, the design review workflow and adding glyphs are covered in **[CONTRIBUTING.md](CONTRIBUTING.md)**.
