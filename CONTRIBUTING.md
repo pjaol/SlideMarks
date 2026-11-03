@@ -19,6 +19,7 @@ uv run slidemarks build --strict   # also fail if there are any consistency find
 uv run slidemarks package          # build, then write dist/SlideMarks-<version>.zip
 uv run pytest                      # manifest, alias, font, CSS, screen-reader pack and browser a11y tests
 uv run slidemarks voiceover-merge <export.voprefs>   # add SlideMarks pronunciations to a VoiceOver export
+uv run slidemarks check <file.pptx|file.docx>        # lint a document for SlideMarks accessibility problems
 ```
 
 ## What a build produces
@@ -53,6 +54,7 @@ src/slidemarks_build/
   office_fonts.py      EOT (PowerPoint) and obfuscated ODTTF (Word) embedding
   specimen_*.py        review sheets (HTML, PPTX, DOCX)
   web.py, reference.py, package.py, screen_readers.py   user-facing outputs
+  check.py             `slidemarks check` document linter
 tests/                 pytest suite
 docs/                  design docs, ADRs, accessibility, generated glyph reference
 review/                generated review specimens

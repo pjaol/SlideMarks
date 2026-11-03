@@ -61,6 +61,11 @@ def _cell(cell, text, typeface, size_pt, align=WD_ALIGN_PARAGRAPH.CENTER, color=
         _shade(cell, fill)
 
 
+def _mark_header_row(table):
+    """Mark the first row as a header so screen readers announce column headers."""
+    table.rows[0]._tr.get_or_add_trPr().append(parse_xml(f'<w:tblHeader {nsdecls("w")}/>'))
+
+
 def _heading(doc, text, sub=None):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(18)
@@ -106,6 +111,7 @@ def render(manifest, ttf_path: Path, out_path: Path):
                  "Typical usage: no per-cell adjustment.")
         t = doc.add_table(rows=len(SCORECARD_ROWS) + 1, cols=len(SCORECARD_HEADER), style="Table Grid")
         t.alignment = WD_TABLE_ALIGNMENT.CENTER
+        _mark_header_row(t)
         fg, bg = (LIGHT, DARK) if dark else (None, None)
         for c, h in enumerate(SCORECARD_HEADER):
             _cell(t.cell(0, c), h, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT if c == 0 else WD_ALIGN_PARAGRAPH.CENTER,
@@ -122,6 +128,7 @@ def render(manifest, ttf_path: Path, out_path: Path):
              "Each symbol is paired with visible text in the same cell. Screen readers read the text; the glyph adds the visual.")
     t = doc.add_table(rows=len(SCORECARD_ROWS) + 1, cols=len(SCORECARD_HEADER), style="Table Grid")
     t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    _mark_header_row(t)
     for c, h in enumerate(SCORECARD_HEADER):
         _cell(t.cell(0, c), h, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT if c == 0 else WD_ALIGN_PARAGRAPH.CENTER, bold=True)
     for r, (label, *ids) in enumerate(SCORECARD_ROWS, start=1):
@@ -136,6 +143,7 @@ def render(manifest, ttf_path: Path, out_path: Path):
              "Both glyph columns use SlideMarks and must look identical. Read each row with a screen reader and record what it says.")
     pairs = alias_rows(manifest)
     t = doc.add_table(rows=len(pairs) + 1, cols=4, style="Table Grid")
+    _mark_header_row(t)
     for c, h in enumerate(("Glyph", "PUA", "Standard", "Unicode name of the standard character")):
         _cell(t.cell(0, c), h, TEXT_FONT, 11, align=WD_ALIGN_PARAGRAPH.LEFT if c in (0, 3) else WD_ALIGN_PARAGRAPH.CENTER, bold=True)
     for r, (sym, pua, alias, uname) in enumerate(pairs, start=1):

@@ -64,6 +64,28 @@ What doesn't work:
 - **Hidden text** is generally skipped by screen readers.
 - **Glyph names inside the font** are never read.
 
+### Checking a document
+
+`slidemarks check` lints PowerPoint and Word files for these problems:
+
+```sh
+uv run slidemarks check deck.pptx report.docx     # human-readable; exit code 1 if any errors
+uv run slidemarks check deck.pptx --json          # machine-readable
+```
+
+| Rule | Severity | Meaning |
+|---|---|---|
+| `silent-symbol` | error | A table cell or paragraph contains only SlideMarks private-use symbols, so a screen reader reads nothing. Add visible text |
+| `font-not-applied` | error | A SlideMarks character is in a run explicitly set to another font, so it shows as an empty box |
+| `prefer-standard` | warning | A private-use arrow or comparison sign where the standard character would be announced by name |
+| `no-header-row` | warning | A table using SlideMarks has no header row, so cells are read without their column headers |
+| `font-not-embedded` | warning | The file uses SlideMarks but doesn't embed it, so recipients without the font see empty boxes |
+| `unknown-code-point` | warning | A private-use character that SlideMarks doesn't define |
+
+Limitations:
+- Font checks only see fonts set directly on a run. Fonts inherited from styles, layouts or themes aren't resolved.
+- `silent-symbol` doesn't know whether the reader has a pronunciation pack installed. Visible text is the only fix that works for every recipient.
+
 ### PDF
 
 PDFs exported from Word or PowerPoint contain the same characters as the document. PUA glyphs carry no meaning, while aliases and visible text do. Export with accessibility tags on:

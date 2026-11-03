@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from . import package, reference, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
+from . import check, package, reference, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
 from .font import build_font
 from .manifest import validate
 from .metrics import measure
@@ -71,6 +71,25 @@ def voiceover_merge_cmd(args) -> int:
     return 0
 
 
+def check_cmd(args) -> int:
+    manifest = json.loads((ROOT / "source/symbols.json").read_text())
+    report, errors, warnings = {}, 0, 0
+    for name in args.files:
+        findings = check.check_file(Path(name), manifest)
+        errors += sum(f.severity == check.ERROR for f in findings)
+        warnings += sum(f.severity == check.WARNING for f in findings)
+        report[name] = check.as_dicts(findings)
+        if not args.json:
+            print(f"{name}: {len(findings)} finding(s)")
+            for f in findings:
+                print(f"  {f.severity:7} {f.rule:18} {f.location}: {f.message}")
+    if args.json:
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+    else:
+        print(f"{errors} error(s), {warnings} warning(s)")
+    return 1 if errors else 0
+
+
 def main():
     parser = argparse.ArgumentParser(prog="slidemarks")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -80,6 +99,10 @@ def main():
     p = sub.add_parser("package", help="build, then write the release zip to dist/")
     p.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
     p.set_defaults(func=package_cmd)
+    c = sub.add_parser("check", help="check PowerPoint/Word files for SlideMarks accessibility and rendering problems")
+    c.add_argument("files", nargs="+", help=".pptx or .docx files")
+    c.add_argument("--json", action="store_true", help="machine-readable output")
+    c.set_defaults(func=check_cmd)
     v = sub.add_parser("voiceover-merge", help="add SlideMarks pronunciations to your own VoiceOver Utility export")
     v.add_argument("export", help="file from VoiceOver Utility: File → Export Preferences")
     v.add_argument("-o", "--output", help="output file (default: '<export> + SlideMarks.voprefs' next to it)")

@@ -49,6 +49,8 @@ The easiest workflow: select the table cells or columns that will hold symbols a
 
 Screen readers can't describe most symbols on their own, so **pair each symbol with text**: put the value next to it (a Harvey ball followed by "75%", a check followed by "Done"), or add a legend.
 
+To find symbols without readable text, PUA arrows that should be standard characters, missing header rows and fonts that aren't embedded, run `uv run slidemarks check deck.pptx`. It needs the developer tools for now; see [docs/accessibility.md](docs/accessibility.md#checking-a-document).
+
 Screen-reader users can also install a **pronunciation pack** (`dist/screen-readers/`) so each symbol is spoken by its meaning, e.g. "Harvey ball 50 percent". See [docs/accessibility.md](docs/accessibility.md) for the packs and for authoring patterns in PowerPoint, Word, PDF and the web.
 
 ### Size and color
