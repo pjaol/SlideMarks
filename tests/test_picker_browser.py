@@ -37,7 +37,7 @@ def picker(tmp_path_factory, tokens, manifest, built):
     server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     _ab("open", f"http://127.0.0.1:{server.server_address[1]}/picker.html")
-    _ab("eval", "localStorage.clear()")
+    _ab("eval", "localStorage.clear(); localStorage.setItem('slidemarks.hidePasteHelp', 'true')")  # only its own test shows the card
     _ab("reload")
     _ab("wait", "400")
     yield
@@ -79,7 +79,11 @@ def test_no_insert_button_outside_office(picker):
     assert _eval("getComputedStyle(document.getElementById('pv-insert')).display") == "none"
 
 
-def test_passes_axe(picker):
+@pytest.mark.parametrize("scheme", ["light", "dark"])
+def test_passes_axe(picker, scheme):
+    _ab("set", "media", scheme)
+    _ab("reload")
+    _ab("wait", "300")
     result = _ab("a11y")
     assert [v["id"] for v in result["violations"]] == []
 
@@ -102,4 +106,19 @@ def test_copy_puts_formatted_html_and_plain_text_on_the_clipboard(picker):
     # Word only sets the East Asian slot (which it draws these characters from) via mso-fareast-font-family.
     for prop in ["font-family:SlideMarks", "mso-fareast-font-family:SlideMarks", "mso-ascii-font-family:SlideMarks"]:
         assert prop in clip["html"]
+    _ab("fill", "#q", "")
+
+
+def test_paste_help_appears_after_copy_until_dismissed_for_good(picker):
+    _ab("eval", "localStorage.removeItem('slidemarks.hidePasteHelp'); 1")
+    _ab("fill", "#q", "harvey 75")
+    _ab("click", "#pv-copy")
+    assert _eval("!document.getElementById('paste-help').hidden")
+    _ab("click", "#paste-help-never")
+    assert _eval("document.getElementById('paste-help').hidden")
+    _ab("click", "#pv-copy")
+    assert _eval("document.getElementById('paste-help').hidden")  # stays out of the way once dismissed
+    _ab("click", "#paste-help-open")  # but can always be reopened
+    assert _eval("!document.getElementById('paste-help').hidden")
+    _ab("click", "#paste-help-ok")
     _ab("fill", "#q", "")

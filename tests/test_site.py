@@ -35,3 +35,8 @@ def test_site_is_complete_and_folder_safe(tmp_path, tokens, manifest, built):
         # Root-relative links would break under /SlideMarks/; everything must be relative or absolute https.
         assert not re.search(r'(href|src)="/(?!/)', html.read_text()), html
     assert (out / "download/SlideMarks-Regular.ttf").exists() and (out / "download/SHA256SUMS").exists()
+
+
+def test_windows_network_path_keeps_both_leading_backslashes():
+    from slidemarks_build.site import _support
+    assert r"\\YOUR-PC\SlideMarks" in _support()  # a UNC path needs two leading backslashes

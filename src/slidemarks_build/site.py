@@ -16,6 +16,12 @@ from pathlib import Path
 from .specimen_content import families
 
 REPO_URL = "https://github.com/pjaol/SlideMarks"
+# GitHub mark from GitHub's Octicons (MIT licence), used to link to the repository.
+GITHUB_MARK = ('<svg aria-hidden="true" viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 '
+    '8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15'
+    '.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51'
+    '.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53'
+    '.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>')
 ISSUES_URL = f"{REPO_URL}/issues"
 
 CSS = """
@@ -28,6 +34,9 @@ header.site .inner, main, footer .inner { max-width: 60rem; margin: 0 auto; padd
 header.site .inner { display: flex; align-items: center; gap: 1.5rem; height: 3.5rem; }
 header.site a.brand { font-weight: 700; display: flex; align-items: center; gap: .5rem; color: var(--fg); text-decoration: none; }
 header.site nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+header.site a.gh { margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; color: var(--fg); text-decoration: none; font-weight: 600; }
+header.site a.gh:hover { color: var(--accent); }
+@media (max-width: 34rem) { header.site a.gh span { display: none; } }
 a { color: var(--accent); }
 main { padding-top: 1.5rem; padding-bottom: 3rem; }
 h1 { font-size: 2rem; line-height: 1.2; margin: .5rem 0 1rem; }
@@ -37,6 +46,8 @@ h2 { margin-top: 2.2rem; }
 .steps > li { counter-increment: s; position: relative; padding: .8rem 1rem .8rem 3.2rem; border: 1px solid var(--line); border-radius: 10px; margin: .7rem 0; background: var(--panel); }
 .steps > li::before { content: counter(s); position: absolute; left: 1rem; top: .8rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); color: var(--bg); text-align: center; font-weight: 700; line-height: 1.6rem; }
 .btn { display: inline-block; padding: .5rem 1rem; border-radius: 8px; background: var(--accent); color: var(--bg); text-decoration: none; font-weight: 600; }
+.steps p { margin: .6rem 0; }
+.steps ul { margin: .3rem 0 .5rem; padding-left: 1.2rem; }
 .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 code, pre { font: .9em ui-monospace, Menlo, monospace; }
 pre { background: var(--panel); padding: .8rem; border-radius: 8px; overflow-x: auto; }
@@ -70,6 +81,7 @@ def _page(title: str, body: str, depth: int, version: str) -> str:
     <a href="{up}glyphs/index.html">Glyphs</a>
     <a href="{up}support/index.html">Support</a>
   </nav>
+  <a class="gh" href="{REPO_URL}" aria-label="SlideMarks on GitHub" title="SlideMarks on GitHub">{GITHUB_MARK}<span>GitHub</span></a>
 </div></header>
 <main>
 {body}
@@ -95,12 +107,17 @@ One consistent family of {count} symbols: type, paste, resize and recolor them l
 
 <h2 id="install">Install</h2>
 <ol class="steps">
-  <li><strong>Install the font.</strong> <a href="download/SlideMarks-Regular.ttf">Download SlideMarks-Regular.ttf</a>.
-    On a Mac, double-click it and choose <em>Install Font</em>. On Windows, right-click and choose <em>Install for all users</em>.
+  <li><strong>Install the font.</strong>
+    <p><a class="btn" href="download/SlideMarks-Regular.ttf" download>Download the font (.ttf)</a></p>
+    <ul>
+      <li><strong>Mac:</strong> double-click <code>SlideMarks-Regular.ttf</code> and choose <em>Install Font</em>.</li>
+      <li><strong>Windows:</strong> right-click <code>SlideMarks-Regular.ttf</code> and choose <em>Install for all users</em> (or <em>Install</em>).</li>
+    </ul>
     Then <strong>quit every Office app and reopen it</strong>: Office only picks up new fonts when it restarts.</li>
-  <li><strong>Add SlideMarks to Word and PowerPoint</strong> <em>(optional)</em>. Until the Microsoft Marketplace listing is live,
-    install it from the add-in manifest: <a href="office/manifest.xml" download>manifest.xml</a>.
-    See <a href="support/index.html#add-in">how to install the add-in</a>.</li>
+  <li><strong>Add SlideMarks to Word and PowerPoint</strong> <em>(optional)</em>. Until the Microsoft Marketplace listing is live, install it from the add-in manifest.
+    <p><a class="btn" href="office/manifest.xml" download="SlideMarks-manifest.xml">Download the add-in manifest</a></p>
+    Then follow the steps for <a href="support/index.html#add-in-mac">Mac</a>, <a href="support/index.html#add-in-windows">Windows</a> or
+    <a href="support/index.html#add-in-web">Office on the web</a>.</li>
   <li><strong>Use it.</strong> Open <em>SlideMarks</em> on the Home tab, search for a symbol and click <em>Insert</em>.
     Or use the <a href="picker/index.html">web picker</a> to copy symbols into any app with the SlideMarks font.</li>
 </ol>
@@ -135,23 +152,51 @@ and reopen it</strong>. If you received the file from someone else, ask them to 
 <p>The picker copies the symbol <em>with</em> the SlideMarks font, but whether Office keeps the font depends on how you paste:</p>
 <ul>
   <li><strong>PowerPoint:</strong> after pasting, click the <em>Paste Options</em> button and choose <strong>Keep Source Formatting</strong>.
-    PowerPoint's default ("Use Destination Theme") switches the font to the theme font, and the symbol shows as a box.</li>
+    PowerPoint's default ("Use Destination Theme") switches the font to the theme font, and the symbol shows as a box.
+    <p><img src="../office/assets/walkthrough/powerpoint-paste-options.png" width="360" style="max-width:100%;height:auto;border-radius:8px"
+      alt="PowerPoint's Paste Options menu with Keep Source Formatting highlighted, above Use Destination Theme and Keep Text Only"></p></li>
   <li><strong>Word:</strong> if the symbol shows as a box, use <em>Paste Options › Keep Source Formatting</em> too.</li>
   <li><strong>Alternative:</strong> set the text or table cell to the <em>SlideMarks</em> font first, then use <em>Edit › Paste Special › Unformatted Text</em>.</li>
 </ul>
 <p>The Office add-in avoids all of this: its <em>Insert</em> button sets the font for you.</p>
 
 <h2 id="add-in">Installing the add-in from the manifest</h2>
-<p>Until the Microsoft Marketplace listing is live, the add-in is installed from its manifest file:</p>
-<ul>
-  <li><strong>Office on the web and Microsoft 365 accounts:</strong> <em>Home → Add-ins → More Add-ins → My Add-ins → Upload My Add-in</em>, then choose
-    <a href="../office/manifest.xml" download>manifest.xml</a>.</li>
-  <li><strong>Mac (Word or PowerPoint):</strong> copy <code>manifest.xml</code> into
-    <code>~/Library/Containers/com.microsoft.Word/Data/Documents/wef/</code> (or <code>com.microsoft.Powerpoint</code>), creating the
-    <code>wef</code> folder if needed, then restart the app and open <em>Home → Add-ins</em>.</li>
-  <li><strong>Organizations:</strong> administrators can deploy the manifest to users from the Microsoft 365 admin center
-    (<em>Settings → Integrated apps → Upload custom apps</em>).</li>
-</ul>
+<p>Until the Microsoft Marketplace listing is live, the add-in is installed from its manifest file:
+<a href="../office/manifest.xml" download="SlideMarks-manifest.xml">download the add-in manifest</a>.
+Install the <a href="../index.html#install">SlideMarks font</a> as well: the add-in inserts symbols, the font draws them.</p>
+
+<h3 id="add-in-mac">Mac (Word or PowerPoint)</h3>
+<ol>
+  <li>In Finder, choose <em>Go → Go to Folder…</em> (<kbd>⇧⌘G</kbd>) and open
+    <code>~/Library/Containers/com.microsoft.Powerpoint/Data/Documents/</code>
+    (for Word: <code>com.microsoft.Word</code>).</li>
+  <li>Create a folder named <code>wef</code> there if it doesn't exist, and copy the manifest file into it.</li>
+  <li>Quit and reopen PowerPoint or Word, then choose <em>Home → Add-ins</em> and pick <em>SlideMarks</em> under developer add-ins.</li>
+</ol>
+
+<h3 id="add-in-windows">Windows (Word or PowerPoint)</h3>
+<p>Office on Windows installs manifest-file add-ins from a <em>shared folder</em> that you mark as trusted. It's a one-time setup:</p>
+<ol>
+  <li><strong>Make a shared folder.</strong> Create a folder, for example <code>C:\SlideMarks</code>, and copy the manifest file into it.
+    Right-click the folder → <em>Properties → Sharing → Share…</em>, add yourself, choose <em>Share</em>, and note the network path shown,
+    such as <code>\\\\YOUR-PC\\SlideMarks</code>.</li>
+  <li><strong>Trust it in Office.</strong> In Word or PowerPoint: <em>File → Options → Trust Center → Trust Center Settings… → Trusted Add-in Catalogs</em>.
+    Paste the network path into <em>Catalog Url</em>, choose <em>Add catalog</em>, tick <em>Show in Menu</em>, then <em>OK</em> twice.</li>
+  <li><strong>Restart</strong> Word and PowerPoint.</li>
+  <li><strong>Add it.</strong> <em>Home → Add-ins → Advanced</em> (or <em>More Add-ins</em>), open the <em>SHARED FOLDER</em> tab, select <em>SlideMarks</em> and choose <em>Add</em>.</li>
+</ol>
+<p>Prefer not to set up a share? Use Office on the web (below). Organizations can deploy it centrally (further below).</p>
+
+<h3 id="add-in-web">Office on the web</h3>
+<ol>
+  <li>Open a document in Word or PowerPoint at <a href="https://www.office.com/">office.com</a>.</li>
+  <li><em>Home → Add-ins → More Settings → Upload My Add-in</em>, choose the manifest file, then <em>Upload</em>.</li>
+</ol>
+<p>The web version can't embed fonts, so use the desktop app before sharing files.</p>
+
+<h3 id="add-in-org">Organizations</h3>
+<p>Administrators can deploy the manifest to users or groups from the Microsoft 365 admin center
+(<em>Settings → Integrated apps → Upload custom apps</em>), so it appears in Word and PowerPoint without any of the steps above.</p>
 
 <h2>Embedding the font when sharing</h2>
 <p>Open the SlideMarks pane and follow <em>Show me how</em>. It shows the exact steps for your app and checks the result.</p>

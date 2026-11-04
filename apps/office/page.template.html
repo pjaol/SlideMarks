@@ -42,8 +42,24 @@
         <button id="pv-insert" class="primary">Insert</button>
         <button id="pv-copy">Copy</button>
       </div>
-      <p class="paste-tip muted" id="paste-tip">Pasting into PowerPoint? Choose <b>Paste Options › Keep Source Formatting</b>, or the font switches to the theme font.</p>
+      <button type="button" class="paste-tip" id="paste-help-open" aria-expanded="false" aria-controls="paste-help">
+        <span class="tofu" aria-hidden="true">?</span>
+        <span><b>Seeing boxes like this when you paste?</b> <span class="paste-tip-fix">Here's the fix →</span></span>
+      </button>
     </div>
+  </section>
+
+  <section id="paste-help" class="paste-help" hidden aria-labelledby="paste-help-title">
+    <h2 id="paste-help-title">Seeing <span class="tofu" aria-hidden="true">?</span> boxes after pasting into PowerPoint?</h2>
+    <p>PowerPoint swapped the SlideMarks font for the theme font. Fix it like this:</p>
+    <ol>
+      <li>Paste as usual (<span class="kbd">⌘</span>+<span class="kbd">V</span> or <span class="kbd">Ctrl</span>+<span class="kbd">V</span>).</li>
+      <li>Click the <b>Paste Options</b> button that appears next to it.</li>
+      <li>Choose <b>Keep Source Formatting</b>.</li>
+    </ol>
+    <img src="assets/walkthrough/powerpoint-paste-options.png" alt="PowerPoint's Paste Options menu with Keep Source Formatting highlighted, above Use Destination Theme and Keep Text Only">
+    <p class="muted">PowerPoint's default, <i>Use Destination Theme</i>, is what swaps the font. Word may need the same choice. Still boxes? Install the SlideMarks font, then restart Office.</p>
+    <div class="row"><button type="button" class="primary" id="paste-help-ok">Got it</button><button type="button" id="paste-help-never">Don't show after copying</button></div>
   </section>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>

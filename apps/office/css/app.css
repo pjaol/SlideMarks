@@ -8,7 +8,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #1e1f22; --fg: #e6edf3; --muted: #9198a1; --line: #3d444d; --panel: #2a2c30;
-    --accent: #a77bc6; --accent-fg: #14161a; --focus: #4493f8;
+    --accent: #b48bd4; --accent-fg: #14161a; --focus: #4493f8;
     --ok-bg: #12301b; --ok: #3fb950; --warn-bg: #3a1a1d; --warn: #f85149; --pend-bg: #33290f; --pend: #d29922;
   }
 }
@@ -50,8 +50,20 @@ button:disabled { opacity: .5; cursor: default; }
 .actions { display: flex; gap: 6px; }
 .actions button { flex: 1; }
 body[data-mode="browser"] #pv-insert { display: none; }
-.paste-tip { font-size: 11px; margin: 6px 0 0; }
-body[data-mode="office"] .paste-tip { display: none; } /* in Office, Insert sets the font itself */
+.paste-tip { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 8px; padding: 7px 10px; text-align: left; font-size: 12px;
+  background: var(--pend-bg); border: 1px solid var(--pend); border-left-width: 4px; border-radius: 6px; color: var(--fg); }
+.paste-tip:hover { filter: brightness(1.05); }
+.paste-tip-fix { color: var(--accent); font-weight: 600; text-decoration: underline; }
+/* Drawn like the missing-glyph box people actually see after a bad paste. */
+.tofu { display: inline-flex; align-items: center; justify-content: center; width: 1.05em; height: 1.35em; border: 1.5px solid currentColor;
+  border-radius: 2px; font: 700 .8em/1 ui-monospace, Menlo, monospace; flex: none; }
+.paste-tip > .tofu { font-size: 16px; }
+.paste-help { position: fixed; inset: auto 8px 8px 8px; max-height: calc(100% - 16px); overflow-y: auto; background: var(--bg); border: 2px solid var(--accent);
+  border-radius: 10px; padding: 12px; box-shadow: 0 8px 28px rgba(0, 0, 0, .35); z-index: 10; }
+.paste-help h2 { font-size: 15px; margin: 0 0 6px; }
+.paste-help ol { margin: 0 0 8px; padding-left: 20px; }
+.paste-help img { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 8px; border: 1px solid var(--line); margin: 4px 0 8px; }
+body[data-mode="office"] .paste-tip, body[data-mode="office"] .paste-help { display: none; } /* in Office, Insert sets the font itself */
 
 .toast { position: fixed; left: 8px; right: 8px; bottom: 8px; padding: 8px 10px; border-radius: 6px; background: var(--fg); color: var(--bg); opacity: 0; transform: translateY(8px); transition: .2s; pointer-events: none; }
 .toast.show { opacity: 1; transform: none; }

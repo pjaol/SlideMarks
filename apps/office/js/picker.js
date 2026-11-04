@@ -132,9 +132,22 @@ SM.picker = (() => {
     const text = label ? `${s.char} ${label}` : s.char;
     const ok = await SM.copyText(text, SM.clipboardHtml(s.char, label));
     if (ok) remember(s.id);
+    SM.toast(ok ? `Copied ${s.name}.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
     // PowerPoint's default paste ("Use Destination Theme") swaps the font for the theme font;
-    // "Keep Source Formatting" keeps SlideMarks (verified on PowerPoint for Mac).
-    SM.toast(ok ? `Copied ${s.name}. In PowerPoint, choose Paste Options › Keep Source Formatting.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
+    // "Keep Source Formatting" keeps SlideMarks (verified on PowerPoint for Mac). Show how, right when it matters.
+    if (ok && document.body.dataset.mode === "browser" && !SM.store.get("hidePasteHelp", false)) showPasteHelp();
+  }
+
+  function showPasteHelp() {
+    SM.$("paste-help").hidden = false;
+    SM.$("paste-help-open").setAttribute("aria-expanded", "true");
+    SM.$("paste-help-ok").focus();
+  }
+
+  function hidePasteHelp() {
+    SM.$("paste-help").hidden = true;
+    SM.$("paste-help-open").setAttribute("aria-expanded", "false");
+    SM.$("pv-copy").focus();
   }
 
   // Arrow keys move geometrically through the wrapped grid, across family groups.
@@ -190,6 +203,10 @@ SM.picker = (() => {
       render();
       select(b.dataset.pick, { focus: true });
     });
+    SM.$("paste-help-open").onclick = showPasteHelp;
+    SM.$("paste-help-ok").onclick = hidePasteHelp;
+    SM.$("paste-help-never").onclick = () => { SM.store.set("hidePasteHelp", true); hidePasteHelp(); };
+    SM.$("paste-help").addEventListener("keydown", (e) => { if (e.key === "Escape") hidePasteHelp(); });
     SM.$("pv-insert").onclick = insert;
     SM.$("pv-copy").onclick = copy;
     SM.$("pv-fav").onclick = () => {
