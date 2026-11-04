@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SlideMarks spike</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+  @font-face { font-family: SlideMarks; src: url(assets/SlideMarks-Regular.woff2) format("woff2"); }
+  body { font: 13px system-ui, sans-serif; margin: 10px; }
+  .sm { font-family: SlideMarks; font-size: 20px; }
+  button { display: block; width: 100%; margin: 6px 0; padding: 6px; text-align: left; }
+  #log { font: 11px ui-monospace, Menlo, monospace; white-space: pre-wrap; border-top: 1px solid #ccc; margin-top: 10px; padding-top: 6px; }
+  .ok { color: #15803d; } .fail { color: #b91c1c; }
+</style>
+</head>
+<body>
+<h3>SlideMarks spike <span class="sm">&#xE003; &#x2192;</span></h3>
+<p id="status">Loading Office.js…</p>
+<div id="manual" hidden>
+  <p><b>Manual probes</b>: click into a table cell (or text) first, then:</p>
+  <button id="m-range">Insert at cursor: getSelectedTextRange</button>
+  <button id="m-data">Insert at cursor: setSelectedDataAsync</button>
+  <button id="m-export">Export document to server</button>
+</div>
+<div id="log"></div>
+<script src="probes.js"></script>
+</body>
+</html>

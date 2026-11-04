@@ -1,0 +1,6 @@
+results/**/*.pptx
+results/**/*.docx
+results/*.pptx
+results/*.docx
+results/cmd.txt
+autorun.flag
