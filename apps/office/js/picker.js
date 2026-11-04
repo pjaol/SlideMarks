@@ -132,7 +132,9 @@ SM.picker = (() => {
     const text = label ? `${s.char} ${label}` : s.char;
     const ok = await SM.copyText(text, SM.clipboardHtml(s.char, label));
     if (ok) remember(s.id);
-    SM.toast(ok ? `Copied ${s.name}. Paste it into Word or PowerPoint (SlideMarks must be installed).` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
+    // PowerPoint's default paste ("Use Destination Theme") swaps the font for the theme font;
+    // "Keep Source Formatting" keeps SlideMarks (verified on PowerPoint for Mac).
+    SM.toast(ok ? `Copied ${s.name}. In PowerPoint, choose Paste Options › Keep Source Formatting.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
   }
 
   // Arrow keys move geometrically through the wrapped grid, across family groups.

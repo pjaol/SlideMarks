@@ -131,6 +131,16 @@ Please mention your app (Word or PowerPoint), platform (Mac, Windows or web) and
 <p>The SlideMarks font isn't available. Install it (see <a href="../index.html#install">Install</a>), then <strong>quit every Office app
 and reopen it</strong>. If you received the file from someone else, ask them to turn on font embedding before sending.</p>
 
+<h2 id="paste">Pasting from the web picker</h2>
+<p>The picker copies the symbol <em>with</em> the SlideMarks font, but whether Office keeps the font depends on how you paste:</p>
+<ul>
+  <li><strong>PowerPoint:</strong> after pasting, click the <em>Paste Options</em> button and choose <strong>Keep Source Formatting</strong>.
+    PowerPoint's default ("Use Destination Theme") switches the font to the theme font, and the symbol shows as a box.</li>
+  <li><strong>Word:</strong> if the symbol shows as a box, use <em>Paste Options › Keep Source Formatting</em> too.</li>
+  <li><strong>Alternative:</strong> set the text or table cell to the <em>SlideMarks</em> font first, then use <em>Edit › Paste Special › Unformatted Text</em>.</li>
+</ul>
+<p>The Office add-in avoids all of this: its <em>Insert</em> button sets the font for you.</p>
+
 <h2 id="add-in">Installing the add-in from the manifest</h2>
 <p>Until the Microsoft Marketplace listing is live, the add-in is installed from its manifest file:</p>
 <ul>

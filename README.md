@@ -39,7 +39,7 @@ SlideMarks symbols live in the Unicode Private Use Area. **They only appear as t
 
 - **Insert → Symbol** (Windows: **Symbol → More Symbols**; Mac: **Advanced Symbol**). Choose **SlideMarks** as the font, then pick the glyph. Works in PowerPoint and Word on Windows and Mac.
 - **Word on Windows:** type the code point from the [glyph reference](docs/glyphs.md) (e.g. `E002`), then press **Alt+X**. Set the character's font to SlideMarks.
-- **Copy and paste** works too. If the pasted character shows as an empty box, set its font to SlideMarks.
+- **Copy and paste** from the [web picker](https://pjaol.github.io/SlideMarks/picker/) carries the SlideMarks font. In **PowerPoint**, choose **Paste Options → Keep Source Formatting** after pasting, because PowerPoint's default paste switches to the theme font. If a pasted symbol still shows as a box, set its font to SlideMarks.
 
 **Arrows and comparison signs also work as ordinary characters.** With SlideMarks applied, `→ ← ↑ ↓ ↔ ≤ ≥ ≠` and friends draw the SlideMarks versions. Prefer these: screen readers can name standard characters (results vary by reader, so see the [test results](docs/accessibility.md#test-results)), and they still make sense if the font is missing. The glyph reference lists them under *Standard Unicode*.
 

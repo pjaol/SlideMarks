@@ -50,6 +50,8 @@ button:disabled { opacity: .5; cursor: default; }
 .actions { display: flex; gap: 6px; }
 .actions button { flex: 1; }
 body[data-mode="browser"] #pv-insert { display: none; }
+.paste-tip { font-size: 11px; margin: 6px 0 0; }
+body[data-mode="office"] .paste-tip { display: none; } /* in Office, Insert sets the font itself */
 
 .toast { position: fixed; left: 8px; right: 8px; bottom: 8px; padding: 8px 10px; border-radius: 6px; background: var(--fg); color: var(--bg); opacity: 0; transform: translateY(8px); transition: .2s; pointer-events: none; }
 .toast.show { opacity: 1; transform: none; }
