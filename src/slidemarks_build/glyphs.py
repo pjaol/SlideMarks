@@ -100,10 +100,15 @@ def curved(t, kind: str, mirror: bool = False):
         line = g.Sketch().move(780, 700).line(780, 380 + r).arc(780 - r, 380 + r, r, 0, -90).line(222, 380)
         shape = g.union(line.stroke(w), _head(t, (222, 380), math.pi))
     elif kind == "branch":
-        fork, left, right = (500, 330), (230, 600), (770, 600)  # arms at 45°, matching the diagonal arrows
+        # Arms at 45°, matching the diagonal arrows. Each head then has one horizontal arm pointing at
+        # the other head, so the heads are shorter (documented exception, like loops) and the tips sit
+        # at the frame edges to keep a clear gap between them at small sizes.
+        bt = t["branch"]
+        fork = (500, bt["forkY"])
+        left, right = ((500 + s * bt["spread"], bt["forkY"] + bt["spread"]) for s in (-1, 1))
         stem = g.stroked_polyline([(500, 110), fork], w)
         arms = [g.stroked_polyline([fork, end], w) for end in (left, right)]
-        heads = [_head(t, end, math.atan2(end[1] - fork[1], end[0] - fork[0])) for end in (left, right)]
+        heads = [_head(t, end, math.atan2(end[1] - fork[1], end[0] - fork[0]), length=bt["headLength"]) for end in (left, right)]
         shape = g.union(stem, *arms, *heads)
     else:
         raise ValueError(kind)

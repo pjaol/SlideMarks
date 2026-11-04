@@ -243,5 +243,11 @@
       "offset": 100,
       "unlinkOffset": 195
     }
+  },
+  "branch": {
+    "forkY": 300,
+    "spread": 285,
+    "headLength": 150,
+    "$comment": "headLength is a documented exception (see loop): with the shared 225 head the inner head arms nearly touch. Tips sit at the frame edges for a clear gap at small sizes"
   }
 }
