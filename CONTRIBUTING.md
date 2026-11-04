@@ -75,15 +75,28 @@ The add-in's source is plain HTML, CSS and JavaScript in `apps/office/`: no fram
 Design: `docs/office-addin-design.md`. Proven API behavior: `docs/office-js-spike.md`.
 
 ```sh
-npx office-addin-dev-certs install          # once: trusted localhost HTTPS certificate
+npx office-addin-dev-certs install          # once: trusted localhost HTTPS certificate (needs Node.js)
 uv run slidemarks build
-uv run slidemarks office-serve               # https://localhost:3443
-npx office-addin-dev-settings sideload dist/office/manifest.dev.xml desktop --app powerpoint   # or --app word
+uv run slidemarks office-serve               # terminal 1: https://localhost:3443 (keep it running)
+uv run slidemarks office-open --app word     # terminal 2: or --app powerpoint
 ```
 
-- After changing the **manifest**, remove the old sideload links before sideloading again. The build replaces `dist/office/`, so the links go stale:
-  `rm ~/Library/Containers/com.microsoft.{Powerpoint,Word}/Data/Documents/wef/3c9a7d2e-*.xml`
-- After changing only HTML, CSS or JS, close and reopen the task pane. The server sends `no-store`.
+### Opening Word or PowerPoint with the add-in
+
+**Use `slidemarks office-open`.** It:
+- checks the add-in server is running;
+- clears stale sideload registrations, which go stale every build because the build replaces `dist/office/`;
+- launches the app through Microsoft's sideload tool, with a document that has the SlideMarks pane attached.
+
+**Why opening the app normally doesn't show the add-in:** a sideloaded add-in gets no ribbon button in ordinary documents. On Mac it's only listed under **Home → Add-ins** (the Add-ins button), as a developer add-in, and has to be picked from there each time. That manual route works too, provided `office-serve` is running.
+
+- After changing **HTML, CSS or JS**, close and reopen the task pane. The server sends `no-store`.
+- After changing the **manifest** (or icons), run `office-open` again.
+- After changing the **font**:
+  1. Quit every Office app.
+  2. Copy `dist/fonts/SlideMarks-Regular.ttf` over the installed copy (`~/Library/Fonts` on Mac).
+  3. Reopen. If symbols still look old, quit and reopen once more: Office reads fonts at launch and can start mid-rebuild of its font cache.
+  4. Documents that already embed SlideMarks keep the old copy until they're saved again.
 - Debugging on Mac: `defaults write com.microsoft.Powerpoint OfficeWebAddinDeveloperExtras -bool true`, then right-click the pane and choose **Inspect Element**.
 - Production: `uv run slidemarks build --office-base-url https://<host>` also writes `dist/office/manifest.xml` for that HTTPS host. Publishing isn't set up yet.
 

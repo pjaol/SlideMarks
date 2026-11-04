@@ -120,6 +120,38 @@ def office_serve_cmd(args) -> int:
     return 0
 
 
+def office_open_cmd(args) -> int:
+    """Launch Word or PowerPoint with the dev add-in attached (Mac/Windows desktop)."""
+    import shutil
+    import ssl
+    import subprocess
+    import urllib.request
+    # Python doesn't read the macOS keychain, so trust the dev certificate authority explicitly.
+    ca = Path.home() / ".office-addin-dev-certs/ca.crt"
+    ctx = ssl.create_default_context(cafile=str(ca)) if ca.exists() else None
+    if ctx is not None:
+        # Microsoft's dev certificate has no Authority Key Identifier, which strict mode rejects.
+        ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT
+    try:
+        urllib.request.urlopen(f"https://localhost:{args.port}/taskpane.html", timeout=3, context=ctx)
+    except Exception:
+        print(f"The add-in server isn't running. In another terminal: uv run slidemarks office-serve --port {args.port}", file=sys.stderr)
+        return 1
+    manifest = ROOT / "dist/office/manifest.dev.xml"
+    if not manifest.exists():
+        print("No dist/office/manifest.dev.xml. Run: uv run slidemarks build", file=sys.stderr)
+        return 1
+    if not shutil.which("npx"):
+        print("npx (Node.js) is required for Microsoft's sideload tool.", file=sys.stderr)
+        return 1
+    # The build replaces dist/office, which leaves the sideload tool's earlier links stale
+    # ("EEXIST"), so clear this add-in's registrations first (Mac locations).
+    for app in ("Powerpoint", "Word"):
+        for old in (Path.home() / f"Library/Containers/com.microsoft.{app}/Data/Documents/wef").glob(f"{office.ADDIN_ID}*.xml"):
+            old.unlink()
+    return subprocess.call(["npx", "--yes", "office-addin-dev-settings", "sideload", str(manifest), "desktop", "--app", args.app])
+
+
 def main():
     parser = argparse.ArgumentParser(prog="slidemarks")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -134,6 +166,10 @@ def main():
     o = sub.add_parser("office-serve", help="serve dist/office over HTTPS for sideloading (dev)")
     o.add_argument("--port", type=int, default=3443)
     o.set_defaults(func=office_serve_cmd)
+    oo = sub.add_parser("office-open", help="launch Word or PowerPoint with the dev add-in attached")
+    oo.add_argument("--app", choices=["word", "powerpoint"], required=True)
+    oo.add_argument("--port", type=int, default=3443)
+    oo.set_defaults(func=office_open_cmd)
     c = sub.add_parser("check", help="check PowerPoint/Word files for SlideMarks accessibility and rendering problems")
     c.add_argument("files", nargs="+", help=".pptx or .docx files")
     c.add_argument("--json", action="store_true", help="machine-readable output")
