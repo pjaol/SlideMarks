@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlideMarks</title>
+{{OFFICE_SCRIPT}}
+<link rel="stylesheet" href="css/font.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-mode="{{MODE}}">
+<main id="app" aria-busy="true">
+  <h1 class="visually-hidden">SlideMarks symbols</h1>
+  <header class="top">
+    <label class="search">
+      <span class="visually-hidden">Search symbols</span>
+      <input id="q" type="search" placeholder="Search symbols (e.g. harvey 75, arrow, check)" autocomplete="off" spellcheck="false">
+    </label>
+    <label class="family">
+      <span class="visually-hidden">Family</span>
+      <select id="family"><option value="">All families</option></select>
+    </label>
+  </header>
+
+  <section id="setup" class="setup" hidden aria-label="Setup"></section>
+
+  <section id="results" class="results" aria-label="Symbols">
+    <div id="shelves"></div>
+    <div id="grid" class="grid" role="listbox" aria-label="Symbols" tabindex="-1"></div>
+    <p id="empty" class="empty" hidden>No symbols match your search.</p>
+  </section>
+
+  <section id="preview" class="preview" aria-label="Selected symbol" hidden>
+    <div class="preview-glyph sm" id="pv-glyph" aria-hidden="true"></div>
+    <div class="preview-info">
+      <div class="preview-name"><span id="pv-name"></span>
+        <button id="pv-fav" class="icon-btn" aria-pressed="false" title="Add to favorites"><span aria-hidden="true">☆</span><span class="visually-hidden">Favorite</span></button>
+      </div>
+      <div class="preview-meta" id="pv-meta"></div>
+      <label class="opt"><input type="checkbox" id="pv-label"> Add a text label <span id="pv-label-text" class="muted"></span></label>
+      <div class="actions">
+        <button id="pv-insert" class="primary">Insert</button>
+        <button id="pv-copy">Copy</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</main>
+<script src="js/catalog-data.js"></script>
+<script src="js/util.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/hosts.js"></script>
+<script src="js/setup.js"></script>
+<script src="js/picker.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

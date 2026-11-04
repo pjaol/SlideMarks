@@ -46,3 +46,7 @@
 {"t": "2026-11-04T06:46:51.898Z", "host": "PowerPoint", "probe": "sharing.status", "ok": true, "detail": {"flag": false, "embedded": false, "used": true, "fontParts": []}}
 {"t": "2026-11-04T06:47:28.573Z", "host": "PowerPoint", "probe": "sharing.status", "ok": true, "detail": {"flag": false, "embedded": false, "used": true, "fontParts": []}}
 {"t": "2026-11-04T06:49:23.915Z", "host": "PowerPoint", "probe": "sharing.status", "ok": true, "detail": {"flag": true, "embedded": true, "used": true, "fontParts": ["ppt/fonts/font1.fntdata"]}}
+{"t": "2026-11-04T06:57:15.413Z", "host": "PowerPoint", "probe": "ppt.manual.getSelectedTextRange", "ok": true, "detail": {"before": {"start": 0, "length": 16, "text": "Sdafa23124r13´12", "shapes": ["Subtitle 2:Placeholder"]}, "insertedFont": "SlideMarks"}}
+{"t": "2026-11-04T06:57:20.029Z", "host": "PowerPoint", "probe": "ppt.manual.setSelectedDataAsync", "ok": true, "detail": {"shapes": ["Subtitle 2:Placeholder"]}}
+{"t": "2026-11-04T06:57:21.504Z", "host": "PowerPoint", "probe": "ppt.manual.getSelectedTextRange", "ok": true, "detail": {"before": {"start": 1, "length": 1, "text": "", "shapes": ["Subtitle 2:Placeholder"]}, "insertedFont": "SlideMarks"}}
+{"t": "2026-11-04T06:57:22.432Z", "host": "PowerPoint", "probe": "ppt.manual.setSelectedDataAsync", "ok": true, "detail": {"shapes": ["Subtitle 2:Placeholder"]}}

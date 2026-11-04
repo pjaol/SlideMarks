@@ -46,6 +46,7 @@ The font is byte-reproducible: the same inputs always give an identical TTF.
 source/
   design-tokens.json   every dimension: frame, center, strokes, family parameters
   symbols.json         families, immutable ids, PUA code points, names, tags, builder params
+apps/office/            Word/PowerPoint add-in and standalone picker (plain HTML/CSS/JS)
 src/slidemarks_build/
   geometry.py          path primitives (circles, arcs, strokes, booleans)
   glyphs.py            one builder per family; all geometry derives from tokens
@@ -56,11 +57,35 @@ src/slidemarks_build/
   specimen_*.py        review sheets (HTML, PPTX, DOCX)
   web.py, reference.py, package.py, screen_readers.py   user-facing outputs
   check.py             `slidemarks check` document linter
+  office.py            assembles dist/office/ (add-in + standalone picker, manifests, icons)
 tests/                 pytest suite
 docs/                  design docs, ADRs, accessibility, generated glyph reference
 review/                generated review specimens
 dist/                  generated user artifacts
 ```
+
+## Office add-in (Word and PowerPoint)
+
+The add-in's source is plain HTML, CSS and JavaScript in `apps/office/`: no framework, bundler or `package.json`. `slidemarks build` assembles `dist/office/`:
+- `taskpane.html`: loads Office.js;
+- `picker.html`: the standalone, offline page;
+- the generated catalog, the embedded preview font and the icons;
+- `manifest.dev.xml`, pointing at `https://localhost:3443`.
+
+Design: `docs/office-addin-design.md`. Proven API behavior: `docs/office-js-spike.md`.
+
+```sh
+npx office-addin-dev-certs install          # once: trusted localhost HTTPS certificate
+uv run slidemarks build
+uv run slidemarks office-serve               # https://localhost:3443
+npx office-addin-dev-settings sideload dist/office/manifest.dev.xml desktop --app powerpoint   # or --app word
+```
+
+- After changing the **manifest**, remove the old sideload links before sideloading again. The build replaces `dist/office/`, so the links go stale:
+  `rm ~/Library/Containers/com.microsoft.{Powerpoint,Word}/Data/Documents/wef/3c9a7d2e-*.xml`
+- After changing only HTML, CSS or JS, close and reopen the task pane. The server sends `no-store`.
+- Debugging on Mac: `defaults write com.microsoft.Powerpoint OfficeWebAddinDeveloperExtras -bool true`, then right-click the pane and choose **Inspect Element**.
+- Production: `uv run slidemarks build --office-base-url https://<host>` also writes `dist/office/manifest.xml` for that HTTPS host. Publishing isn't set up yet.
 
 ## Design review workflow
 

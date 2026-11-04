@@ -1,0 +1,201 @@
+"""Assemble the Office add-in and standalone picker into dist/office/.
+
+Static files only: apps/office/ (hand-written UI) plus generated catalog data,
+an embedded-font stylesheet, brand icons and Office manifests."""
+
+import base64
+import json
+import shutil
+import struct
+import zlib
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+from .font import FAMILY
+from .glyphs import build_outline
+from .manifest import preferred_codepoint
+from .specimen_content import families
+
+ADDIN_ID = "3c9a7d2e-5b41-4f0e-9d6a-8e2b1f4c7a35"
+DEV_BASE_URL = "https://localhost:3443"
+ICON_SIZES = (16, 32, 64, 80, 128)
+# Mid-tone brand purple: >= 3:1 contrast against both the light (#ffffff) and dark (#2b2b2b) ribbon.
+ICON_INK = (0x9B, 0x5C, 0xC8)
+
+
+def catalog_data(manifest) -> dict:
+    return {
+        "version": manifest["manifestVersion"],
+        "fontFamily": FAMILY,
+        "families": [{"id": fid, "title": title} for fid, title, _ in families(manifest)],
+        "symbols": [
+            {
+                "id": s["id"],
+                "name": s["name"],
+                "family": s["category"],
+                "char": chr(int(preferred_codepoint(s), 16)),
+                "cp": preferred_codepoint(s),
+                "pua": s["codepoint"],
+                "aliases": s["unicodeAliases"],
+                "label": s["spokenLabel"],
+                "needsContext": s["needsContext"],
+                "status": s["status"],
+                "tags": s["tags"],
+            }
+            for s in manifest["symbols"]
+        ],
+    }
+
+
+def _png(size: int, rgba: bytes) -> bytes:
+    def chunk(tag, data):
+        return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+    rows = b"".join(b"\x00" + rgba[y * size * 4:(y + 1) * size * 4] for y in range(size))
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 6, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(rows, 9)) + chunk(b"IEND", b""))
+
+
+def icon_png(tokens, manifest, size: int, glyph_id: str = "harvey-75") -> bytes:
+    """The glyph itself on a transparent background, rasterized from the real outline (4x4 supersampling)."""
+    symbol = next(s for s in manifest["symbols"] if s["id"] == glyph_id)
+    path = build_outline(tokens, symbol)
+    cx, cy = tokens["center"]["x"], tokens["center"]["y"]
+    span = tokens["harvey"]["diameter"]
+    scale = span / (size * (0.94 if size <= 16 else 0.88))  # the ball fills ~90% of the icon
+    samples = 4
+    out = bytearray()
+    for py in range(size):
+        for px in range(size):
+            hits = 0
+            for sy in range(samples):
+                for sx in range(samples):
+                    fx = cx + (px + (sx + 0.5) / samples - size / 2) * scale
+                    fy = cy - (py + (sy + 0.5) / samples - size / 2) * scale
+                    hits += path.contains((fx, fy))
+            out += bytes((*ICON_INK, round(255 * hits / samples ** 2)))
+    return _png(size, bytes(out))
+
+
+def icon_names(icons: dict) -> dict:
+    """Content-hashed file names, so Office never shows a stale cached icon after a change."""
+    import hashlib
+    return {size: f"icon-{size}.{hashlib.sha256(png).hexdigest()[:8]}.png" for size, png in icons.items()}
+
+
+def manifest_xml(manifest, base_url: str, icons: dict | None = None) -> str:
+    icons = icons or {size: f"icon-{size}.png" for size in ICON_SIZES}
+    base = base_url.rstrip("/")
+    # Office requires add-in versions >= 1.0; font 0.y.z ships as add-in 1.y.z.0 (major + 1).
+    major, minor, patch = (int(x) for x in manifest["manifestVersion"].split("."))
+    version = f"{major + 1}.{minor}.{patch}.0"
+    url = lambda p: escape(f"{base}/{p}")  # noqa: E731
+
+    def host(kind, group_id):
+        return f"""      <Host xsi:type="{kind}">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="SlideMarks.{group_id}">
+                <Label resid="SM.Group"/>
+                <Icon><bt:Image size="16" resid="SM.Icon16"/><bt:Image size="32" resid="SM.Icon32"/><bt:Image size="80" resid="SM.Icon80"/></Icon>
+                <Control xsi:type="Button" id="SlideMarks.Open.{group_id}">
+                  <Label resid="SM.Button"/>
+                  <Supertip><Title resid="SM.Button"/><Description resid="SM.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="SM.Icon16"/><bt:Image size="32" resid="SM.Icon32"/><bt:Image size="80" resid="SM.Icon80"/></Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>SlideMarksPicker</TaskpaneId>
+                    <SourceLocation resid="SM.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>"""
+
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated by `slidemarks build` from source/symbols.json — do not edit. -->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+  <Id>{ADDIN_ID}</Id>
+  <Version>{version}</Version>
+  <ProviderName>SlideMarks</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="SlideMarks"/>
+  <Description DefaultValue="Insert consistent presentation symbols (Harvey balls, arrows, checks, ratings) as text, and make sure they travel with your file."/>
+  <IconUrl DefaultValue="{url('assets/' + icons[32])}"/>
+  <HighResolutionIconUrl DefaultValue="{url('assets/' + icons[64])}"/>
+  <SupportUrl DefaultValue="https://github.com/pjaol/SlideMarks"/>
+  <AppDomains>
+    <AppDomain>{escape(base)}</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Presentation"/>
+    <Host Name="Document"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="{url('taskpane.html')}"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+{host("Presentation", "Pres")}
+{host("Document", "Doc")}
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="SM.Icon16" DefaultValue="{url('assets/' + icons[16])}"/>
+        <bt:Image id="SM.Icon32" DefaultValue="{url('assets/' + icons[32])}"/>
+        <bt:Image id="SM.Icon80" DefaultValue="{url('assets/' + icons[80])}"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="SM.Url" DefaultValue="{url('taskpane.html')}"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="SM.Group" DefaultValue="SlideMarks"/>
+        <bt:String id="SM.Button" DefaultValue="SlideMarks"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="SM.Tip" DefaultValue="Search and insert SlideMarks symbols, and check the font travels with this file."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
+"""
+
+
+def build(root: Path, tokens, manifest, woff2: Path, ttf: Path, prod_base_url: str | None = None) -> Path:
+    src, out = root / "apps/office", root / "dist/office"
+    if out.exists():
+        shutil.rmtree(out)
+    shutil.copytree(src, out, ignore=shutil.ignore_patterns("*.template.html", ".DS_Store"))
+
+    data = json.dumps(catalog_data(manifest), ensure_ascii=False, separators=(",", ":"))
+    (out / "js/catalog-data.js").write_text(f"/* generated from source/symbols.json */\nwindow.SM_DATA = {data};\n", encoding="utf-8")
+    font_b64 = base64.b64encode(woff2.read_bytes()).decode()
+    (out / "css/font.css").write_text(
+        "/* generated: bundled SlideMarks for previews (named 'SlideMarks Preview' so it never masks the installed font) */\n"
+        f"@font-face {{ font-family: 'SlideMarks Preview'; src: url(data:font/woff2;base64,{font_b64}) format('woff2'); font-display: block; }}\n")
+
+    (out / "assets").mkdir(exist_ok=True)
+    pngs = {size: icon_png(tokens, manifest, size) for size in ICON_SIZES}
+    names = icon_names(pngs)
+    for size, png in pngs.items():
+        (out / "assets" / names[size]).write_bytes(png)
+    (out / "fonts").mkdir(exist_ok=True)
+    shutil.copy(ttf, out / "fonts" / ttf.name)
+
+    template = (src / "page.template.html").read_text()
+    office_script = '<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>'
+    (out / "taskpane.html").write_text(template.replace("{{OFFICE_SCRIPT}}", office_script).replace("{{MODE}}", "office"))
+    (out / "picker.html").write_text(template.replace("{{OFFICE_SCRIPT}}", "").replace("{{MODE}}", "browser"))
+
+    (out / "manifest.dev.xml").write_text(manifest_xml(manifest, DEV_BASE_URL, names))
+    if prod_base_url:
+        (out / "manifest.xml").write_text(manifest_xml(manifest, prod_base_url, names))
+    return out
+
+
