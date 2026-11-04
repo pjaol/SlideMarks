@@ -115,7 +115,7 @@ async function pptContext() {
       const shapes = context.presentation.getSelectedShapes();
       shapes.load("items/type");
       await context.sync();
-      if (!sel.isNullObject) return { kind: "text", length: sel.length };
+      if (!sel.isNullObject) return { kind: "text" };
       return { kind: shapes.items.some((s) => s.type === "Table") ? "table" : "none" };
     });
   } catch (e) {
@@ -124,29 +124,29 @@ async function pptContext() {
   }
 }
 
-async function pptInsertText(sym, text, length) {
-  const glyphLen = sym.char.length;
-  if (length > 0) {
-    // A selection: replace it, then style only the symbol (verified: surrounding text keeps its font).
-    await PowerPoint.run(async (context) => {
-      const sel = context.presentation.getSelectedTextRange();
-      sel.text = text;
-      await context.sync();
-      sel.getSubstring(0, glyphLen).font.name = SM.FONT;
-      await context.sync();
-    });
-    return { ok: true, message: `Inserted ${sym.name}` };
-  }
-  // A blinking cursor: the generic insert leaves the new text selected, which we then style.
-  await setSelectedData(text);
+async function pptInsertText(sym, text) {
+  // PowerPoint for Mac reports the word next to a blinking cursor as the selected text, so that range
+  // can't be trusted: replacing it swallowed the word. The generic insert goes to the real cursor (and
+  // replaces a real highlight); then find the new text by comparing the selected shape's text.
   return PowerPoint.run(async (context) => {
-    const sel = context.presentation.getSelectedTextRangeOrNullObject();
-    sel.load("text");
+    const shapes = context.presentation.getSelectedShapes();
+    shapes.load("items/id");
     await context.sync();
-    if (sel.isNullObject || !sel.text.startsWith(sym.char)) {
+    const ranges = shapes.items.map((s) => s.textFrame.textRange);
+    ranges.forEach((r) => r.load("text"));
+    await context.sync();
+    const before = ranges.map((r) => r.text);
+
+    await setSelectedData(text);
+    ranges.forEach((r) => r.load("text"));
+    await context.sync();
+    const changed = ranges.map((r, i) => i).filter((i) => ranges[i].text !== before[i]);
+    if (changed.length !== 1) {
       return { ok: true, warn: true, message: "Inserted, but couldn't set its font. Select the symbol and choose SlideMarks in the font menu." };
     }
-    sel.getSubstring(0, glyphLen).font.name = SM.FONT;
+    const i = changed[0];
+    const span = insertedSpan(before[i], ranges[i].text);
+    ranges[i].getSubstring(span.start, sym.char.length).font.name = SM.FONT;
     await context.sync();
     return { ok: true, message: `Inserted ${sym.name}` };
   });
@@ -249,7 +249,7 @@ SM.hosts.powerpoint = {
   async insert(sym, { label }) {
     const text = label ? `${sym.char} ${SM.labelText(sym)}` : sym.char;
     const where = await pptContext();
-    if (where.kind === "text") return pptInsertText(sym, text, where.length);
+    if (where.kind === "text") return pptInsertText(sym, text);
     if (where.kind === "table") return pptInsertTable(sym, text);
     // Never call setSelectedDataAsync without a text cursor: it creates a stray shape (spike).
     return { ok: false, message: "Click into a text box or a table cell first, then insert." };

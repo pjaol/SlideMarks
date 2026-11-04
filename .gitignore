@@ -8,3 +8,4 @@ dist/*.zip
 # personal VoiceOver exports used as format samples
 docs/sample-vo/
 dist/site/
+dist/*.pkg

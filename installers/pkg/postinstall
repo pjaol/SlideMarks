@@ -1,0 +1,20 @@
+#!/bin/sh
+# Installer runs this as root. Install for the person at the screen, in their own Library,
+# using the same script as the curl one-liner (bundled next to this file with the font and manifest),
+# then open the support page at the next step (or at the fix, if macOS blocked access).
+set -u
+here=$(cd "$(dirname "$0")" && pwd)
+user=$(stat -f%Su /dev/console)
+if [ -z "$user" ] || [ "$user" = root ] || [ "$user" = loginwindow ]; then
+  echo "SlideMarks: no one is logged in at the screen; install while logged in." >&2
+  exit 1
+fi
+sudo -u "$user" -H /bin/sh "$here/install.sh" --from "$here"
+status=$?
+case $status in
+  0) page="support/#after-install" ;;
+  3) page="support/#mac-access" ;;
+  *) exit "$status" ;;
+esac
+launchctl asuser "$(id -u "$user")" sudo -u "$user" open "{{BASE_URL}}/$page"
+exit "$status"

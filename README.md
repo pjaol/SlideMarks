@@ -27,6 +27,13 @@ Download the repository (**Code → Download ZIP**). The files you need are in t
 
 ## Install the font
 
+The easiest way is the one-step installer on the [website](https://pjaol.github.io/SlideMarks/#install). It installs the font and adds the SlideMarks add-in to Word and PowerPoint:
+
+- **Mac:** download the [Mac installer](https://github.com/pjaol/SlideMarks/releases/latest/download/SlideMarks.pkg), or run `curl -fsSL https://pjaol.github.io/SlideMarks/install.sh | sh` in Terminal.
+- **Windows:** run `irm https://pjaol.github.io/SlideMarks/install.ps1 | iex` in PowerShell.
+
+To install only the font:
+
 - **Windows:** right-click `SlideMarks-Regular.ttf` → **Install** (or **Install for all users**). Restart PowerPoint or Word.
 - **macOS:** double-click `SlideMarks-Regular.ttf` → **Install Font**. Restart PowerPoint or Word.
 - **Linux:** copy the file to `~/.local/share/fonts/` and run `fc-cache -f`.

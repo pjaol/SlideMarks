@@ -2,6 +2,7 @@
 
 Layout (all relative, so the site works under any folder such as /SlideMarks/):
   index.html          landing page and install steps
+  install.sh, install.ps1   one-step installers (Mac, Windows), see installers/
   office/             the Office add-in (manifest.xml points here)
   picker/             standalone character map
   download/           font, release zip and checksums
@@ -13,6 +14,7 @@ import shutil
 from html import escape
 from pathlib import Path
 
+from . import installers
 from .specimen_content import families
 
 REPO_URL = "https://github.com/pjaol/SlideMarks"
@@ -23,6 +25,7 @@ GITHUB_MARK = ('<svg aria-hidden="true" viewBox="0 0 16 16" width="20" height="2
     '.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53'
     '.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>')
 ISSUES_URL = f"{REPO_URL}/issues"
+PKG_URL = f"{REPO_URL}/releases/latest/download/SlideMarks.pkg"  # signed, notarized; built with `slidemarks mac-pkg`
 
 CSS = """
 :root { --fg:#1f2328; --muted:#59636e; --line:#d1d9e0; --panel:#f6f8fa; --accent:#6d3b8e; --bg:#fff; color-scheme: light dark; }
@@ -57,6 +60,10 @@ td img { width: 32px; height: 32px; display: block; }
 .preview { max-width: 100%; height: auto; border-radius: 12px; }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; padding: 1.2rem 0; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+.platforms section { border: 1px solid var(--line); border-radius: 10px; padding: 0 1rem .5rem; background: var(--panel); }
+.platforms pre { background: var(--bg); white-space: pre-wrap; word-break: break-all; }
+.small { font-size: .92rem; color: var(--muted); }
 .note { border-left: 4px solid var(--accent); background: var(--panel); padding: .6rem 1rem; border-radius: 0 8px 8px 0; }
 """
 
@@ -97,7 +104,8 @@ def _page(title: str, body: str, depth: int, version: str) -> str:
 """
 
 
-def _landing(manifest, version: str, zip_name: str) -> str:
+def _landing(manifest, version: str, zip_name: str, base_url: str) -> str:
+    base = escape(base_url.rstrip("/"))
     count = len(manifest["symbols"])
     return f"""
 <h1>Presentation symbols that behave like text</h1>
@@ -106,19 +114,28 @@ One consistent family of {count} symbols: type, paste, resize and recolor them l
 <p><img class="preview" src="preview.svg" alt="All {count} SlideMarks symbols, grouped by family"></p>
 
 <h2 id="install">Install</h2>
+<p>One step installs the font and adds SlideMarks to Word and PowerPoint. No administrator password needed.</p>
+<div class="platforms">
+<section>
+  <h3>Mac</h3>
+  <p><a class="btn" href="{PKG_URL}">Download the Mac installer</a></p>
+  <p>Open <code>SlideMarks.pkg</code> and follow the steps. It's signed and notarized by Apple.</p>
+  <p>Or paste this into <em>Terminal</em>:</p>
+  <pre><code>curl -fsSL {base}/install.sh | sh</code></pre>
+</section>
+<section>
+  <h3>Windows</h3>
+  <p>Close Word and PowerPoint. Open <em>PowerShell</em> (Start menu, type <kbd>PowerShell</kbd>), paste this and press <kbd>Enter</kbd>:</p>
+  <pre><code>irm {base}/install.ps1 | iex</code></pre>
+</section>
+</div>
+<p class="small">See exactly what they do: <a href="install.sh">install.sh</a> · <a href="install.ps1">install.ps1</a>.
+<a href="support/index.html#add-in">Uninstall, Office on the web, organizations and manual steps</a>.</p>
 <ol class="steps">
-  <li><strong>Install the font.</strong>
-    <p><a class="btn" href="download/SlideMarks-Regular.ttf" download>Download the font (.ttf)</a></p>
-    <ul>
-      <li><strong>Mac:</strong> double-click <code>SlideMarks-Regular.ttf</code> and choose <em>Install Font</em>.</li>
-      <li><strong>Windows:</strong> right-click <code>SlideMarks-Regular.ttf</code> and choose <em>Install for all users</em> (or <em>Install</em>).</li>
-    </ul>
-    Then <strong>quit every Office app and reopen it</strong>: Office only picks up new fonts when it restarts.</li>
-  <li><strong>Add SlideMarks to Word and PowerPoint</strong> <em>(optional)</em>. Until the Microsoft Marketplace listing is live, install it from the add-in manifest.
-    <p><a class="btn" href="office/manifest.xml" download="SlideMarks-manifest.xml">Download the add-in manifest</a></p>
-    Then follow the steps for <a href="support/index.html#add-in-mac">Mac</a>, <a href="support/index.html#add-in-windows">Windows</a> or
-    <a href="support/index.html#add-in-web">Office on the web</a>.</li>
-  <li><strong>Use it.</strong> Open <em>SlideMarks</em> on the Home tab, search for a symbol and click <em>Insert</em>.
+  <li><strong>Quit Word and PowerPoint and reopen them.</strong> Office only sees new fonts and add-ins when it starts
+    (if symbols show as boxes, restart Office once more).</li>
+  <li><strong>Use it.</strong> On the Home tab, click <em>Add-ins</em>, then <em>SlideMarks</em> (<a href="support/index.html#after-install">where to find it</a>).
+    Search for a symbol and click <em>Insert</em>.
     Or use the <a href="picker/index.html">web picker</a> to copy symbols into any app with the SlideMarks font.</li>
 </ol>
 <p class="note">Sharing a file? Turn on <em>Embed fonts in the file</em> so recipients see your symbols without installing anything.
@@ -138,7 +155,8 @@ Pronunciation packs for VoiceOver, NVDA and JAWS are in the zip.
 """
 
 
-def _support() -> str:
+def _support(base_url: str) -> str:
+    base = escape(base_url.rstrip("/"))
     return f"""
 <h1>Support</h1>
 <p>Questions, bugs and requests: <a href="{ISSUES_URL}">open an issue on GitHub</a>.
@@ -160,43 +178,63 @@ and reopen it</strong>. If you received the file from someone else, ask them to 
 </ul>
 <p>The Office add-in avoids all of this: its <em>Insert</em> button sets the font for you.</p>
 
-<h2 id="add-in">Installing the add-in from the manifest</h2>
-<p>Until the Microsoft Marketplace listing is live, the add-in is installed from its manifest file:
-<a href="../office/manifest.xml" download="SlideMarks-manifest.xml">download the add-in manifest</a>.
-Install the <a href="../index.html#install">SlideMarks font</a> as well: the add-in inserts symbols, the font draws them.</p>
+<h2 id="add-in">Installing and uninstalling</h2>
+<p>The <a href="../index.html#install">one-step installers</a> put the font and the add-in in your own user folders,
+so they don't need administrator rights. Read them first if you like: <a href="../install.sh">install.sh</a> (Mac),
+<a href="../install.ps1">install.ps1</a> (Windows).</p>
 
-<h3 id="add-in-mac">Mac (Word or PowerPoint)</h3>
+<h3 id="after-install">After installing: open SlideMarks</h3>
 <ol>
-  <li>In Finder, choose <em>Go → Go to Folder…</em> (<kbd>⇧⌘G</kbd>) and open
-    <code>~/Library/Containers/com.microsoft.Powerpoint/Data/Documents/</code>
-    (for Word: <code>com.microsoft.Word</code>).</li>
-  <li>Create a folder named <code>wef</code> there if it doesn't exist, and copy the manifest file into it.</li>
-  <li>Quit and reopen PowerPoint or Word, then choose <em>Home → Add-ins</em> and pick <em>SlideMarks</em> under developer add-ins.</li>
+  <li><strong>Quit Word and PowerPoint and reopen them</strong> (on a Mac, <kbd>⌘Q</kbd>; closing the window isn't enough).
+    Office only loads new fonts and add-ins when it starts.</li>
+  <li>On the <em>Home</em> tab, click <strong>Add-ins</strong>, then <strong>SlideMarks</strong>.
+    Word lists it under <em>Developer Add-ins</em>; PowerPoint shows it at the top.
+    <p><img src="../office/assets/walkthrough/word-mac-addins.png" width="316" style="max-width:100%;height:auto;border-radius:8px"
+      alt="Word's Home tab with the Add-ins button open, showing SlideMarks under Developer Add-ins"></p></li>
+  <li>The SlideMarks pane opens on the right. Search for a symbol and click <em>Insert</em>.</li>
 </ol>
+<p>If symbols show as empty boxes, quit Office once more: it sometimes needs a second restart to load a new font.</p>
 
-<h3 id="add-in-windows">Windows (Word or PowerPoint)</h3>
-<p>Office on Windows installs manifest-file add-ins from a <em>shared folder</em> that you mark as trusted. It's a one-time setup:</p>
-<ol>
-  <li><strong>Make a shared folder.</strong> Create a folder, for example <code>C:\SlideMarks</code>, and copy the manifest file into it.
-    Right-click the folder → <em>Properties → Sharing → Share…</em>, add yourself, choose <em>Share</em>, and note the network path shown,
-    such as <code>\\\\YOUR-PC\\SlideMarks</code>.</li>
-  <li><strong>Trust it in Office.</strong> In Word or PowerPoint: <em>File → Options → Trust Center → Trust Center Settings… → Trusted Add-in Catalogs</em>.
-    Paste the network path into <em>Catalog Url</em>, choose <em>Add catalog</em>, tick <em>Show in Menu</em>, then <em>OK</em> twice.</li>
-  <li><strong>Restart</strong> Word and PowerPoint.</li>
-  <li><strong>Add it.</strong> <em>Home → Add-ins → Advanced</em> (or <em>More Add-ins</em>), open the <em>SHARED FOLDER</em> tab, select <em>SlideMarks</em> and choose <em>Add</em>.</li>
-</ol>
-<p>Prefer not to set up a share? Use Office on the web (below). Organizations can deploy it centrally (further below).</p>
+<h3 id="mac-access">Mac: “would like to access data from other apps”</h3>
+<p>While installing, macOS asks whether <em>Installer</em> (or <em>Terminal</em>, if you used the command) can access data from other apps.
+Choose <strong>Allow</strong>. Word and PowerPoint only load add-ins from a folder inside their own app data, so the installer has to write there.
+It adds one file and changes nothing else.</p>
+<p>If you chose <em>Don't Allow</em>, the font is installed but the add-in isn't. Run the installer again and choose <em>Allow</em>.
+If macOS doesn't ask again, add the add-in by hand with the <a href="#manual">manual steps</a> (Finder isn't blocked).</p>
+
+<h3 id="uninstall">Uninstall</h3>
+<ul>
+  <li><strong>Mac</strong>, in Terminal: <pre><code>curl -fsSL {base}/install.sh | sh -s uninstall</code></pre></li>
+  <li><strong>Windows</strong>, in PowerShell with Word and PowerPoint closed:
+    <pre><code>&amp; ([scriptblock]::Create((irm {base}/install.ps1))) -Uninstall</code></pre></li>
+</ul>
 
 <h3 id="add-in-web">Office on the web</h3>
 <ol>
+  <li>Download the <a href="../office/manifest.xml" download="SlideMarks-manifest.xml">add-in manifest</a>.</li>
   <li>Open a document in Word or PowerPoint at <a href="https://www.office.com/">office.com</a>.</li>
   <li><em>Home → Add-ins → More Settings → Upload My Add-in</em>, choose the manifest file, then <em>Upload</em>.</li>
 </ol>
 <p>The web version can't embed fonts, so use the desktop app before sharing files.</p>
 
 <h3 id="add-in-org">Organizations</h3>
-<p>Administrators can deploy the manifest to users or groups from the Microsoft 365 admin center
-(<em>Settings → Integrated apps → Upload custom apps</em>), so it appears in Word and PowerPoint without any of the steps above.</p>
+<p>Administrators can deploy the <a href="../office/manifest.xml" download="SlideMarks-manifest.xml">add-in manifest</a> to users or groups
+from the Microsoft 365 admin center (<em>Settings → Integrated apps → Upload custom apps</em>), so it appears in Word and PowerPoint
+without any other steps. Deploy the font with your usual software tools.</p>
+
+<h3 id="manual">Manual install</h3>
+<p>If you can't run the installers, install the <a href="../download/SlideMarks-Regular.ttf" download>font</a> by double-clicking it
+(Windows: right-click → <em>Install</em>), then add the <a href="../office/manifest.xml" download="SlideMarks-manifest.xml">add-in manifest</a>:</p>
+<ul>
+  <li id="add-in-mac"><strong>Mac:</strong> in Finder choose <em>Go → Go to Folder…</em> (<kbd>⇧⌘G</kbd>), open
+    <code>~/Library/Containers/com.microsoft.Powerpoint/Data/Documents/</code> (for Word: <code>com.microsoft.Word</code>),
+    create a folder named <code>wef</code> there if it's missing, and copy the manifest into it.</li>
+  <li id="add-in-windows"><strong>Windows:</strong> put the manifest in a folder, share it (<em>Properties → Sharing → Share…</em>),
+    then in Word or PowerPoint add the network path, such as <code>\\\\YOUR-PC\\SlideMarks</code>, under
+    <em>File → Options → Trust Center → Trust Center Settings… → Trusted Add-in Catalogs</em> with <em>Show in Menu</em> ticked.
+    After a restart, it's under <em>Home → Add-ins → Advanced → SHARED FOLDER</em>.</li>
+</ul>
+<p>Then quit and reopen Word and PowerPoint.</p>
 
 <h2>Embedding the font when sharing</h2>
 <p>Open the SlideMarks pane and follow <em>Show me how</em>. It shows the exact steps for your app and checks the result.</p>
@@ -262,7 +300,7 @@ To search and copy, use the <a href="../picker/index.html">picker</a>.</p>
 """
 
 
-def build(root: Path, manifest, zip_path: Path) -> Path:
+def build(root: Path, manifest, zip_path: Path, base_url: str) -> Path:
     dist = root / "dist"
     out = dist / "site"
     if out.exists():
@@ -284,15 +322,17 @@ def build(root: Path, manifest, zip_path: Path) -> Path:
         sums = next(n for n in z.namelist() if n.endswith("SHA256SUMS"))
         (out / "download/SHA256SUMS").write_bytes(z.read(sums))
 
+    installers.write_scripts(root, out, base_url)
+
     (out / "glyphs").mkdir()
     shutil.copytree(root / "docs/glyphs", out / "glyphs/svg")
     shutil.copy(root / "docs/preview.svg", out / "preview.svg")
 
     (out / "site.css").write_text(CSS)
     pages = {
-        "index.html": ("SlideMarks", _landing(manifest, version, zip_path.name), 0),
+        "index.html": ("SlideMarks", _landing(manifest, version, zip_path.name, base_url), 0),
         "glyphs/index.html": ("Glyph reference", _glyphs(manifest), 1),
-        "support/index.html": ("Support", _support(), 1),
+        "support/index.html": ("Support", _support(base_url), 1),
         "privacy/index.html": ("Privacy", _privacy(), 1),
         "terms/index.html": ("Terms of use", _terms(), 1),
     }

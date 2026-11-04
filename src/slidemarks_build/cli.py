@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from . import check, office, package, reference, site, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
+from . import check, installers, office, package, reference, site, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
 from .font import build_font
 from .manifest import validate
 from .metrics import measure
@@ -104,8 +104,29 @@ def site_cmd(args) -> int:
         return status
     manifest = json.loads((ROOT / "source/symbols.json").read_text())
     zip_path = package.build_zip(ROOT, manifest)
-    out = site.build(ROOT, manifest, zip_path)
+    out = site.build(ROOT, manifest, zip_path, args.base_url)
     print(f"site → {out.relative_to(ROOT)}/ (for {args.base_url})")
+    return 0
+
+
+def mac_pkg_cmd(args) -> int:
+    """Build SlideMarks.pkg (Mac installer for the font and add-in), optionally signed and notarized."""
+    if sys.platform != "darwin":
+        print("The Mac installer can only be built on a Mac (pkgbuild, productbuild).", file=sys.stderr)
+        return 1
+    args.office_base_url = f"{args.base_url.rstrip('/')}/office"
+    args.strict = True
+    status = build(args)
+    if status:
+        return status
+    tokens = json.loads((ROOT / "source/design-tokens.json").read_text())
+    manifest = json.loads((ROOT / "source/symbols.json").read_text())
+    pkg = installers.build_pkg(ROOT, tokens, manifest, ROOT / "dist/fonts/SlideMarks-Regular.ttf", ROOT / "dist/office/manifest.xml",
+                               args.base_url, ROOT / "dist/SlideMarks.pkg", sign=args.sign)
+    print(f"installer → {pkg.relative_to(ROOT)}" + ("" if args.sign else " (unsigned: for local testing only)"))
+    if args.notarize:
+        installers.notarize(pkg, args.notarize)
+        print("notarized and stapled")
     return 0
 
 
@@ -183,6 +204,11 @@ def main():
     st.add_argument("--base-url", default=PAGES_BASE_URL, help=f"public HTTPS address of the site (default {PAGES_BASE_URL})")
     st.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
     st.set_defaults(func=site_cmd)
+    mp = sub.add_parser("mac-pkg", help="build dist/SlideMarks.pkg, the Mac installer for the font and add-in")
+    mp.add_argument("--base-url", default=PAGES_BASE_URL, help="site the installed add-in loads from")
+    mp.add_argument("--sign", help='"Developer ID Installer: ..." identity or its SHA-1 hash')
+    mp.add_argument("--notarize", metavar="PROFILE", help="notarytool keychain profile (xcrun notarytool store-credentials)")
+    mp.set_defaults(func=mac_pkg_cmd)
     o = sub.add_parser("office-serve", help="serve dist/office over HTTPS for sideloading (dev)")
     o.add_argument("--port", type=int, default=3443)
     o.set_defaults(func=office_serve_cmd)

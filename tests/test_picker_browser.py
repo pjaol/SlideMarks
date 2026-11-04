@@ -113,10 +113,12 @@ def test_paste_help_appears_after_copy_until_dismissed_for_good(picker):
     _ab("eval", "localStorage.removeItem('slidemarks.hidePasteHelp'); 1")
     _ab("fill", "#q", "harvey 75")
     _ab("click", "#pv-copy")
+    _ab("wait", "200")  # the card opens once the asynchronous copy has finished
     assert _eval("!document.getElementById('paste-help').hidden")
     _ab("click", "#paste-help-never")
     assert _eval("document.getElementById('paste-help').hidden")
     _ab("click", "#pv-copy")
+    _ab("wait", "200")
     assert _eval("document.getElementById('paste-help').hidden")  # stays out of the way once dismissed
     _ab("click", "#paste-help-open")  # but can always be reopened
     assert _eval("!document.getElementById('paste-help').hidden")

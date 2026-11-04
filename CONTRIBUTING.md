@@ -46,6 +46,7 @@ The font is byte-reproducible: the same inputs always give an identical TTF.
 source/
   design-tokens.json   every dimension: frame, center, strokes, family parameters
   symbols.json         families, immutable ids, PUA code points, names, tags, builder params
+installers/             install.sh (Mac), install.ps1 (Windows), pkg/ (Mac package scripts); published with the site
 apps/office/            Word/PowerPoint add-in and standalone picker (plain HTML/CSS/JS)
 src/slidemarks_build/
   geometry.py          path primitives (circles, arcs, strokes, booleans)
@@ -58,6 +59,7 @@ src/slidemarks_build/
   web.py, reference.py, package.py, screen_readers.py   user-facing outputs
   check.py             `slidemarks check` document linter
   office.py            assembles dist/office/ (add-in + standalone picker, manifests, icons)
+  installers.py        renders the install scripts; builds, signs and notarizes SlideMarks.pkg
 tests/                 pytest suite
 docs/                  design docs, ADRs, accessibility, generated glyph reference
 review/                generated review specimens
@@ -140,8 +142,36 @@ uv run slidemarks site      # dist/site/: landing, office/ (production manifest)
   `mkdir -p /tmp/pages && ln -sfn "$PWD/dist/site" /tmp/pages/SlideMarks && python3 -m http.server -d /tmp/pages 8780`
   Then open http://localhost:8780/SlideMarks/.
 
+## Installers
+
+`install.sh` and `install.ps1` (in `installers/`) are published at the site root with the site's address filled in.
+They install per user (no admin):
+
+- **Mac:** the font goes to `~/Library/Fonts`. The manifest goes to `~/Library/Containers/com.microsoft.{Word,Powerpoint}/Data/Documents/wef/`,
+  but only for apps whose container already exists; the script never creates another app's container.
+- **Windows:** the font goes to `%LOCALAPPDATA%\Microsoft\Windows\Fonts` and is registered under HKCU. The manifest is registered under
+  `HKCU\Software\Microsoft\Office\16.0\WEF\Developer` (value name = add-in ID, data = manifest path), as Microsoft's
+  `office-addin-dev-settings` does.
+
+`tests/test_installers.py` runs `install.sh` against a fake home folder, and parses `install.ps1` where PowerShell is available (CI).
+
+### Mac package
+
+`SlideMarks.pkg` is a scripts-only package: its `postinstall` runs the same `install.sh --from` as the console user,
+with the font and production manifest bundled. Build it on a Mac with a Developer ID Installer certificate:
+
+```sh
+# once: store notarization credentials (app-specific password from appleid.apple.com)
+xcrun notarytool store-credentials slidemarks --apple-id <apple-id> --team-id <team-id>
+
+uv run slidemarks mac-pkg --sign "Developer ID Installer: <name> (<team-id>)" --notarize slidemarks
+```
+
+The website links to `releases/latest/download/SlideMarks.pkg`, so attach it to every GitHub release under exactly that name.
+
 ## Releases
 
 1. Bump `manifestVersion` in `source/symbols.json`.
 2. Run `uv run pytest` and `uv run slidemarks package --strict`.
-3. Attach `dist/SlideMarks-<version>.zip` to a GitHub release.
+3. Build the Mac package (above).
+4. Attach `dist/SlideMarks-<version>.zip` and `dist/SlideMarks.pkg` to a GitHub release.
