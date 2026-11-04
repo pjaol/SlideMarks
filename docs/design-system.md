@@ -12,7 +12,7 @@ Status: v0.1.0 draft (2026-11-03). Values live in `source/design-tokens.json`, a
 | Center | (500, 420) | asymmetric glyphs are centered by ink box |
 | Stroke | regular 56, thin 36, heavy 84 | thin/heavy only for explicit weight variants and separators |
 | Caps / joins | round for line glyphs; sharp for geometric outlines (squares, diamonds, process boxes, progress segments) | |
-| Arrowhead | open, 225 long, 45° half-angle | shared by every arrow, every trend (including oscillating) and every curved arrow; loops are the one exception (below) |
+| Arrowhead | open, 225 long, 45° half-angle | shared by every arrow, every trend (including oscillating) and every curved arrow; loops and the branch arrow are the exceptions (below) |
 
 ## Decisions
 
@@ -32,6 +32,7 @@ Status: v0.1.0 draft (2026-11-03). Values live in `source/design-tokens.json`, a
 | D12 | Trend oscillating ends in the shared arrowhead, pointing level after two even swings | Every trend carries a head; ending level keeps it neutral instead of reading as falling. Its repeated swings separate it from trend flat (one wiggle, then level) |
 | D13 | Circled 1 is centered on its stem, not its ink box | Ink-box centering let the flag pull the stem right of center; numerals are judged by their main stroke |
 | D14 | Arrows and comparison operators are also mapped from their standard Unicode code points; the missing-font empty-box rule is relaxed for those glyphs only | Screen readers can name standard characters but never PUA ones; a system arrow keeps the meaning when the font is missing. See ADR 0002 and `docs/accessibility.md` |
+| D15 | Branch arrow uses a 150-unit head (like loops), with its tips at the frame edges | With the shared 225 head, the two inner head arms pointed at each other about 166 units apart (about 4 px at picker size) and read as one bar; now about 428 units apart |
 
 ## Code point blocks
 

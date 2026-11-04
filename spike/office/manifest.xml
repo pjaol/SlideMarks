@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPIKE ONLY: sideloaded test add-in for probing PowerPoint/Word insertion. Not for distribution. -->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+  <Id>6f2d3c4e-9a1b-4d7e-8c2f-51a0b7e3d9a1</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>SlideMarks</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="SlideMarks Spike"/>
+  <Description DefaultValue="Probe symbol insertion in PowerPoint and Word (spike)."/>
+  <IconUrl DefaultValue="https://localhost:3443/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3443/assets/icon-64.png"/>
+  <SupportUrl DefaultValue="https://github.com/pjaol/SlideMarks"/>
+  <AppDomains>
+    <AppDomain>https://localhost:3443</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Presentation"/>
+    <Host Name="Document"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:3443/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Presentation">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="SlideMarks.Group">
+                <Label resid="SM.Group"/>
+                <Icon>
+                  <bt:Image size="16" resid="SM.Icon16"/>
+                  <bt:Image size="32" resid="SM.Icon32"/>
+                  <bt:Image size="80" resid="SM.Icon80"/>
+                </Icon>
+                <Control xsi:type="Button" id="SlideMarks.Open">
+                  <Label resid="SM.Button"/>
+                  <Supertip><Title resid="SM.Button"/><Description resid="SM.Tip"/></Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="SM.Icon16"/>
+                    <bt:Image size="32" resid="SM.Icon32"/>
+                    <bt:Image size="80" resid="SM.Icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>SlideMarksSpike</TaskpaneId>
+                    <SourceLocation resid="SM.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="SlideMarks.GroupW">
+                <Label resid="SM.Group"/>
+                <Icon>
+                  <bt:Image size="16" resid="SM.Icon16"/>
+                  <bt:Image size="32" resid="SM.Icon32"/>
+                  <bt:Image size="80" resid="SM.Icon80"/>
+                </Icon>
+                <Control xsi:type="Button" id="SlideMarks.OpenW">
+                  <Label resid="SM.Button"/>
+                  <Supertip><Title resid="SM.Button"/><Description resid="SM.Tip"/></Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="SM.Icon16"/>
+                    <bt:Image size="32" resid="SM.Icon32"/>
+                    <bt:Image size="80" resid="SM.Icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>SlideMarksSpike</TaskpaneId>
+                    <SourceLocation resid="SM.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="SM.Icon16" DefaultValue="https://localhost:3443/assets/icon-16.png"/>
+        <bt:Image id="SM.Icon32" DefaultValue="https://localhost:3443/assets/icon-32.png"/>
+        <bt:Image id="SM.Icon80" DefaultValue="https://localhost:3443/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="SM.Url" DefaultValue="https://localhost:3443/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="SM.Group" DefaultValue="SlideMarks"/>
+        <bt:String id="SM.Button" DefaultValue="SlideMarks Spike"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="SM.Tip" DefaultValue="Open the SlideMarks insertion spike."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

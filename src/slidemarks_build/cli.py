@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from . import check, package, reference, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
+from . import check, office, package, reference, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
 from .font import build_font
 from .manifest import validate
 from .metrics import measure
@@ -32,6 +32,7 @@ def build(args) -> int:
     web.render_example(manifest, dist / "web" / "example.html")
     reference.render(tokens, manifest, out["svg_paths"], ROOT / "docs")
     screen_readers.render(manifest, dist / "screen-readers")
+    office.build(ROOT, tokens, manifest, out["woff2"], out["ttf"], prod_base_url=getattr(args, "office_base_url", None))
 
     review = ROOT / "review"
     info = {"built": datetime.now().strftime("%Y-%m-%d %H:%M")}
@@ -43,6 +44,8 @@ def build(args) -> int:
     print(f"built {len(records)} glyphs → {out['ttf'].relative_to(ROOT)}, {out['woff2'].relative_to(ROOT)}")
     print("web → dist/web/ (slidemarks.css, slidemarks.json, example.html) · reference → docs/glyphs.md, docs/preview.svg")
     print("screen readers → dist/screen-readers/ (VoiceOver, NVDA, JAWS)")
+    print("office add-in → dist/office/ (taskpane.html, picker.html, manifest.dev.xml"
+          + (", manifest.xml" if getattr(args, "office_base_url", None) else "") + ")")
     print("review → review/specimen.html, review/specimen.pptx, review/specimen.docx")
     for gid, f in findings:
         print(f"  ! {gid}: {f}")
@@ -90,15 +93,83 @@ def check_cmd(args) -> int:
     return 1 if errors else 0
 
 
+def office_serve_cmd(args) -> int:
+    import http.server
+    import ssl
+    certs = Path.home() / ".office-addin-dev-certs"
+    if not (certs / "localhost.crt").exists():
+        print("No dev certificate. Run once: npx office-addin-dev-certs install", file=sys.stderr)
+        return 1
+    root = ROOT / "dist/office"
+
+    class Handler(http.server.SimpleHTTPRequestHandler):
+        def __init__(self, *a, **kw):
+            super().__init__(*a, directory=str(root), **kw)
+
+        def end_headers(self):
+            self.send_header("Cache-Control", "no-store")
+            super().end_headers()
+
+    server = http.server.ThreadingHTTPServer(("localhost", args.port), Handler)
+    ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ctx.load_cert_chain(certs / "localhost.crt", certs / "localhost.key")
+    server.socket = ctx.wrap_socket(server.socket, server_side=True)
+    print(f"serving dist/office at https://localhost:{args.port}")
+    print("sideload: npx office-addin-dev-settings sideload dist/office/manifest.dev.xml desktop --app powerpoint|word")
+    server.serve_forever()
+    return 0
+
+
+def office_open_cmd(args) -> int:
+    """Launch Word or PowerPoint with the dev add-in attached (Mac/Windows desktop)."""
+    import shutil
+    import ssl
+    import subprocess
+    import urllib.request
+    # Python doesn't read the macOS keychain, so trust the dev certificate authority explicitly.
+    ca = Path.home() / ".office-addin-dev-certs/ca.crt"
+    ctx = ssl.create_default_context(cafile=str(ca)) if ca.exists() else None
+    if ctx is not None:
+        # Microsoft's dev certificate has no Authority Key Identifier, which strict mode rejects.
+        ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT
+    try:
+        urllib.request.urlopen(f"https://localhost:{args.port}/taskpane.html", timeout=3, context=ctx)
+    except Exception:
+        print(f"The add-in server isn't running. In another terminal: uv run slidemarks office-serve --port {args.port}", file=sys.stderr)
+        return 1
+    manifest = ROOT / "dist/office/manifest.dev.xml"
+    if not manifest.exists():
+        print("No dist/office/manifest.dev.xml. Run: uv run slidemarks build", file=sys.stderr)
+        return 1
+    if not shutil.which("npx"):
+        print("npx (Node.js) is required for Microsoft's sideload tool.", file=sys.stderr)
+        return 1
+    # The build replaces dist/office, which leaves the sideload tool's earlier links stale
+    # ("EEXIST"), so clear this add-in's registrations first (Mac locations).
+    for app in ("Powerpoint", "Word"):
+        for old in (Path.home() / f"Library/Containers/com.microsoft.{app}/Data/Documents/wef").glob(f"{office.ADDIN_ID}*.xml"):
+            old.unlink()
+    return subprocess.call(["npx", "--yes", "office-addin-dev-settings", "sideload", str(manifest), "desktop", "--app", args.app])
+
+
 def main():
     parser = argparse.ArgumentParser(prog="slidemarks")
     sub = parser.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build", help="compile font and regenerate review specimens")
     b.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
+    b.add_argument("--office-base-url", help="also write dist/office/manifest.xml pointing at this HTTPS host")
     b.set_defaults(func=build)
     p = sub.add_parser("package", help="build, then write the release zip to dist/")
     p.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
+    p.add_argument("--office-base-url", help="also write dist/office/manifest.xml pointing at this HTTPS host")
     p.set_defaults(func=package_cmd)
+    o = sub.add_parser("office-serve", help="serve dist/office over HTTPS for sideloading (dev)")
+    o.add_argument("--port", type=int, default=3443)
+    o.set_defaults(func=office_serve_cmd)
+    oo = sub.add_parser("office-open", help="launch Word or PowerPoint with the dev add-in attached")
+    oo.add_argument("--app", choices=["word", "powerpoint"], required=True)
+    oo.add_argument("--port", type=int, default=3443)
+    oo.set_defaults(func=office_open_cmd)
     c = sub.add_parser("check", help="check PowerPoint/Word files for SlideMarks accessibility and rendering problems")
     c.add_argument("files", nargs="+", help=".pptx or .docx files")
     c.add_argument("--json", action="store_true", help="machine-readable output")

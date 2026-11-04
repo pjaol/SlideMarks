@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SlideMarks spike</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+  @font-face { font-family: SlideMarks; src: url(assets/SlideMarks-Regular.woff2) format("woff2"); }
+  body { font: 13px system-ui, sans-serif; margin: 10px; }
+  .sm { font-family: SlideMarks; font-size: 20px; }
+  button { display: block; width: 100%; margin: 6px 0; padding: 6px; text-align: left; }
+  #log { font: 11px ui-monospace, Menlo, monospace; white-space: pre-wrap; border-top: 1px solid #ccc; margin-top: 10px; padding-top: 6px; }
+  .ok { color: #15803d; } .fail { color: #b91c1c; }
+  .sharing { display: flex; gap: 10px; padding: 10px; border-radius: 8px; margin: 8px 0 12px; color: #1f2328; }
+  .sharing p { margin: 4px 0; } .sharing ol { margin: 6px 0; padding-left: 18px; } .sharing button { width: auto; display: inline-block; }
+  .sharing .badge { flex: none; width: 26px; height: 26px; border-radius: 13px; text-align: center; line-height: 26px; font-weight: 700; color: #fff; }
+  .sharing.ok { background: #dafbe1; } .sharing.ok .badge { background: #1a7f37; }
+  .sharing.pending { background: #fff8c5; } .sharing.pending .badge { background: #9a6700; }
+  .sharing.warn { background: #ffebe9; } .sharing.warn .badge { background: #cf222e; }
+</style>
+</head>
+<body>
+<h3>SlideMarks spike <span class="sm">&#xE003; &#x2192;</span></h3>
+<p id="status">Loading Office.js…</p>
+<div id="sharing" class="sharing">Checking whether SlideMarks is embedded…</div>
+<div id="manual" hidden>
+  <p><b>Manual probes</b>: click into a table cell (or text) first, then:</p>
+  <button id="m-range">Insert at cursor: getSelectedTextRange</button>
+  <button id="m-data">Insert at cursor: setSelectedDataAsync</button>
+  <button id="m-export">Export document to server</button>
+</div>
+<div id="log"></div>
+<script src="probes.js"></script>
+<script src="sharing.js"></script>
+</body>
+</html>

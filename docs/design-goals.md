@@ -1,6 +1,6 @@
 # SlideMarks design goals
 
-Status: **accepted** (2026-11-03). Derived from `SlideMarks_Requirements_v0.1.md` and the Phase 0 spike. The review sheet (`review/specimen.html`) is how each goal is checked.
+Status: **accepted** (2026-11-03). Derived from `docs/SlideMarks_Requirements_v0.1.md` and the Phase 0 spike. The review sheet (`review/specimen.html`) is how each goal is checked.
 
 The one-line test: **a reader should never notice which glyphs came from which family.** Anything in a table cell should look like it was drawn by one hand, at one weight, on one grid.
 

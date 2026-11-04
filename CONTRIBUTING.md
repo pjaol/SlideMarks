@@ -3,7 +3,8 @@
 This guide is for people building or changing the font. If you just want to use SlideMarks, see the [README](README.md).
 
 Background reading:
-- `SlideMarks_Requirements_v0.1.md`: the product spec.
+- `docs/SlideMarks_Requirements_v0.1.md`: the product spec.
+- `docs/charmap.md`: Office add-in and distribution requirements (next phase).
 - `docs/design-goals.md`: the design principles.
 - `docs/design-system.md`: metrics, design decisions and code point blocks.
 - `docs/adr/`: architecture decisions.
@@ -45,6 +46,7 @@ The font is byte-reproducible: the same inputs always give an identical TTF.
 source/
   design-tokens.json   every dimension: frame, center, strokes, family parameters
   symbols.json         families, immutable ids, PUA code points, names, tags, builder params
+apps/office/            Word/PowerPoint add-in and standalone picker (plain HTML/CSS/JS)
 src/slidemarks_build/
   geometry.py          path primitives (circles, arcs, strokes, booleans)
   glyphs.py            one builder per family; all geometry derives from tokens
@@ -55,11 +57,48 @@ src/slidemarks_build/
   specimen_*.py        review sheets (HTML, PPTX, DOCX)
   web.py, reference.py, package.py, screen_readers.py   user-facing outputs
   check.py             `slidemarks check` document linter
+  office.py            assembles dist/office/ (add-in + standalone picker, manifests, icons)
 tests/                 pytest suite
 docs/                  design docs, ADRs, accessibility, generated glyph reference
 review/                generated review specimens
 dist/                  generated user artifacts
 ```
+
+## Office add-in (Word and PowerPoint)
+
+The add-in's source is plain HTML, CSS and JavaScript in `apps/office/`: no framework, bundler or `package.json`. `slidemarks build` assembles `dist/office/`:
+- `taskpane.html`: loads Office.js;
+- `picker.html`: the standalone, offline page;
+- the generated catalog, the embedded preview font and the icons;
+- `manifest.dev.xml`, pointing at `https://localhost:3443`.
+
+Design: `docs/office-addin-design.md`. Proven API behavior: `docs/office-js-spike.md`.
+
+```sh
+npx office-addin-dev-certs install          # once: trusted localhost HTTPS certificate (needs Node.js)
+uv run slidemarks build
+uv run slidemarks office-serve               # terminal 1: https://localhost:3443 (keep it running)
+uv run slidemarks office-open --app word     # terminal 2: or --app powerpoint
+```
+
+### Opening Word or PowerPoint with the add-in
+
+**Use `slidemarks office-open`.** It:
+- checks the add-in server is running;
+- clears stale sideload registrations, which go stale every build because the build replaces `dist/office/`;
+- launches the app through Microsoft's sideload tool, with a document that has the SlideMarks pane attached.
+
+**Why opening the app normally doesn't show the add-in:** a sideloaded add-in gets no ribbon button in ordinary documents. On Mac it's only listed under **Home → Add-ins** (the Add-ins button), as a developer add-in, and has to be picked from there each time. That manual route works too, provided `office-serve` is running.
+
+- After changing **HTML, CSS or JS**, close and reopen the task pane. The server sends `no-store`.
+- After changing the **manifest** (or icons), run `office-open` again.
+- After changing the **font**:
+  1. Quit every Office app.
+  2. Copy `dist/fonts/SlideMarks-Regular.ttf` over the installed copy (`~/Library/Fonts` on Mac).
+  3. Reopen. If symbols still look old, quit and reopen once more: Office reads fonts at launch and can start mid-rebuild of its font cache.
+  4. Documents that already embed SlideMarks keep the old copy until they're saved again.
+- Debugging on Mac: `defaults write com.microsoft.Powerpoint OfficeWebAddinDeveloperExtras -bool true`, then right-click the pane and choose **Inspect Element**.
+- Production: `uv run slidemarks build --office-base-url https://<host>` also writes `dist/office/manifest.xml` for that HTTPS host. Publishing isn't set up yet.
 
 ## Design review workflow
 
