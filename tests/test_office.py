@@ -18,6 +18,13 @@ def test_manifest_is_wellformed_and_points_at_base_url(manifest):
     assert root.find("o:DefaultSettings/o:SourceLocation", NS).get("DefaultValue") == "https://office.example.org/taskpane.html"
     assert {h.get("Name") for h in root.findall("o:Hosts/o:Host", NS)} == {"Presentation", "Document"}
     assert "https://localhost" not in xml
+    assert root.find("o:AppDomains/o:AppDomain", NS).text == "https://office.example.org"  # origin only
+
+
+def test_app_domain_drops_the_path(manifest):
+    root = ET.fromstring(office.manifest_xml(manifest, "https://pjaol.github.io/SlideMarks/office").encode())
+    assert root.find("o:AppDomains/o:AppDomain", NS).text == "https://pjaol.github.io"
+    assert root.find("o:DefaultSettings/o:SourceLocation", NS).get("DefaultValue") == "https://pjaol.github.io/SlideMarks/office/taskpane.html"
 
 
 def test_manifest_version_is_at_least_one(manifest):

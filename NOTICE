@@ -1,0 +1,42 @@
+SlideMarks
+Copyright (c) 2026 Patrick O'Leary
+https://github.com/pjaol/SlideMarks
+
+This project is distributed under two licences:
+
+1. The SlideMarks font: SIL Open Font License, Version 1.1 (see OFL.txt),
+   with Reserved Font Name "SlideMarks". This covers:
+     - the font files: dist/fonts/, dist/web/*.woff2, and the fonts
+       embedded in generated documents and the add-in;
+     - the glyph designs: the outlines produced by
+       src/slidemarks_build/glyphs.py and geometry.py from
+       source/design-tokens.json and source/symbols.json;
+     - the per-glyph SVG exports in dist/svg/ and docs/glyphs/.
+   Modified versions of the font must not use the name "SlideMarks".
+
+2. Everything else, including the build tools, Office add-in, picker,
+   document checker, screen-reader packs and tests: Apache License,
+   Version 2.0 (see LICENSE).
+
+The name "SlideMarks" and the Harvey-ball logo identify the official project.
+See TRADEMARKS.md.
+
+Provenance
+----------
+Every glyph is an original drawing. The outlines are computed from this
+project's own design tokens by this project's own code (see
+docs/adr/0001-parametric-glyph-source.md). No third-party font outlines,
+icon sets or SVGs were copied or traced. Mapping some glyphs to standard
+Unicode code points (for example U+2192 RIGHTWARDS ARROW) uses the Unicode
+standard and implies no third-party design.
+
+Third-party material
+--------------------
+- apps/office/assets/walkthrough/*.png (copied into dist/office/):
+  screenshots of Microsoft Word and PowerPoint for Mac,
+  (c) Microsoft Corporation, used for instructional purposes. They are not
+  covered by either licence above. Highlight boxes are drawn separately by the
+  add-in's stylesheet; the screenshots themselves are unaltered.
+- Office.js is loaded at runtime from Microsoft's CDN and is not redistributed.
+- Build-time tools (not redistributed): fontTools (MIT), skia-pathops (BSD-3-Clause),
+  python-pptx (MIT), python-docx (MIT).

@@ -85,6 +85,10 @@ def icon_names(icons: dict) -> dict:
 def manifest_xml(manifest, base_url: str, icons: dict | None = None) -> str:
     icons = icons or {size: f"icon-{size}.png" for size in ICON_SIZES}
     base = base_url.rstrip("/")
+    # AppDomains take an origin (scheme + host), never a path: https://pjaol.github.io, not …/SlideMarks.
+    from urllib.parse import urlsplit
+    parts = urlsplit(base)
+    origin = f"{parts.scheme}://{parts.netloc}"
     # Office requires add-in versions >= 1.0; font 0.y.z ships as add-in 1.y.z.0 (major + 1).
     major, minor, patch = (int(x) for x in manifest["manifestVersion"].split("."))
     version = f"{major + 1}.{minor}.{patch}.0"
@@ -130,7 +134,7 @@ def manifest_xml(manifest, base_url: str, icons: dict | None = None) -> str:
   <HighResolutionIconUrl DefaultValue="{url('assets/' + icons[64])}"/>
   <SupportUrl DefaultValue="https://github.com/pjaol/SlideMarks"/>
   <AppDomains>
-    <AppDomain>{escape(base)}</AppDomain>
+    <AppDomain>{escape(origin)}</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Presentation"/>
