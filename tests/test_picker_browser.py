@@ -82,3 +82,24 @@ def test_no_insert_button_outside_office(picker):
 def test_passes_axe(picker):
     result = _ab("a11y")
     assert [v["id"] for v in result["violations"]] == []
+
+
+def test_copy_puts_formatted_html_and_plain_text_on_the_clipboard(picker):
+    # Capture what the page hands to the clipboard (no system clipboard permission needed).
+    _ab("eval", """window.__clip = null;
+      navigator.clipboard.write = async (items) => {
+        const item = items[0];
+        window.__clip = { types: item.types,
+          html: await (await item.getType('text/html')).text(),
+          text: await (await item.getType('text/plain')).text() };
+      }; 1""")
+    _ab("fill", "#q", "harvey 75")
+    _ab("click", "#pv-copy")
+    _ab("wait", "200")
+    clip = _eval("window.__clip")
+    assert set(clip["types"]) == {"text/html", "text/plain"}
+    assert clip["text"] == "\ue003"
+    # Word only sets the East Asian slot (which it draws these characters from) via mso-fareast-font-family.
+    for prop in ["font-family:SlideMarks", "mso-fareast-font-family:SlideMarks", "mso-ascii-font-family:SlideMarks"]:
+        assert prop in clip["html"]
+    _ab("fill", "#q", "")

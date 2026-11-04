@@ -2,21 +2,45 @@
 //   { ok, message?, warn?, confirm?: { label, run } }
 // Behavior follows docs/office-js-spike.md; comments cite the finding each step relies on.
 
-SM.copyText = async (text) => {
+// Copy as formatted text as well as plain text, so pasting into Word or PowerPoint keeps the
+// SlideMarks font. Plain text alone pastes in the destination's font, which has no SlideMarks
+// characters, so it shows as a box. The mso-* properties make Word set all four font slots
+// (it draws these characters from the East Asian slot); verified by pasting into Word for Mac.
+SM.clipboardHtml = (char, label) => {
+  const f = SM.FONT;
+  const style = `font-family:${f};mso-ascii-font-family:${f};mso-hansi-font-family:${f};mso-fareast-font-family:${f};mso-bidi-font-family:${f}`;
+  return `<span style="${style}">${SM.esc(char)}</span>${label ? `<span> ${SM.esc(label)}</span>` : ""}`;
+};
+
+SM.copyText = async (text, html) => {
   try {
-    await navigator.clipboard.writeText(text);
+    if (html && window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      await navigator.clipboard.write([new ClipboardItem({
+        "text/html": new Blob([html], { type: "text/html" }),
+        "text/plain": new Blob([text], { type: "text/plain" }),
+      })]);
+    } else {
+      await navigator.clipboard.writeText(text);
+    }
     return true;
   } catch {
-    // Office web views and file:// pages may refuse the async clipboard; fall back to a selection copy.
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
+    // Office web views and file:// pages may refuse the async clipboard. Fall back to copying a
+    // selection, which still carries the formatting when html is given.
+    const holder = document.createElement(html ? "div" : "textarea");
+    holder.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0";
+    if (html) { holder.contentEditable = "true"; holder.innerHTML = html; } else { holder.value = text; }
+    document.body.appendChild(holder);
+    if (html) {
+      const range = document.createRange();
+      range.selectNodeContents(holder);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } else {
+      holder.select();
+    }
     const ok = document.execCommand("copy");
-    ta.remove();
+    holder.remove();
     return ok;
   }
 };

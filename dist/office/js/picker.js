@@ -128,10 +128,11 @@ SM.picker = (() => {
   async function copy() {
     const s = byId[state.selected];
     if (!s) return;
-    const text = SM.$("pv-label").checked ? `${s.char} ${SM.labelText(s)}` : s.char;
-    const ok = await SM.copyText(text);
+    const label = SM.$("pv-label").checked ? SM.labelText(s) : "";
+    const text = label ? `${s.char} ${label}` : s.char;
+    const ok = await SM.copyText(text, SM.clipboardHtml(s.char, label));
     if (ok) remember(s.id);
-    SM.toast(ok ? `Copied ${s.name}. Paste it where the font is set to SlideMarks.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
+    SM.toast(ok ? `Copied ${s.name}. Paste it into Word or PowerPoint (SlideMarks must be installed).` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
   }
 
   // Arrow keys move geometrically through the wrapped grid, across family groups.
