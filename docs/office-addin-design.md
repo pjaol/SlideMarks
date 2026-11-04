@@ -55,6 +55,15 @@ The same picker also ships as a standalone page (`dist/web/picker.html`) with Co
 - **PowerPoint:** radio buttons (*Embed all characters*); the dropdown shows the name without extension.
 - **Word:** a checkbox (*Embed only the characters used* — leave unticked); the dropdown shows the name **with** `.docx`. Word also embeds every other font the document uses (2.6 MB in testing).
 
-**Known quirk (Word):** text typed immediately after an inserted symbol inherits the symbol's `eastAsia`/`cs` slots. Latin text is unaffected; CJK and complex-script text typed right after a symbol could fall back. Fix later by resetting the insertion-point formatting.
+**Word slot carry-over (investigated, mitigated):** text typed immediately after a symbol inherits the symbol's `eastAsia`/`cs` slots. Experiments (`spike/office/scripts/w_*.js`):
+- Resetting the font at the cursor through the API doesn't take.
+- `w:sym` keeps the font on the symbol only, but Word then reports the character as "(", which breaks screen readers, copy-paste and the standard-character aliases.
+- An invisible trailing character with the original formatting works, but leaves hidden content in the document.
+
+None of these is acceptable. In practice:
+- Word writes a suitable font back when typed text needs a script SlideMarks lacks; observed for Latin text, where `ascii`/`hAnsi` returned to Cambria.
+- With **Add a text label**, the label carries the original formatting, so text after it is completely clean.
+
+**Fixed along the way:** inserted symbols now carry the formatting at the cursor (size, colour, bold), captured with a placeholder. Previously they fell back to the style's default size.
 
 **Not yet verified:** Windows, Office on the web, undo granularity.
