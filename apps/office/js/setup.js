@@ -115,9 +115,18 @@ SM.setup = (() => {
         { text: `Click <b>File</b> at the top left, then <b>Options</b> at the bottom of the list.`,
           mock: mockWindow(app, `<div class="menu"><div>Info</div><div>Save As</div><div>Export</div><div class="sep"></div><div class="hl">Options</div></div>`) },
         { text: `In the window that opens, choose <b>Save</b> in the list on the left.`,
-          mock: mockWindow(`${app} Options`, `<div class="menu"><div>General</div><div>Proofing</div><div class="hl">Save</div><div>Language</div></div>`) },
-        { text: `At the bottom, make sure the dropdown shows <b>${SM.esc(name)}</b>. Then ${choose}.`,
-          mock: dialogFields(`<div class="row"><span class="select">OK</span></div>`) },
+          // Real screenshots (PowerPoint for Windows, Microsoft 365); highlight boxes sit over the controls.
+          mock: app === "PowerPoint"
+            ? `<div class="shot" aria-hidden="true"><img src="assets/walkthrough/powerpoint-windows-options.png" alt="">
+                 <span class="shot-hl" style="left:2.6%;top:32.1%;width:43.6%;height:7.3%"></span></div>`
+            : mockWindow(`${app} Options`, `<div class="menu"><div>General</div><div>Proofing</div><div class="hl">Save</div><div>Language</div></div>`) },
+        { text: `Near the bottom, under <b>Preserve fidelity when sharing this ${noun()}</b>, make sure the dropdown shows <b>${SM.esc(name)}</b>. Then ${choose}.`,
+          mock: app === "PowerPoint"
+            ? `<div class="shot" aria-hidden="true"><img src="assets/walkthrough/powerpoint-windows-embedding.png" alt="">
+                 <span class="shot-hl multi" style="left:70.7%;top:4.7%;width:28%;height:18.8%"></span>
+                 <span class="shot-hl multi" style="left:2.4%;top:30.6%;width:36.8%;height:20%"></span>
+                 <span class="shot-hl multi" style="left:11.7%;top:76.5%;width:75.5%;height:18.8%"></span></div>`
+            : dialogFields(`<div class="row"><span class="select">OK</span></div>`) },
         { text: `Click <b>OK</b>, then save with <span class="kbd">Ctrl</span>+<span class="kbd">S</span>. This panel turns green once the font is in the file.`, mock: "" },
       ];
     }

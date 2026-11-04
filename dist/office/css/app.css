@@ -109,5 +109,6 @@ body[data-mode="office"] .paste-tip, body[data-mode="office"] .paste-help { disp
 .shot { position: relative; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .shot img { display: block; width: 100%; height: auto; }
 .shot-hl { position: absolute; border: 3px solid #f0b400; border-radius: 10px; box-shadow: 0 0 0 9999px rgba(0, 0, 0, .35); animation: shot-pulse 1.6s ease-in-out infinite; }
+.shot-hl.multi { box-shadow: none; } /* several boxes on one shot: no dimming, which would darken the other boxes */
 @keyframes shot-pulse { 50% { border-color: rgba(240, 180, 0, .25); } }
 @media (prefers-reduced-motion: reduce) { .shot-hl { animation: none; } }

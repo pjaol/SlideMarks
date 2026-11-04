@@ -7,7 +7,7 @@ Layout (all relative, so the site works under any folder such as /SlideMarks/):
   picker/             standalone character map
   download/           font, release zip and checksums
   glyphs/             glyph reference
-  support/ privacy/ terms/   pages Microsoft Marketplace requires
+  support/ privacy/ terms/   support, privacy and terms pages
 """
 
 import shutil

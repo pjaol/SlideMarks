@@ -33,7 +33,7 @@ standard and implies no third-party design.
 Third-party material
 --------------------
 - apps/office/assets/walkthrough/*.png (copied into dist/office/):
-  screenshots of Microsoft Word and PowerPoint for Mac,
+  screenshots of Microsoft Word and PowerPoint for Mac and Windows,
   (c) Microsoft Corporation, used for instructional purposes. They are not
   covered by either licence above. Highlight boxes are drawn separately by the
   add-in's stylesheet; the screenshots themselves are unaltered.
