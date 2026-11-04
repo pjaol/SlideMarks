@@ -42,3 +42,10 @@ def test_build_is_reproducible(tokens, manifest, built, tmp_path):
 def test_no_consistency_findings(built, tokens, manifest):
     findings = [(r["id"], f) for r in measure(built["ttf"], tokens, manifest) for f in r["findings"]]
     assert findings == []
+
+
+def test_font_carries_licence_metadata(built):
+    names = TTFont(str(built["ttf"]))["name"]
+    assert "Reserved Font Name" in names.getDebugName(0)          # copyright
+    assert "SIL Open Font License, Version 1.1" in names.getDebugName(13)
+    assert names.getDebugName(14) == "https://openfontlicense.org"

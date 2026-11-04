@@ -7,7 +7,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from . import check, office, package, reference, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
+from . import check, office, package, reference, site, screen_readers, specimen_docx, specimen_html, specimen_pptx, web
 from .font import build_font
 from .manifest import validate
 from .metrics import measure
@@ -93,6 +93,22 @@ def check_cmd(args) -> int:
     return 1 if errors else 0
 
 
+PAGES_BASE_URL = "https://pjaol.github.io/SlideMarks"
+
+
+def site_cmd(args) -> int:
+    """Build everything for the public site: font, add-in (production manifest), zip, pages."""
+    args.office_base_url = f"{args.base_url.rstrip('/')}/office"
+    status = build(args)
+    if status:
+        return status
+    manifest = json.loads((ROOT / "source/symbols.json").read_text())
+    zip_path = package.build_zip(ROOT, manifest)
+    out = site.build(ROOT, manifest, zip_path)
+    print(f"site → {out.relative_to(ROOT)}/ (for {args.base_url})")
+    return 0
+
+
 def office_serve_cmd(args) -> int:
     import http.server
     import ssl
@@ -163,6 +179,10 @@ def main():
     p.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
     p.add_argument("--office-base-url", help="also write dist/office/manifest.xml pointing at this HTTPS host")
     p.set_defaults(func=package_cmd)
+    st = sub.add_parser("site", help="build the public website into dist/site/ (GitHub Pages)")
+    st.add_argument("--base-url", default=PAGES_BASE_URL, help=f"public HTTPS address of the site (default {PAGES_BASE_URL})")
+    st.add_argument("--strict", action="store_true", help="exit non-zero if any consistency finding")
+    st.set_defaults(func=site_cmd)
     o = sub.add_parser("office-serve", help="serve dist/office over HTTPS for sideloading (dev)")
     o.add_argument("--port", type=int, default=3443)
     o.set_defaults(func=office_serve_cmd)

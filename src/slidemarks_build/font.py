@@ -76,6 +76,15 @@ def build_font(tokens, manifest, out_dir: Path) -> dict:
         "fullName": f"{FAMILY} {STYLE}",
         "psName": f"{FAMILY}-{STYLE}",
         "version": f"Version {version}",
+        "copyright": "Copyright (c) 2026, Patrick O'Leary (https://github.com/pjaol/SlideMarks), with Reserved Font Name \"SlideMarks\".",
+        "trademark": "SlideMarks is a trademark of Patrick O'Leary.",
+        "manufacturer": "SlideMarks",
+        "designer": "Patrick O'Leary",
+        "vendorURL": "https://pjaol.github.io/SlideMarks/",
+        "description": "Presentation symbols (Harvey balls, arrows, checks, ratings, trends) that behave like text.",
+        "licenseDescription": "This Font Software is licensed under the SIL Open Font License, Version 1.1. "
+                              "This license is available with a FAQ at: https://openfontlicense.org",
+        "licenseInfoURL": "https://openfontlicense.org",
     })
     fb.setupOS2(
         version=4, sTypoAscender=asc, sTypoDescender=desc, sTypoLineGap=0,

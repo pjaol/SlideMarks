@@ -10,6 +10,8 @@
 
 122 glyphs in 17 families. See the **[glyph reference](docs/glyphs.md)** for every symbol with its code point.
 
+**Website and downloads:** https://pjaol.github.io/SlideMarks/
+
 > **Status:** pre-release (v0.1.0). Glyphs marked *candidate* in the reference may change or be removed before 1.0; all others keep their code points.
 
 ## Download
@@ -98,7 +100,13 @@ The font is self-hosted, so the site makes no third-party requests.
 
 ## License
 
-Not yet decided. Please don't redistribute until a license is published here.
+- **The font** (the font files and glyph designs): [SIL Open Font License 1.1](OFL.txt), with Reserved Font Name **"SlideMarks"**. Use it freely in any document, commercial or not, and embed it in files you share. Modified versions must use a different name.
+- **The software** (add-in, picker, tools): [Apache License 2.0](LICENSE).
+- **The name and logo:** see [TRADEMARKS.md](TRADEMARKS.md).
+
+Details and third-party material are listed in [NOTICE](NOTICE).
+
+All glyphs are original drawings generated from this project's own design tokens. No third-party font outlines or icon sets are included.
 
 ## Contributing
 

@@ -126,6 +126,20 @@ uv run slidemarks office-open --app word     # terminal 2: or --app powerpoint
 
 New glyphs start as `draft`, or as `candidate` if they may not stay in the core set.
 
+## Publishing the website
+
+The public site is `https://pjaol.github.io/SlideMarks/` (GitHub Pages, built by `.github/workflows/pages.yml` on every push to `main`).
+
+```sh
+uv run slidemarks site      # dist/site/: landing, office/ (production manifest), picker/, download/, glyphs/, support/, privacy/, terms/
+```
+
+- Every link in the site is relative, so it works under the `/SlideMarks/` folder. `tests/test_site.py` enforces this.
+- The add-in's production manifest is `dist/site/office/manifest.xml`, pointing at `https://pjaol.github.io/SlideMarks/office/`. **That address is baked into installed add-ins: don't rename the repo or move the site.**
+- To preview locally under the same folder:
+  `mkdir -p /tmp/pages && ln -sfn "$PWD/dist/site" /tmp/pages/SlideMarks && python3 -m http.server -d /tmp/pages 8780`
+  Then open http://localhost:8780/SlideMarks/.
+
 ## Releases
 
 1. Bump `manifestVersion` in `source/symbols.json`.

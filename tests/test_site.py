@@ -1,0 +1,37 @@
+"""Public site assembly (dist/site/): pages, production manifest, relative links."""
+
+import re
+import shutil
+import zipfile
+from pathlib import Path
+
+from slidemarks_build import office, site
+
+REPO = Path(__file__).resolve().parents[1]
+BASE = "https://pjaol.github.io/SlideMarks"
+
+
+def test_site_is_complete_and_folder_safe(tmp_path, tokens, manifest, built):
+    root = tmp_path / "repo"
+    shutil.copytree(REPO / "apps/office", root / "apps/office")
+    office.build(root, tokens, manifest, built["woff2"], built["ttf"], prod_base_url=f"{BASE}/office")
+    (root / "dist/fonts").mkdir(parents=True)
+    shutil.copy(built["ttf"], root / "dist/fonts")
+    shutil.copytree(REPO / "docs/glyphs", root / "docs/glyphs")
+    shutil.copy(REPO / "docs/preview.svg", root / "docs/preview.svg")
+    zip_path = root / "dist/SlideMarks-test.zip"
+    with zipfile.ZipFile(zip_path, "w") as z:
+        z.writestr("SlideMarks-test/SHA256SUMS", "abc  fonts/SlideMarks-Regular.ttf\n")
+
+    out = site.build(root, manifest, zip_path)
+
+    for page in ["index.html", "glyphs/index.html", "support/index.html", "privacy/index.html",
+                 "terms/index.html", "picker/index.html", "office/taskpane.html", "office/picker.html", ".nojekyll"]:
+        assert (out / page).exists(), page
+    assert not (out / "office/manifest.dev.xml").exists()  # never publish the localhost manifest
+    xml = (out / "office/manifest.xml").read_text()
+    assert f"{BASE}/office/taskpane.html" in xml and "localhost" not in xml
+    for html in out.rglob("*.html"):
+        # Root-relative links would break under /SlideMarks/; everything must be relative or absolute https.
+        assert not re.search(r'(href|src)="/(?!/)', html.read_text()), html
+    assert (out / "download/SlideMarks-Regular.ttf").exists() and (out / "download/SHA256SUMS").exists()
