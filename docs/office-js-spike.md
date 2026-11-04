@@ -4,7 +4,7 @@
 - Branch: `spike/powerpoint-insert` (code in `spike/office/`, throwaway)
 - Environment: macOS 26, PowerPoint and Word for Mac 16.114.3 (Office.com build), add-in sideloaded with `office-addin-dev-settings`
 - Requirement sets: PowerPointApi 1.1–1.10 and WordApi 1.1–1.9 all supported
-- Not yet tested: Windows, Office on the web, the visual rendering of inserted symbols with SlideMarks installed
+- Not yet tested: Windows, Office on the web
 
 ## Question
 
@@ -38,6 +38,25 @@ Can an Office add-in insert a SlideMarks symbol **at the user's cursor**, in ord
 - PowerPoint's AppleScript can't place a cursor in a table cell, so the table tests needed a human click. Every other step was driven remotely.
 - `font.name` in PowerPoint sets only the Latin slot (`a:latin`). Our generated specimens set all four slots. **Open question:** does a Latin-only symbol render in SlideMarks on Windows, where PowerPoint may classify Private Use Area characters differently? Test on Windows.
 
+## Font installation, embedding and detection (round 2)
+
+### Installing the font
+- After copying SlideMarks into `~/Library/Fonts`, macOS registered it immediately, and CoreText rendered it correctly. **PowerPoint still showed boxes until it was restarted a second time.** It had launched while Office's shared font cache (`~/Library/Group Containers/UBF8T346G9.Office/FontCache`) was being rebuilt. The install guide must say: quit **all** Office apps after installing, then reopen.
+- Slot test in PowerPoint for Mac, with the font installed and no embedding: SlideMarks set on `latin`, `ea` or `cs` alone **renders**; `sym` alone or no font does not. So Office.js `font.name` (Latin only) is enough for PowerPoint on Mac. Windows is still to be confirmed. Word still needs the four-slot OOXML insert (`w:hint="eastAsia"`).
+
+### Embedding
+- Office.js can't turn on font embedding or embed a font into the open document.
+- **A "prepared copy" doesn't stick.** A copy with the embed flag and an embedded SlideMarks font, opened via `PowerPoint.createPresentation` or directly, lost both on the next save while the font wasn't installed. PowerPoint embeds from *installed* fonts at save time and rewrites the flag from the document's own setting. Not retested with the font installed: the guided route below made it unnecessary.
+- **The guided route works.** With SlideMarks installed: Preferences → Save → *Embed fonts in the file* → *Embed all characters* → save. The saved `.pptx` contained `embedTrueTypeFonts="1"`, an `embeddedFont` entry for SlideMarks, and `ppt/fonts/font1.fntdata` (7 KB: PowerPoint compresses it).
+- **Usability trap (Mac):** the setting is **per presentation**, and the *"Preserve fidelity when sharing this presentation"* dropdown picks which open presentation it applies to. In testing it was set on the wrong deck first. Walkthroughs must name the current file explicitly.
+
+### Detecting embedding from the add-in
+- `getFileAsync` returns the document as saved, including embedded fonts. A dependency-free ZIP reader (central directory plus `DecompressionStream("deflate-raw")`) checks:
+  - **PowerPoint:** `embedTrueTypeFonts` in `ppt/presentation.xml`, and a `p:embeddedFont` entry with `typeface="SlideMarks"`.
+  - **Word:** `w:embedTrueTypeFonts` in `word/settings.xml`, and a `w:embedRegular` entry under the SlideMarks entry in `word/fontTable.xml`.
+  - **Both:** whether any slide or the document body uses SlideMarks.
+- Verified both ways: the detection logic was checked in Node against known files (specimens embedded, spike exports not), and the live panel went red → green after the user enabled embedding and saved. The result matched the file on disk.
+
 ## Consequences for the picker (`docs/charmap.md`)
 
 1. **Insert at cursor is viable** in Word and PowerPoint, including existing PowerPoint tables. The original spec's gate (PRD F-17) is cleared on Mac.
@@ -49,7 +68,8 @@ Can an Office add-in insert a SlideMarks symbol **at the user's cursor**, in ord
    - read the cell's font and refuse to flatten mixed formatting without telling the user;
    - offer copy and paste as the fallback.
 4. Insertion goes through two API calls in PowerPoint tables, so undo may take two steps. Untested.
-5. The inserted symbol needs the SlideMarks font **installed** (or embedded) to display. Without it, the add-in inserts correctly, but users see a "?" box. The picker should detect and explain this.
+5. The inserted symbol needs the SlideMarks font **installed** (or embedded) to display. Without it, the add-in inserts correctly, but users see a "?" box. The picker should detect and explain this, including "restart Office after installing".
+6. **Sharing panel:** a status (✓ embedded / … save to finish / ! do this first) driven by `getFileAsync`, plus a **detailed, per-platform walkthrough** that names the current file for the Mac dropdown. Embedding is a per-document step, so the panel should check on open and whenever the user returns to the pane.
 
 ## How the spike was driven (reusable for the real add-in's tests)
 

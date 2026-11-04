@@ -3,6 +3,8 @@ the add-in can report probe results and upload the saved document for inspection
 
 import base64
 import http.server
+import io
+import sys
 import json
 import ssl
 import time
@@ -11,6 +13,37 @@ from pathlib import Path
 HERE = Path(__file__).parent
 CERTS = Path.home() / ".office-addin-dev-certs"
 RESULTS = HERE / "results"
+ROOT = HERE.parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+TTF = ROOT / "dist/fonts/SlideMarks-Regular.ttf"
+
+
+def prepare(kind: str, data: bytes, mode: str) -> bytes:
+    """Return a copy with the embed-fonts flag set and (mode=full) SlideMarks embedded."""
+    if kind == "pptx":
+        from pptx import Presentation
+        from slidemarks_build.specimen_pptx import _embed_font
+        doc = Presentation(io.BytesIO(data))
+        if mode == "full":
+            _embed_font(doc, TTF)
+        else:
+            doc.part._element.set("embedTrueTypeFonts", "1")
+    else:
+        from docx import Document
+        from docx.oxml.ns import qn
+        from slidemarks_build.specimen_docx import _embed_font
+        doc = Document(io.BytesIO(data))
+        if mode == "full":
+            _embed_font(doc, TTF)
+        else:
+            settings = doc.settings.element
+            if settings.find(qn("w:embedTrueTypeFonts")) is None:
+                zoom = settings.find(qn("w:zoom"))
+                el = settings.makeelement(qn("w:embedTrueTypeFonts"), {})
+                (zoom.addnext(el) if zoom is not None else settings.insert(0, el))
+    out = io.BytesIO()
+    doc.save(out)
+    return out.getvalue()
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -22,8 +55,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self):
-        if self.path == "/cmd":
-            cmd_file = RESULTS / "cmd.txt"
+        if self.path.startswith("/cmd"):
+            host = self.path.partition("host=")[2]
+            cmd_file = RESULTS / (f"cmd-{host}.txt" if host else "cmd.txt")
             cmd = cmd_file.read_text().strip() if cmd_file.exists() else ""
             if cmd:
                 cmd_file.unlink()
@@ -44,6 +78,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             entry = json.loads(body)
             with open(RESULTS / "log.jsonl", "a") as f:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        elif self.path.startswith("/prepare"):
+            payload = json.loads(body)
+            result = prepare(payload["kind"], base64.b64decode(payload["data"]), payload.get("mode", "full"))
+            (RESULTS / f"{stamp}-prepared-{payload.get('mode','full')}.{payload['kind']}").write_bytes(result)
+            out = json.dumps({"data": base64.b64encode(result).decode()}).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+            return
         elif self.path.startswith("/file"):
             payload = json.loads(body)
             (RESULTS / f"{stamp}-{payload['name']}").write_bytes(base64.b64decode(payload["data"]))

@@ -38,6 +38,23 @@ function sets(prefix, max) {
   return out;
 }
 
+async function fileBase64() {
+  const file = await new Promise((res, rej) =>
+    Office.context.document.getFileAsync(Office.FileType.Compressed, { sliceSize: 4194304 }, (r) =>
+      r.status === "succeeded" ? res(r.value) : rej(r.error)));
+  const bytes = [];
+  for (let i = 0; i < file.sliceCount; i++) {
+    const slice = await new Promise((res, rej) =>
+      file.getSliceAsync(i, (r) => (r.status === "succeeded" ? res(r.value) : rej(r.error))));
+    bytes.push(...slice.data);
+  }
+  file.closeAsync();
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.slice(i, i + 0x8000));
+  return btoa(bin);
+}
+window.fileBase64 = fileBase64;
+
 async function exportFile(name) {
   const file = await new Promise((res, rej) =>
     Office.context.document.getFileAsync(Office.FileType.Compressed, { sliceSize: 4194304 }, (r) =>
@@ -287,6 +304,7 @@ Office.onReady(async (info) => {
   $("m-range").onclick = isPpt ? pptManualRange : wordManualRange;
   $("m-data").onclick = isPpt ? pptManualData : () => probe("word.manual.setSelectedDataAsync", async () => { await setSelectedData(GLYPH); return {}; });
   $("m-export").onclick = () => probe(isPpt ? "ppt.export.manual" : "word.export.manual", () => exportFile(isPpt ? "manual.pptx" : "manual.docx"));
+  if (window.checkSharing) await window.checkSharing();
   // Auto probes only when spike/office/autorun.flag exists (they add slides and move the selection).
   if ((await fetch("autorun.flag")).ok) { if (isPpt) await pptAuto(); else await wordAuto(); }
   // Remote control for the spike: the server hands out one command at a time.
@@ -298,7 +316,7 @@ Office.onReady(async (info) => {
     export: $("m-export").onclick,
   };
   setInterval(async () => {
-    const cmd = (await (await fetch("/cmd")).text()).trim();
+    const cmd = (await (await fetch(`/cmd?host=${Office.context.host}`)).text()).trim();
     if (!cmd) return;
     if (cmd.startsWith("script:")) {
       // run spike/office/scripts/<name>.js as an async function body with helpers in scope
@@ -306,6 +324,8 @@ Office.onReady(async (info) => {
       const src = await (await fetch(`scripts/${name}.js`)).text();
       const fn = new Function("probe", "PowerPoint", "Word", "GLYPH", "FONT", "hex", "setSelectedData", "exportFile", `return (async () => {${src}})();`);
       await probe(`script.${name}`, () => fn(probe, window.PowerPoint, window.Word, GLYPH, FONT, hex, setSelectedData, exportFile));
+    } else if (cmd === "sharing") {
+      await window.checkSharing();
     } else if (cmd === "reload") {
       location.reload();
     } else if (commands[cmd]) {
