@@ -85,7 +85,7 @@ body[data-mode="browser"] #pv-insert { display: none; }
 .mock .group-label { font-weight: 600; margin: 4px 0; }
 .mock .field { display: flex; justify-content: space-between; gap: 6px; align-items: center; margin: 4px 0; }
 .mock .select { border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px; background: var(--bg); max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mock .tick::before { content: "☑ "; } .mock .radio::before { content: "◉ "; } .mock .radio.off::before { content: "○ "; }
+.mock .tick::before { content: "☑ "; } .mock .untick::before { content: "☐ "; } .mock i { color: var(--muted); } .mock .radio::before { content: "◉ "; } .mock .radio.off::before { content: "○ "; }
 .mock .hl { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 5px; background: color-mix(in srgb, var(--accent) 14%, transparent); animation: pulse 1.6s ease-in-out infinite; }
 @keyframes pulse { 50% { outline-color: transparent; } }
 @media (prefers-reduced-motion: reduce) { .mock .hl { animation: none; } }

@@ -85,7 +85,8 @@ SM.setup = (() => {
   function fileName() {
     const url = Office.context.document.url || "";
     const last = decodeURIComponent(url.split(/[\\/]/).pop() || "");
-    return last.replace(/\.(pptx|docx|pptm|docm|potx|dotx)$/i, "");
+    // Match each app's dropdown: Word lists "Report.docx", PowerPoint lists "Deck" (verified on Mac).
+    return host() === "Word" ? last : last.replace(/\.(pptx|pptm|potx)$/i, "");
   }
 
   // ── Walkthroughs ──────────────────────────────────────────────────────────
@@ -94,12 +95,20 @@ SM.setup = (() => {
 
   function embedSteps() {
     const app = host(), name = fileName() || `your ${noun()}`;
+    // PowerPoint offers radio buttons (Embed all characters); Word offers a checkbox to leave unticked.
+    const options = app === "PowerPoint"
+      ? `<div class="field"><span class="tick hl">Embed fonts in the file</span></div>
+         <div class="field"><span class="radio off">Embed only the characters used</span></div>
+         <div class="field"><span class="radio hl">Embed all characters (best for editing by other people)</span></div>`
+      : `<div class="field"><span class="tick hl">Embed fonts in the file</span></div>
+         <div class="field"><span class="untick hl">Embed only the characters used in the document</span> <i>leave unticked</i></div>`;
+    const choose = app === "PowerPoint"
+      ? `tick <b>Embed fonts in the file</b> and choose <b>Embed all characters</b>`
+      : `tick <b>Embed fonts in the file</b> and leave <b>Embed only the characters used in the document</b> unticked, so others can edit`;
     const dialogFields = (closeHint) => mockWindow(platform() === "PC" ? `${app} Options › Save` : "Save", `
       <div class="group-label">${platform() === "PC" ? `Preserve fidelity when sharing this ${noun()}` : "Font Embedding"}</div>
       <div class="field hl"><span>${platform() === "PC" ? "" : `Preserve fidelity when sharing this ${noun()}:`}</span><span class="select">${SM.esc(name)} ⌄</span></div>
-      <div class="field"><span class="tick hl">Embed fonts in the file</span></div>
-      <div class="field"><span class="radio off">Embed only the characters used</span></div>
-      <div class="field"><span class="radio hl">Embed all characters (best for editing by other people)</span></div>
+      ${options}
       ${closeHint}`);
     if (platform() === "PC") {
       return [
@@ -107,7 +116,7 @@ SM.setup = (() => {
           mock: mockWindow(app, `<div class="menu"><div>Info</div><div>Save As</div><div>Export</div><div class="sep"></div><div class="hl">Options</div></div>`) },
         { text: `In the window that opens, choose <b>Save</b> in the list on the left.`,
           mock: mockWindow(`${app} Options`, `<div class="menu"><div>General</div><div>Proofing</div><div class="hl">Save</div><div>Language</div></div>`) },
-        { text: `At the bottom, make sure the dropdown shows <b>${SM.esc(name)}</b>. Tick <b>Embed fonts in the file</b> and choose <b>Embed all characters</b>.`,
+        { text: `At the bottom, make sure the dropdown shows <b>${SM.esc(name)}</b>. Then ${choose}.`,
           mock: dialogFields(`<div class="row"><span class="select">OK</span></div>`) },
         { text: `Click <b>OK</b>, then save with <span class="kbd">Ctrl</span>+<span class="kbd">S</span>. This panel turns green once the font is in the file.`, mock: "" },
       ];
@@ -116,18 +125,13 @@ SM.setup = (() => {
       { text: `Open the <b>${app}</b> menu (next to the Apple menu) and choose <b>Preferences…</b> (or <b>Settings…</b>). Shortcut: <span class="kbd">⌘</span>+<span class="kbd">,</span>`,
         mock: mockWindow(app, `<div class="menu"><div>About Microsoft ${app}</div><div class="sep"></div><div class="hl">Preferences…  ⌘,</div><div>Services</div></div>`) },
       { text: `In the Preferences window, under <b>Output and Sharing</b>, click <b>Save</b> (the floppy-disk icon).`,
+        // Real screenshots (Office for Mac 16.114); each highlight box sits over that window's Save icon.
         mock: app === "PowerPoint"
-          // Real screenshot (PowerPoint for Mac 16.114); the highlight box is positioned over the Save icon.
           ? `<div class="shot" aria-hidden="true"><img src="assets/walkthrough/powerpoint-mac-preferences.png" alt="">
                <span class="shot-hl" style="left:3.5%;top:58.5%;width:9%;height:13%"></span></div>`
-          : mockWindow(`${app} Preferences`, `
-              <div class="group-label">Authoring and Proofing Tools</div>
-              <div class="icons"><div>⚙︎<br>General</div><div>▤<br>View</div><div>✎<br>Edit</div><div>✓<br>Spelling</div></div>
-              <div class="group-label">Output and Sharing</div>
-              <div class="icons"><div class="hl"><span style="font-size:20px">💾</span><br>Save</div><div>⎙<br>Print</div></div>
-              <div class="group-label">Personal Settings</div>
-              <div class="icons"><div>👤<br>User Information</div><div>🔒<br>Security</div><div>🛡︎<br>Privacy</div></div>`) },
-      { text: `Under <b>Font Embedding</b>, set the dropdown to <b>${SM.esc(name)}</b>. This setting is per ${noun()}, so check the name. Then tick <b>Embed fonts in the file</b> and choose <b>Embed all characters</b>.`,
+          : `<div class="shot" aria-hidden="true"><img src="assets/walkthrough/word-mac-preferences.png" alt="">
+               <span class="shot-hl" style="left:3.5%;top:47.6%;width:9%;height:10.6%"></span></div>` },
+      { text: `Under <b>Font Embedding</b>, set the dropdown to <b>${SM.esc(name)}</b>. This setting is per ${noun()}, so check the name. Then ${choose}.`,
         mock: dialogFields("") },
       { text: `Close Preferences and save with <span class="kbd">⌘</span>+<span class="kbd">S</span>. This panel turns green once the font is in the file.`, mock: "" },
     ];

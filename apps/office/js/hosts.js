@@ -29,18 +29,30 @@ function setSelectedData(text) {
 
 // ── Word ────────────────────────────────────────────────────────────────────
 // insertText + font.name leaves the East Asian slot unset, and Word draws PUA characters from it
-// (w:hint="eastAsia"), so the symbol goes in as an OOXML run with all four slots set.
+// (w:hint="eastAsia"), so the symbol goes in as an OOXML run with all four slots set. That run also
+// carries the formatting at the cursor (size, colour, bold…), captured by briefly typing a Latin
+// placeholder that inherits it; otherwise the symbol would fall back to the style's default size.
+// (w:sym was tried and rejected: Word then reports the character as "(", which breaks screen
+// readers and copy-paste.)
 
-function wordRunPackage(char) {
-  const f = SM.FONT;
-  const run = `<w:r><w:rPr><w:rFonts w:ascii="${f}" w:hAnsi="${f}" w:eastAsia="${f}" w:cs="${f}"/></w:rPr><w:t>${SM.esc(char)}</w:t></w:r>`;
+const W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
+function wordPackage(runs) {
   return `<pkg:package xmlns:pkg="http://schemas.microsoft.com/office/2006/xmlPackage">
 <pkg:part pkg:name="/_rels/.rels" pkg:contentType="application/vnd.openxmlformats-package.relationships+xml"><pkg:xmlData>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>
 </pkg:xmlData></pkg:part>
 <pkg:part pkg:name="/word/document.xml" pkg:contentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"><pkg:xmlData>
-<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p>${run}</w:p></w:body></w:document>
+<w:document xmlns:w="${W_NS}"><w:body><w:p>${runs}</w:p></w:body></w:document>
 </pkg:xmlData></pkg:part></pkg:package>`;
+}
+
+function runProperties(ooxml) {
+  // The run holding the placeholder "x": its full properties, and the same without fonts.
+  const body = ooxml.slice(ooxml.indexOf("<w:body>"), ooxml.indexOf("</w:body>"));
+  const run = [...body.matchAll(/<w:r\b[^>]*>(?:(?!<\/w:r>)[\s\S])*?<\/w:r>/g)].map((m) => m[0]).find((r) => />x<\/w:t>/.test(r)) || "";
+  const full = (run.match(/<w:rPr>([\s\S]*?)<\/w:rPr>/) || [, ""])[1];
+  return { full, withoutFonts: full.replace(/<w:rFonts[^>]*\/>/, "") };
 }
 
 SM.hosts = {};
@@ -50,12 +62,17 @@ SM.hosts.word = {
   canInsert: true,
   async insert(sym, { label }) {
     await Word.run(async (context) => {
-      const selection = context.document.getSelection();
-      // The label goes in as plain text first, so it inherits the formatting at the cursor.
-      const labelRange = label ? selection.insertText(` ${SM.labelText(sym)}`, "Replace") : null;
-      const glyph = (labelRange || selection).insertOoxml(wordRunPackage(sym.char), labelRange ? "Before" : "Replace");
+      const holder = context.document.getSelection().insertText("x", "Replace");
+      const captured = holder.getOoxml();
       await context.sync();
-      (labelRange || glyph).select("End");
+      const props = runProperties(captured.value);
+      const f = SM.FONT;
+      const symbolRun = `<w:r><w:rPr><w:rFonts w:ascii="${f}" w:hAnsi="${f}" w:eastAsia="${f}" w:cs="${f}"/>${props.withoutFonts}</w:rPr><w:t>${SM.esc(sym.char)}</w:t></w:r>`;
+      // The label keeps the original formatting, fonts included, so text typed after it is clean too.
+      const labelRun = label ? `<w:r><w:rPr>${props.full}</w:rPr><w:t xml:space="preserve"> ${SM.esc(SM.labelText(sym))}</w:t></w:r>` : "";
+      const inserted = holder.insertOoxml(wordPackage(symbolRun + labelRun), "Replace");
+      await context.sync();
+      inserted.select("End");
       await context.sync();
     });
     return { ok: true, message: `Inserted ${sym.name}` };

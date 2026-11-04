@@ -40,3 +40,21 @@ The same picker also ships as a standalone page (`dist/web/picker.html`) with Co
 - Python tests: generated manifest (valid XML, URLs, hosts), catalog data, and build outputs.
 - agent-browser tests on the standalone picker: search, filter, preview, keyboard navigation, copy, and an axe audit.
 - Live runs in PowerPoint and Word on this Mac: insert in text, selection and table cell; mixed-format warning; font and embedding status.
+
+## Verified (Mac, Office 16.114, 2026-11-04)
+
+| Area | Result |
+|---|---|
+| PowerPoint: text box, selection, table cell, mixed-format cell | ✅ (user-tested; mixed formatting prompts before restyling) |
+| Word: paragraph and table cell | ✅ Saved runs have `ascii`/`hAnsi`/`eastAsia`/`cs` all set to SlideMarks; surrounding text unchanged |
+| Embedding detection and walkthrough | ✅ Both apps: red → green after following the steps and saving; the saved files contain the embedded font |
+| Ribbon icon | ✅ 75% Harvey ball; hashed file names stop Office showing a stale cached icon |
+| Font-installed detection | ⚠️ Works in Chrome (standalone picker). Inside Office the web view hides user-installed fonts, so the panel asks instead of accusing |
+
+**Embedding differs between the apps:**
+- **PowerPoint:** radio buttons (*Embed all characters*); the dropdown shows the name without extension.
+- **Word:** a checkbox (*Embed only the characters used* — leave unticked); the dropdown shows the name **with** `.docx`. Word also embeds every other font the document uses (2.6 MB in testing).
+
+**Known quirk (Word):** text typed immediately after an inserted symbol inherits the symbol's `eastAsia`/`cs` slots. Latin text is unaffected; CJK and complex-script text typed right after a symbol could fall back. Fix later by resetting the insertion-point formatting.
+
+**Not yet verified:** Windows, Office on the web, undo granularity.
