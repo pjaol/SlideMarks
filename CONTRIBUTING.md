@@ -3,7 +3,8 @@
 This guide is for people building or changing the font. If you just want to use SlideMarks, see the [README](README.md).
 
 Background reading:
-- `SlideMarks_Requirements_v0.1.md`: the product spec.
+- `docs/SlideMarks_Requirements_v0.1.md`: the product spec.
+- `docs/charmap.md`: Office add-in and distribution requirements (next phase).
 - `docs/design-goals.md`: the design principles.
 - `docs/design-system.md`: metrics, design decisions and code point blocks.
 - `docs/adr/`: architecture decisions.
