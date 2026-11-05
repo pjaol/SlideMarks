@@ -2,6 +2,10 @@
 
 **Presentation symbols that behave like text.** Harvey balls, arrows, checks, ratings, trends and more for PowerPoint and Word tables. You can type, paste, resize, recolor and align them like any other character.
 
+[![Watch the 1-minute video: building a compliance table with icons in PowerPoint, then with SlideMarks](docs/images/promo-video.jpg)](https://vimeo.com/1243908122)
+
+*[Watch the 1-minute video](https://vimeo.com/1243908122): icons vs SlideMarks in a PowerPoint table, then Word. Click sound: "Single click mouse" by ScouseMouseJB, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
 ![SlideMarks in Word: a table comparing two products with Harvey balls, next to the SlideMarks pane. Callouts: 1, symbols are text, so they take the table cell's size, color and alignment. 2, open SlideMarks from the Home tab. 3, it checks the font is embedded so the file looks right everywhere. 4, insert at the cursor, or copy with the font already set.](docs/images/word-addin.png)
 
 - **One consistent family.** Every Harvey ball has the same size, every arrow the same head, and every glyph the same stroke weight and center. Symbols line up in table cells without per-cell nudging.
