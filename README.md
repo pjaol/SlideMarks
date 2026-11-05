@@ -38,6 +38,8 @@ The easiest way is the one-step installer on the [website](https://pjaol.github.
 - **Mac:** download the [Mac installer](https://github.com/pjaol/SlideMarks/releases/latest/download/SlideMarks.pkg), or run `curl -fsSL https://pjaol.github.io/SlideMarks/install.sh | sh` in Terminal.
 - **Windows:** run `irm https://pjaol.github.io/SlideMarks/install.ps1 | iex` in PowerShell.
 
+Not sure yet? [Watch the 1-minute video](https://vimeo.com/1243908122) to see SlideMarks in a PowerPoint table and in Word.
+
 To install only the font:
 
 - **Windows:** right-click `SlideMarks-Regular.ttf` → **Install** (or **Install for all users**). Restart PowerPoint or Word.
