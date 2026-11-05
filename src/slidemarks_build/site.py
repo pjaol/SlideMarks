@@ -58,6 +58,7 @@ table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 th, td { border-bottom: 1px solid var(--line); padding: .35rem .5rem; text-align: left; vertical-align: middle; }
 td img { width: 32px; height: 32px; display: block; }
 .preview { max-width: 100%; height: auto; border-radius: 12px; }
+.preview.shot { border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(0, 0, 0, .12); }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; padding: 1.2rem 0; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
@@ -111,7 +112,8 @@ def _landing(manifest, version: str, zip_name: str, base_url: str) -> str:
 <h1>Presentation symbols that behave like text</h1>
 <p class="lede">Harvey balls, arrows, checks, ratings and trends for PowerPoint and Word tables.
 One consistent family of {count} symbols: type, paste, resize and recolor them like any character. Free and open source.</p>
-<p><img class="preview" src="preview.svg" alt="All {count} SlideMarks symbols, grouped by family"></p>
+<p><img class="preview shot" src="word-addin.png" width="2000" height="1231"
+  alt="SlideMarks in Word: a table comparing two products with Harvey balls, next to the SlideMarks pane. Callouts: 1, symbols are text, so they take the table cell's size, color and alignment. 2, open SlideMarks from the Home tab. 3, it checks the font is embedded so the file looks right everywhere. 4, insert at the cursor, or copy with the font already set."></p>
 
 <h2 id="install">Install</h2>
 <p>One step installs the font and adds SlideMarks to Word and PowerPoint. No administrator password needed.</p>
@@ -140,6 +142,10 @@ One consistent family of {count} symbols: type, paste, resize and recolor them l
 </ol>
 <p class="note">Sharing a file? Turn on <em>Embed fonts in the file</em> so recipients see your symbols without installing anything.
 The add-in walks you through it and checks that it worked.</p>
+
+<h2 id="symbols">The symbols</h2>
+<p><img class="preview" src="preview.svg" alt="All {count} SlideMarks symbols, grouped by family"></p>
+<p>Every symbol with its code point is in the <a href="glyphs/index.html">glyph reference</a>.</p>
 
 <h2>Downloads</h2>
 <p><a class="btn" href="download/{escape(zip_name)}">Everything (zip)</a>
@@ -327,6 +333,7 @@ def build(root: Path, manifest, zip_path: Path, base_url: str) -> Path:
     (out / "glyphs").mkdir()
     shutil.copytree(root / "docs/glyphs", out / "glyphs/svg")
     shutil.copy(root / "docs/preview.svg", out / "preview.svg")
+    shutil.copy(root / "docs/images/word-addin.png", out / "word-addin.png")
 
     (out / "site.css").write_text(CSS)
     pages = {

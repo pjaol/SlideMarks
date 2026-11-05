@@ -20,6 +20,7 @@ def test_site_is_complete_and_folder_safe(tmp_path, tokens, manifest, built):
     shutil.copy(built["ttf"], root / "dist/fonts")
     shutil.copytree(REPO / "docs/glyphs", root / "docs/glyphs")
     shutil.copy(REPO / "docs/preview.svg", root / "docs/preview.svg")
+    shutil.copytree(REPO / "docs/images", root / "docs/images")
     zip_path = root / "dist/SlideMarks-test.zip"
     with zipfile.ZipFile(zip_path, "w") as z:
         z.writestr("SlideMarks-test/SHA256SUMS", "abc  fonts/SlideMarks-Regular.ttf\n")
