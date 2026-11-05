@@ -1,0 +1,226 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+    }
+    .cam {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+    }
+    .card {
+      position: absolute;
+      left: 120px;
+      top: 67px;
+      width: 1680px;
+      height: 945px;
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #d1d9e0;
+      box-shadow: 0 30px 80px rgba(31, 35, 40, 0.16);
+    }
+    .bar {
+      position: absolute;
+      left: 90px;
+      top: 56px;
+      width: 72px;
+      height: 10px;
+      background: #6d3b8e;
+    }
+    .ttl {
+      position: absolute;
+      left: 90px;
+      top: 84px;
+      font-size: 56px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .sub {
+      position: absolute;
+      left: 92px;
+      top: 156px;
+      font-size: 28px;
+      color: #59636e;
+    }
+    table {
+      position: absolute;
+      left: 90px;
+      top: 230px;
+      width: 1500px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th,
+    td {
+      border-bottom: 2px solid #d1d9e0;
+      padding: 0 24px;
+      vertical-align: middle;
+    }
+    th {
+      height: 72px;
+      background: #f6f8fa;
+      color: #59636e;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+    }
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+    td {
+      height: 80px;
+      font-size: 38px;
+      line-height: 1.25;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+    .ic {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+    }
+    .ic img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hdl {
+      position: absolute;
+      inset: -4px;
+      border: 1px solid #59636e;
+    }
+    .hdl i {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border: 1px solid #59636e;
+    }
+    .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 31px;
+      height: 46px;
+      z-index: 20;
+    }
+    .cap {
+      position: absolute;
+      left: 96px;
+      bottom: 96px;
+      z-index: 10;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 14px;
+      padding: 20px 36px 24px;
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.1);
+    }
+    .cap span {
+      display: inline-block;
+    }
+    .cap .hl {
+      color: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="grind" data-width="1920" data-height="1080">
+    <div id="g-cam" class="cam">
+      <div class="card" id="g-card">
+        <div class="bar"></div>
+        <div class="ttl">Compliance: Product A vs Product B</div>
+        <div class="sub">Status as of Q4 review</div>
+        <table>
+          <colgroup><col style="width: 840px" /><col style="width: 330px" /><col style="width: 330px" /></colgroup>
+          <tr><th>Requirement</th><th>Product A</th><th>Product B</th></tr>
+          <tr><td>SOC 2 Type II</td><td></td><td></td></tr>
+          <tr><td>GDPR data residency<span id="g-ext"></span></td><td></td><td></td></tr>
+          <tr><td>SSO / SAML</td><td></td><td></td></tr>
+          <tr><td>Audit log coverage</td><td></td><td></td></tr>
+          <tr><td>Encryption at rest</td><td></td><td></td></tr>
+        </table>
+        <div class="ic" id="g-i0"><img src="assets/icons/harvey-100.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i1"><img src="assets/icons/harvey-50.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i2"><img src="assets/icons/harvey-75.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i3"><img src="assets/icons/harvey-0.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i4"><img src="assets/icons/status-check.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i5"><img src="assets/icons/status-cross.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i6"><img src="assets/icons/trend-up.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i7"><img src="assets/icons/trend-down.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i8"><img src="assets/icons/harvey-100.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="ic" id="g-i9"><img src="assets/icons/harvey-25.png" alt="" /><div class="hdl"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <svg id="g-cursor" class="cursor" viewBox="0 0 24 36"><path d="M2 2 L2 28 L8.5 22 L13 33 L17.5 31 L13 20.5 L22 20.5 Z" fill="#000" stroke="#fff" stroke-width="2" stroke-linejoin="round" /></svg>
+      </div>
+    </div>
+    <div id="g-cap1" class="cap clip" data-start="0.3" data-duration="4.9" data-track-index="2"><span>Ten</span> <span>cells.</span> <span>Ten</span> <span>pictures.</span></div>
+    <div id="g-cap2" class="cap clip" data-start="5.3" data-duration="2.1" data-track-index="2"><span>Then</span> <span>the</span> <span>text</span> <span>changes.</span></div>
+    <div id="g-cap3" class="cap clip" data-start="7.4" data-duration="2" data-track-index="2"><span>The</span> <span>icons</span> <span class="hl">don't.</span></div>
+  </div>
+  <script>
+    (function () {
+      // handle squares: corners and edge midpoints of the selection box
+      const spots = [[0, 0], [50, 0], [100, 0], [0, 50], [100, 50], [0, 100], [50, 100], [100, 100]];
+      document.querySelectorAll("#root .hdl").forEach((h) =>
+        h.querySelectorAll("i").forEach((el, n) => {
+          el.style.left = `calc(${spots[n][0]}% - 4px)`;
+          el.style.top = `calc(${spots[n][1]}% - 4px)`;
+        }));
+
+      const colX = [1095, 1425];
+      const rowY = (r) => 342 + 80 * r;
+      const jitter = [[0, 3], [-8, 5], [6, -4], [-3, 8], [9, 0], [-5, -6], [4, 4], [-9, 3], [3, -8], [8, 6]];
+      const sizes = [1, 0.92, 1.08, 1, 0.92, 1.08, 1, 0.92, 1.08, 1];
+      const starts = [0.4, 1.4, 2.3, 2.9, 3.4, 3.8, 4.1, 4.4, 4.65, 4.9];
+      const gaps = [1.0, 0.9, 0.6, 0.5, 0.4, 0.3, 0.3, 0.25, 0.25, 0.25];
+      const mid = [840, 560];
+
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#g-cursor", { x: 1500, y: 980 }, 0);
+
+      for (let k = 0; k < 10; k++) {
+        const cx = colX[k % 2], cy = rowY(Math.floor(k / 2));
+        const el = `#g-i${k}`;
+        document.querySelector(el).style.left = cx - 32 + "px";
+        document.querySelector(el).style.top = cy - 32 + "px";
+        const t = starts[k], d = gaps[k];
+        const away = { x: mid[0] - cx, y: mid[1] - cy, scale: 1.9 };
+        const home = { x: jitter[k][0], y: jitter[k][1], scale: sizes[k] };
+        tl.fromTo(el, { ...away, opacity: 0 }, { ...away, opacity: 1, duration: 0.06 }, t);
+        tl.fromTo(`${el} .hdl`, { opacity: 1 }, { opacity: 1, duration: 0.01 }, t);
+        tl.to("#g-cursor", { x: mid[0] + 18, y: mid[1] + 18, duration: Math.min(0.25, d * 0.3), ease: "power2.out" }, t);
+        tl.to(el, { ...home, duration: d * 0.5, ease: "power3.inOut" }, t + d * 0.3);
+        tl.to("#g-cursor", { x: cx + home.x + 18, y: cy + home.y + 18, duration: d * 0.5, ease: "power3.inOut" }, t + d * 0.3);
+        tl.to(`${el} .hdl`, { opacity: 0, duration: 0.05 }, t + d * 0.85);
+      }
+      tl.to("#g-cursor", { x: 860, y: 450, duration: 0.4, ease: "power2.inOut" }, 5.3);
+      tl.to("#g-cursor", { opacity: 0, duration: 0.2 }, 7.2);
+
+      // the requirement gets longer; the table grows; the pictures stay put
+      const ext = " (EU and UK regions, customer-managed keys)";
+      const extEl = document.getElementById("g-ext");
+      const render = () => {
+        const p = Math.min(Math.max((tl.time() - 5.5) / 1.6, 0), 1);
+        extEl.textContent = ext.slice(0, Math.round(p * ext.length));
+      };
+      tl.eventCallback("onUpdate", render);
+      tl.set({}, {}, 9.4);
+
+      // push in on the drifted pictures
+      tl.fromTo("#g-cam", { x: 0, y: 0, scale: 1 }, { x: -620, y: -330, scale: 1.45, duration: 0.7, ease: "power2.inOut" }, 7.45);
+
+      ["#g-cap1", "#g-cap2", "#g-cap3"].forEach((c, n) =>
+        tl.fromTo(`${c} span`, { opacity: 0, filter: "blur(6px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.07, ease: "power2.out" }, [0.3, 5.3, 7.4][n]));
+
+      window.__timelines["grind"] = tl;
+    })();
+  </script>
+</template>
