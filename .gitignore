@@ -14,6 +14,7 @@ media/promo/renders/
 media/promo/.media/
 media/promo/.hyperframes/
 media/promo/.thumbnails/
+media/promo/.waveform-cache/
 media/promo/assets/bgm/
 media/promo/assets/sfx/
 media/capture/*.pptx
