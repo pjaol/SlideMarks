@@ -197,7 +197,8 @@ One consistent family of {count} symbols: type, paste, resize and recolor them l
   <pre><code>irm {base}/install.ps1 | iex</code></pre>
 </section>
 </div>
-<p class="small">See exactly what they do: <a href="install.sh">install.sh</a> · <a href="install.ps1">install.ps1</a>.
+<p class="small">See exactly what they do: read <a href="{REPO_URL}/blob/main/installers/install.sh">install.sh</a> ·
+<a href="{REPO_URL}/blob/main/installers/install.ps1">install.ps1</a> on GitHub (the site's copies only fill in its address and the add-in ID).
 <a href="support/index.html#add-in">Uninstall, Office on the web, organizations and manual steps</a>.</p>
 <ol class="steps">
   <li><strong>Quit Word and PowerPoint and reopen them.</strong> Office only sees new fonts and add-ins when it starts
@@ -254,8 +255,8 @@ and reopen it</strong>. If you received the file from someone else, ask them to 
 
 <h2 id="add-in">Installing and uninstalling</h2>
 <p>The <a href="../index.html#install">one-step installers</a> put the font and the add-in in your own user folders,
-so they don't need administrator rights. Read them first if you like: <a href="../install.sh">install.sh</a> (Mac),
-<a href="../install.ps1">install.ps1</a> (Windows).</p>
+so they don't need administrator rights. Read them first if you like, on GitHub: <a href="{REPO_URL}/blob/main/installers/install.sh">install.sh</a> (Mac),
+<a href="{REPO_URL}/blob/main/installers/install.ps1">install.ps1</a> (Windows).</p>
 
 <h3 id="after-install">After installing: open SlideMarks</h3>
 <ol>
