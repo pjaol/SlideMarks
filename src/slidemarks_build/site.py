@@ -8,8 +8,12 @@ Layout (all relative, so the site works under any folder such as /SlideMarks/):
   download/           font, release zip and checksums
   glyphs/             glyph reference
   support/ privacy/ terms/   support, privacy and terms pages
+  og.jpg, video-poster.jpg    social preview and video thumbnail (from docs/images/)
+  sitemap.xml                 for search engines (robots.txt only works at a domain root, so none)
 """
 
+import hashlib
+import json
 import shutil
 from html import escape
 from pathlib import Path
@@ -27,6 +31,10 @@ GITHUB_MARK = ('<svg aria-hidden="true" viewBox="0 0 16 16" width="20" height="2
 ISSUES_URL = f"{REPO_URL}/issues"
 PKG_URL = f"{REPO_URL}/releases/latest/download/SlideMarks.pkg"  # signed, notarized; built with `slidemarks mac-pkg`
 VIDEO_URL = "https://vimeo.com/1243908122"
+VIDEO_UPLOADED = "2026-11-05"
+VIDEO_DURATION = "PT1M4S"
+SITE_TAGLINE = ("Harvey balls, arrows, checks, ratings and trends for PowerPoint and Word tables: "
+                "a free font and add-in whose symbols behave like text.")
 VIDEO_EMBED = "https://player.vimeo.com/video/1243908122?badge=0&amp;autopause=0&amp;dnt=1"  # HTML-escaped: used only in markup
 
 CSS = """
@@ -74,17 +82,35 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9re
 """
 
 
-def _page(title: str, body: str, depth: int, version: str) -> str:
+def _page(title: str, body: str, depth: int, version: str, *, path: str, description: str,
+          base_url: str, head: str = "") -> str:
+    """One site page. `title` is the full <title>; `path` is relative to the site root (for canonical)."""
     up = "../" * depth
+    base = base_url.rstrip("/")
+    url = f"{base}/{path.removesuffix('index.html')}"
+    css_v = hashlib.sha256(CSS.encode()).hexdigest()[:10]  # new URL whenever the stylesheet changes
+    t, d = escape(title), escape(description)
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{escape(title)} · SlideMarks</title>
+<title>{t}</title>
+<meta name="description" content="{d}">
+<link rel="canonical" href="{escape(url)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SlideMarks">
+<meta property="og:title" content="{t}">
+<meta property="og:description" content="{d}">
+<meta property="og:url" content="{escape(url)}">
+<meta property="og:image" content="{base}/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A compliance table with Harvey balls, checks and trend arrows typed as SlideMarks symbols">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{up}office/assets/favicon.png">
-<link rel="stylesheet" href="{up}site.css">
-</head>
+<link rel="stylesheet" href="{up}site.css?v={css_v}">
+{head}</head>
 <body>
 <header class="site"><div class="inner">
   <a class="brand" href="{up}index.html"><img src="{up}office/assets/favicon.png" alt="" width="24" height="24">SlideMarks</a>
@@ -110,6 +136,37 @@ def _page(title: str, body: str, depth: int, version: str) -> str:
 """
 
 
+def _structured_data(manifest, version: str, base_url: str) -> str:
+    base = base_url.rstrip("/")
+    app = {
+        "@context": "https://schema.org", "@type": "SoftwareApplication",
+        "name": "SlideMarks", "url": f"{base}/", "description": SITE_TAGLINE,
+        "applicationCategory": "DesignApplication", "operatingSystem": "Windows, macOS",
+        "softwareVersion": version, "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+        "downloadUrl": PKG_URL, "image": f"{base}/og.jpg", "codeRepository": REPO_URL,
+    }
+    video = {
+        "@context": "https://schema.org", "@type": "VideoObject",
+        "name": "SlideMarks: Harvey balls in PowerPoint without the icon grind",
+        "description": ("Building a compliance table in PowerPoint with icons (search, insert, resize, nudge), "
+                        "then with SlideMarks, where symbols are text: they flow, align, resize and take "
+                        "bold, italic, underline and colour. Also works in Word."),
+        "thumbnailUrl": f"{base}/video-poster.jpg", "uploadDate": VIDEO_UPLOADED,
+        "duration": VIDEO_DURATION, "embedUrl": VIDEO_EMBED.replace("&amp;", "&"), "url": VIDEO_URL,
+    }
+    # "</" can't appear inside JSON here, but escape it anyway so a future string can't close the tag
+    blocks = (json.dumps(x, ensure_ascii=False).replace("</", "<\\/") for x in (app, video))
+    return "".join(f'<script type="application/ld+json">{b}</script>\n' for b in blocks)
+
+
+def _sitemap(base_url: str, paths) -> str:
+    base = base_url.rstrip("/")
+    urls = "".join(f"  <url><loc>{escape(base + '/' + p.removesuffix('index.html'))}</loc></url>\n" for p in paths)
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n")
+
+
 def _landing(manifest, version: str, zip_name: str, base_url: str) -> str:
     base = escape(base_url.rstrip("/"))
     count = len(manifest["symbols"])
@@ -117,7 +174,7 @@ def _landing(manifest, version: str, zip_name: str, base_url: str) -> str:
 <h1>Presentation symbols that behave like text</h1>
 <p class="lede">Harvey balls, arrows, checks, ratings and trends for PowerPoint and Word tables.
 One consistent family of {count} symbols: type, paste, resize and recolor them like any character. Free and open source.</p>
-<div class="video"><iframe src="{VIDEO_EMBED}" title="SlideMarks: the icon grind in PowerPoint, then symbols that behave like text (1 minute)"
+<div class="video"><iframe src="{VIDEO_EMBED}" width="960" height="540" title="SlideMarks: the icon grind in PowerPoint, then symbols that behave like text (1 minute)"
   allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe></div>
 <p class="credit">Video on <a href="{VIDEO_URL}">Vimeo</a>. Click sound: "Single click mouse" by ScouseMouseJB,
   <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
@@ -347,18 +404,30 @@ def build(root: Path, manifest, zip_path: Path, base_url: str) -> Path:
     shutil.copytree(root / "docs/glyphs", out / "glyphs/svg")
     shutil.copy(root / "docs/preview.svg", out / "preview.svg")
     shutil.copy(root / "docs/images/word-addin.png", out / "word-addin.png")
+    shutil.copy(root / "docs/images/og.jpg", out / "og.jpg")
+    shutil.copy(root / "docs/images/video-poster.jpg", out / "video-poster.jpg")
 
     (out / "site.css").write_text(CSS)
-    pages = {
-        "index.html": ("SlideMarks", _landing(manifest, version, zip_path.name, base_url), 0),
-        "glyphs/index.html": ("Glyph reference", _glyphs(manifest), 1),
-        "support/index.html": ("Support", _support(base_url), 1),
-        "privacy/index.html": ("Privacy", _privacy(), 1),
-        "terms/index.html": ("Terms of use", _terms(), 1),
+    count = len(manifest["symbols"])
+    pages = {  # path: (full title, description, body, depth)
+        "index.html": ("SlideMarks: Harvey balls and status symbols for PowerPoint and Word", SITE_TAGLINE,
+                       _landing(manifest, version, zip_path.name, base_url), 0),
+        "glyphs/index.html": ("Glyph reference · SlideMarks",
+                              f"All {count} SlideMarks symbols (Harvey balls, arrows, checks, ratings, trends and more) "
+                              "with their names and code points.", _glyphs(manifest), 1),
+        "support/index.html": ("Support · SlideMarks",
+                               "Help with installing SlideMarks, using it in PowerPoint and Word, and embedding the font.",
+                               _support(base_url), 1),
+        "privacy/index.html": ("Privacy · SlideMarks", "SlideMarks collects no personal data.", _privacy(), 1),
+        "terms/index.html": ("Terms of use · SlideMarks", "Terms of use for the SlideMarks font, add-in and website.",
+                             _terms(), 1),
     }
-    for path, (title, body, depth) in pages.items():
+    for path, (title, description, body, depth) in pages.items():
         (out / path).parent.mkdir(parents=True, exist_ok=True)
-        (out / path).write_text(_page(title, body, depth, version))
+        head = _structured_data(manifest, version, base_url) if path == "index.html" else ""
+        (out / path).write_text(_page(title, body, depth, version, path=path, description=description,
+                                      base_url=base_url, head=head))
+    (out / "sitemap.xml").write_text(_sitemap(base_url, pages))
     (out / "picker").mkdir()
     (out / "picker/index.html").write_text(
         '<!doctype html><meta charset="utf-8"><title>SlideMarks picker</title>'
