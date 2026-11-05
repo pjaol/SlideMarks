@@ -23,11 +23,11 @@ The same picker also ships as a standalone page (`dist/web/picker.html`) with Co
 | Office.js from Microsoft's CDN in the add-in only | Required for Marketplace; the standalone page doesn't load it, so it works offline |
 | Insert the **preferred character** (standard Unicode alias when one exists) | Screen readers announce aliases (verified with VoiceOver) |
 | **Word:** `insertOoxml` with all four font slots | `insertText` + `font.name` leaves the East Asian slot unset, and Word draws PUA from that slot |
-| **PowerPoint text:** replace the selection, or insert at the cursor and style it | Verified for selections; the collapsed-cursor path is verified live |
-| **PowerPoint table cell:** snapshot cells → `setSelectedDataAsync` → diff → rewrite `textRuns`, carrying uniform cell formatting | The only path that works in existing tables (spike). Mixed formatting can't be read, so the user is told and given a choice instead of a silent flattening |
-| Never call `setSelectedDataAsync` without a confirmed text cursor | It creates stray shapes otherwise (spike) |
+| **PowerPoint: one path for all text.** Snapshot the text the add-in can see in the selection (text frames, including lists and grouped shapes, and table cells with their runs) → `setSelectedDataAsync` at the real cursor → diff → style what changed: `getSubstring` in a text frame, a `textRuns` rewrite in a table cell that keeps every run's own formatting | `setSelectedDataAsync` is the only insert that reaches the cursor everywhere. PowerPoint for Mac reports the word next to a blinking cursor as the selected text, so the add-in never edits the reported selection (replacing it swallowed the word). Table cells have no substring API, and writing `textRuns` resets anything left out. Text add-ins can't see (SmartArt) still gets the symbol, and the user is told to set its font |
+| Gate on `getSelectedDataAsync`: insert only with a blinking cursor or a highlight; refuse when nothing is selected (error 1001) or a whole box or table is selected (the text contains a line break); remove any shape the insert creates | The common API reports the real selection, unlike `getSelectedTextRange` on Mac. A whole selected box would otherwise lose all its text (seen in testing), and `setSelectedDataAsync` without a cursor makes a stray text box (spike) |
+| Tables in content placeholders count as tables | They report shape type `Placeholder` with `containedType` `Table` |
 | Embedding is **guided**, with detection via `getFileAsync` + a small ZIP reader | Office.js can't embed fonts; prepared copies lose embedding on save (spike) |
-| Walkthroughs use illustrated HTML mock-ups of the real dialogs, showing the user's actual file name | Hand-drawn mock-ups stay accurate in light and dark themes and can name the file; screenshots can't |
+| Walkthroughs use real screenshots with highlight boxes where we have them (Mac Preferences, PowerPoint for Windows Options), and HTML mock-ups of the dialogs elsewhere | Users found the mock-ups harder to match to the real window; mock-ups remain where no screenshot exists yet and in the steps that name the user's file |
 | Dev hosting: `slidemarks office-serve` (HTTPS on localhost:3443 with Microsoft's dev certificate); sideload with `npx office-addin-dev-settings` | Proven in the spike; no Node project |
 | Production hosting and Marketplace: **not in this build** | Publishing is a public step and needs a domain decision. The build generates a production manifest for any base URL so it's ready |
 
@@ -45,7 +45,7 @@ The same picker also ships as a standalone page (`dist/web/picker.html`) with Co
 
 | Area | Result |
 |---|---|
-| PowerPoint: text box, selection, table cell, mixed-format cell | ✅ (user-tested; mixed formatting prompts before restyling) |
+| PowerPoint (2026-11-05, driven live) | ✅ Cursor at the end of a word (the word is kept), bulleted list item, highlighted word (replaced), whole box selected (refused, text untouched), nothing selected (refused, no stray shape), placeholder table and standalone table cells, mixed-format cell (italic "EM" and regular "AIL" kept), empty cell with a text label. SmartArt: inserted, with the "set the font" card. Grouped text boxes: not yet tested |
 | Word: paragraph and table cell | ✅ Saved runs have `ascii`/`hAnsi`/`eastAsia`/`cs` all set to SlideMarks; surrounding text unchanged |
 | Embedding detection and walkthrough | ✅ Both apps: red → green after following the steps and saving; the saved files contain the embedded font |
 | Ribbon icon | ✅ 75% Harvey ball; hashed file names stop Office showing a stale cached icon |

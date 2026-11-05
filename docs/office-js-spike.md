@@ -57,6 +57,33 @@ Can an Office add-in insert a SlideMarks symbol **at the user's cursor**, in ord
   - **Both:** whether any slide or the document body uses SlideMarks.
 - Verified both ways: the detection logic was checked in Node against known files (specimens embedded, spike exports not), and the live panel went red → green after the user enabled embedding and saved. The result matched the file on disk.
 
+## PowerPoint insertion, round 3 (live, PowerPoint for Mac 16.114, 2026-11-05)
+
+Findings from user testing of the shipped add-in, which led to the single snapshot-and-diff insertion path (`docs/office-addin-design.md`):
+
+- **Blinking cursor reported as a word.** With the cursor at the end of a word and nothing highlighted, `getSelectedTextRange()` returns the word (for example "WORLD", length 5). Replacing that range swallowed the word. The add-in now never edits the reported selection; it inserts with `setSelectedDataAsync` and finds the new text by diffing.
+- **The common API reports the real selection.** `Office.context.document.getSelectedDataAsync(Text)` gives:
+
+  | Selection | Result |
+  |---|---|
+  | Blinking cursor in a text box | `""`, while `getSelectedTextRange` says "WORLD", start 6, length 5 |
+  | Blinking cursor in a table cell | `""`, while `getSelectedTextRange` throws InvalidArgument |
+  | A highlighted word | the word |
+  | A whole text box selected (its border clicked) | the whole text plus `\r\n`; ⌘A inside the box gives the same |
+  | A whole table selected | every cell's text separated by `\r\n` |
+  | Nothing holding text (empty slide area) | error 1001, "The current selection is not supported" |
+
+  The add-in uses this as its gate: an error means no cursor, and a line break means a whole box or table, which the insert would replace. Before this check, inserting with a text box selected replaced all of its text. That happened in testing; it wasn't hypothetical.
+- **Tables in content placeholders** report shape type `Placeholder`, with `placeholderFormat.containedType` `Table`. A table inserted with Insert › Table reports `Table`.
+- **Empty table cells** report `null` for unset font properties, the same value PowerPoint uses for mixed formatting. `TableCell.textRuns` is readable on Mac (verified: in a cell with italic "EM" and regular "AIL", inserting after it kept both). The add-in reads each run's formatting and writes it back, so nothing is flattened.
+- **SmartArt** (a SmartArt diagram in a content placeholder):
+  - `getSelectedShapes()` reports one shape of type **`Placeholder`** (not `SmartArt`).
+  - Before inserting, `getSelectedTextRangeOrNullObject()` throws `InvalidArgument`, the same as in a table cell.
+  - `setSelectedDataAsync` inserts at the cursor. The text arrives in the theme font, so a SlideMarks-only symbol shows as a box.
+  - Afterwards, the selected shape's `textFrame.textRange` shows no change, and `getSelectedTextRangeOrNullObject()` returns a range whose `text` is **`null`**. The inserted character can't be positively identified, so its font can't be set safely.
+  - **Pasting doesn't help either.** Pasting the picker's formatted copy into a SmartArt box shows no Paste Options button, so there's no Keep Source Formatting, and the symbol arrives in the theme font.
+  - **Conclusion:** Office.js offers no supported way to format SmartArt text, and pasting can't carry the font in. Setting the font by hand is the only route. The add-in inserts the symbol and shows a "One more step: set the font" card. It never changes formatting it can't identify, and it doesn't convert SmartArt to shapes.
+
 ## Consequences for the picker (`docs/charmap.md`)
 
 1. **Insert at cursor is viable** in Word and PowerPoint, including existing PowerPoint tables. The original spec's gate (PRD F-17) is cleared on Mac.

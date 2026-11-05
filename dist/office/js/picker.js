@@ -91,16 +91,15 @@ SM.picker = (() => {
     SM.store.set("recent", recent);
   }
 
-  function showConfirm(result) {
+  // A step only the user can do (it stays until dismissed, unlike a toast).
+  function showNext(next) {
+    SM.$("pv-confirm")?.remove();
     const div = document.createElement("div");
     div.id = "pv-confirm";
     div.className = "check-item pending";
-    div.innerHTML = `<p>${SM.esc(result.message)}</p><div class="row"><button class="primary">${SM.esc(result.confirm.label)}</button><button data-dismiss>Leave it</button></div>`;
-    div.querySelector(".primary").onclick = async () => {
-      const r = await result.confirm.run();
-      div.remove();
-      SM.toast(r.message);
-    };
+    div.setAttribute("role", "status");
+    div.innerHTML = `<p><b>${SM.esc(next.title)}</b></p><p>${next.html}</p>
+      <div class="row"><button data-dismiss>Got it</button></div>`;
     div.querySelector("[data-dismiss]").onclick = () => div.remove();
     SM.$("preview").querySelector(".preview-info").appendChild(div);
   }
@@ -114,11 +113,11 @@ SM.picker = (() => {
     try {
       const result = await state.host.insert(s, { label: SM.$("pv-label").checked });
       if (result.ok) remember(s.id);
-      if (result.confirm) showConfirm(result);
-      else SM.toast(result.message, result.ok && !result.warn ? "" : "warn");
+      if (result.next) showNext(result.next);
+      else SM.toast(result.message, result.ok && !result.warn ? "" : "hint");
       SM.setup.refresh({ force: true });
     } catch (e) {
-      SM.toast(`Couldn't insert: ${e.message || e}`, "warn");
+      SM.toast(`Something went wrong: ${e.message || e}. Try again, or use Copy instead.`, "error");
     } finally {
       state.busy = false;
       SM.$("pv-insert").disabled = false;
@@ -132,7 +131,7 @@ SM.picker = (() => {
     const text = label ? `${s.char} ${label}` : s.char;
     const ok = await SM.copyText(text, SM.clipboardHtml(s.char, label));
     if (ok) remember(s.id);
-    SM.toast(ok ? `Copied ${s.name}.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "warn");
+    SM.toast(ok ? `Copied ${s.name}.` : "Couldn't copy. Select the symbol and copy it manually.", ok ? "" : "error");
     // PowerPoint's default paste ("Use Destination Theme") swaps the font for the theme font;
     // "Keep Source Formatting" keeps SlideMarks (verified on PowerPoint for Mac). Show how, right when it matters.
     if (ok && document.body.dataset.mode === "browser" && !SM.store.get("hidePasteHelp", false)) showPasteHelp();

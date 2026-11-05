@@ -1,5 +1,7 @@
 // Host adapters: insert a symbol at the cursor. Each returns
-//   { ok, message?, warn?, confirm?: { label, run } }
+//   { ok, message?, warn?, next?: { title, html } }
+// ok: false means nothing was inserted and the message says what to do; warn means it was inserted
+// but needs a follow-up; next is a step only the user can do, shown as a card. Unexpected failures throw.
 // Behavior follows docs/office-js-spike.md; comments cite the finding each step relies on.
 
 // Copy as formatted text as well as plain text, so pasting into Word or PowerPoint keeps the
@@ -107,49 +109,26 @@ SM.hosts.word = {
 
 const FONT_PROPS = ["name", "size", "bold", "italic", "color", "underline"];
 
-async function pptContext() {
-  try {
-    return await PowerPoint.run(async (context) => {
-      const sel = context.presentation.getSelectedTextRangeOrNullObject();
-      sel.load("text,start,length"); // throws InvalidArgument when the cursor is inside a table cell
-      const shapes = context.presentation.getSelectedShapes();
-      shapes.load("items/type");
-      await context.sync();
-      if (!sel.isNullObject) return { kind: "text" };
-      return { kind: shapes.items.some((s) => s.type === "Table") ? "table" : "none" };
-    });
-  } catch (e) {
-    if (e.code === "InvalidArgument") return { kind: "table" }; // cursor inside a table cell (spike)
-    throw e;
-  }
+// A table inserted into a layout's content placeholder reports type "Placeholder", with the table
+// as its contained type; one inserted onto the slide reports "Table".
+async function pptTables(context, shapes) {
+  const placeholders = shapes.filter((s) => s.type === "Placeholder");
+  placeholders.forEach((s) => s.placeholderFormat.load("containedType"));
+  if (placeholders.length) await context.sync();
+  return shapes.filter((s) => s.type === "Table" || (s.type === "Placeholder" && s.placeholderFormat.containedType === "Table"));
 }
 
-async function pptInsertText(sym, text) {
-  // PowerPoint for Mac reports the word next to a blinking cursor as the selected text, so that range
-  // can't be trusted: replacing it swallowed the word. The generic insert goes to the real cursor (and
-  // replaces a real highlight); then find the new text by comparing the selected shape's text.
-  return PowerPoint.run(async (context) => {
-    const shapes = context.presentation.getSelectedShapes();
-    shapes.load("items/id");
-    await context.sync();
-    const ranges = shapes.items.map((s) => s.textFrame.textRange);
-    ranges.forEach((r) => r.load("text"));
-    await context.sync();
-    const before = ranges.map((r) => r.text);
-
-    await setSelectedData(text);
-    ranges.forEach((r) => r.load("text"));
-    await context.sync();
-    const changed = ranges.map((r, i) => i).filter((i) => ranges[i].text !== before[i]);
-    if (changed.length !== 1) {
-      return { ok: true, warn: true, message: "Inserted, but couldn't set its font. Select the symbol and choose SlideMarks in the font menu." };
-    }
-    const i = changed[0];
-    const span = insertedSpan(before[i], ranges[i].text);
-    ranges[i].getSubstring(span.start, sym.char.length).font.name = SM.FONT;
-    await context.sync();
-    return { ok: true, message: `Inserted ${sym.name}` };
-  });
+// What's selected, from the common API, which reports the real selection on Mac (getSelectedTextRange
+// reports the word next to a blinking cursor). Verified 2026-11-05: "" for a blinking cursor in a text
+// box or table cell; the highlighted text; the whole text with line breaks when a whole text box or
+// table is selected; error 1001 when nothing holding text is selected. Returns null for that error.
+function pptSelectedText() {
+  return new Promise((resolve, reject) =>
+    Office.context.document.getSelectedDataAsync(Office.CoercionType.Text, (r) => {
+      if (r.status === Office.AsyncResultStatus.Succeeded) resolve(r.value);
+      else if (r.error.code === 1001) resolve(null);
+      else reject(r.error);
+    }));
 }
 
 function insertedSpan(before, after) {
@@ -160,86 +139,146 @@ function insertedSpan(before, after) {
   return { start, end: after.length - end };
 }
 
-function cellRuns(text, glyphSpan, font) {
-  // Symbol characters (all PUA, plus the just-inserted glyph) get SlideMarks; everything else
-  // gets the cell's own formatting carried forward, because writing textRuns resets it (spike).
-  const runs = [];
-  [...text].forEach((ch, i, chars) => {
-    const offset = chars.slice(0, i).join("").length;
-    const sym = SM.isSymbolChar(ch) || (offset >= glyphSpan.start && offset < glyphSpan.end);
-    const last = runs[runs.length - 1];
-    if (last && last.sym === sym) last.text += ch;
-    else runs.push({ sym, text: ch });
-  });
-  return runs.map(({ sym, text: t }) => ({ text: t, font: sym ? { ...font, name: SM.FONT } : { ...font } }));
+function cleanFont(font) {
+  const out = {};
+  for (const [k, v] of Object.entries(font || {})) if (v !== null && v !== undefined) out[k] = v;
+  return out;
 }
 
-async function pptInsertTable(sym, text) {
+// Rebuild a cell's runs after an insert: every original character keeps its own run's formatting;
+// the inserted text takes its neighbor's (the character before it, else after it), and the glyph
+// itself is set to SlideMarks. Writing textRuns replaces the whole cell, so nothing may be left out.
+function spliceRuns(beforeRuns, beforeText, afterText, glyphLen, fallbackFont) {
+  const fonts = [];
+  for (const run of beforeRuns) for (let k = 0; k < run.text.length; k++) fonts.push(cleanFont(run.font));
+  if (fonts.length !== beforeText.length) throw new Error("PowerPoint returned runs that don't match the cell's text.");
+  const span = insertedSpan(beforeText, afterText);
+  const removed = beforeText.length - (afterText.length - (span.end - span.start));
+  const neighbor = fonts[span.start - 1] || fonts[span.start + removed] || cleanFont(fallbackFont);
+  const after = [
+    ...fonts.slice(0, span.start),
+    ...[...Array(span.end - span.start)].map((_, k) => (k < glyphLen ? { ...neighbor, name: SM.FONT } : { ...neighbor })),
+    ...fonts.slice(span.start + removed),
+  ];
+  const runs = [];
+  for (let k = 0; k < afterText.length; k++) {
+    const last = runs[runs.length - 1];
+    if (last && JSON.stringify(last.font) === JSON.stringify(after[k])) last.text += afterText[k];
+    else runs.push({ text: afterText[k], font: after[k] });
+  }
+  return runs;
+}
+
+// After inserting into text the add-in can't otherwise see: if the selection is now exactly the
+// inserted text, set the symbol's font and read it back. Never touch a selection that differs
+// (PowerPoint for Mac may report a neighboring word). In SmartArt the selection's text is null
+// (docs/office-js-spike.md, round 3), so this returns false there.
+async function pptFormatSelectionIfInserted(context, sym, text) {
+  const sel = context.presentation.getSelectedTextRangeOrNullObject();
+  sel.load("text");
+  try {
+    await context.sync();
+  } catch (e) {
+    if (e.code === "InvalidArgument") return false; // the selection can't be read here
+    throw e;
+  }
+  if (sel.isNullObject || sel.text !== text) return false;
+  const glyph = sel.getSubstring(0, sym.char.length);
+  glyph.font.name = SM.FONT;
+  glyph.font.load("name");
+  await context.sync();
+  return glyph.font.name === SM.FONT;
+}
+
+// One path for every kind of text. The generic insert goes to the real cursor wherever it is (and
+// replaces a real highlight). PowerPoint for Mac reports the word next to a blinking cursor as the
+// selected text, so the add-in never edits the reported selection itself. Instead it snapshots the
+// text it can see (text frames, including lists and grouped shapes, and table cells), inserts, and
+// formats whatever changed. Text add-ins can't see (SmartArt, notes) still gets the symbol; the
+// user is told to set its font.
+async function pptInsert(sym, text) {
   return PowerPoint.run(async (context) => {
-    const shapes = context.presentation.getSelectedShapes();
-    shapes.load("items/type,items/id");
+    const slideShapes = context.presentation.getSelectedSlides().getItemAt(0).shapes;
+    slideShapes.load("items/id");
+    const selected = context.presentation.getSelectedShapes();
+    selected.load("items/type,items/id");
     await context.sync();
-    const shape = shapes.items.find((s) => s.type === "Table");
-    if (!shape) return { ok: false, message: "Click inside a table cell or text box first." };
-    const table = shape.getTable();
-    table.load("rowCount,columnCount");
-    await context.sync();
+    const shapeIdsBefore = new Set(slideShapes.items.map((s) => s.id));
 
-    const cells = [];
-    for (let r = 0; r < table.rowCount; r++)
-      for (let c = 0; c < table.columnCount; c++) {
-        const cell = table.getCellOrNullObject(r, c);
-        cell.load("text");
-        cell.font.load(FONT_PROPS.join(","));
-        cells.push({ r, c, cell });
+    const groups = selected.items.filter((s) => s.type === "Group");
+    groups.forEach((g) => g.group.shapes.load("items/type,items/id"));
+    if (groups.length) await context.sync();
+    const shapes = [...selected.items.filter((s) => s.type !== "Group"), ...groups.flatMap((g) => g.group.shapes.items)];
+    const tables = await pptTables(context, shapes);
+
+    const frames = [];
+    for (const shape of shapes.filter((s) => !tables.includes(s))) {
+      const range = shape.textFrame.textRange;
+      range.load("text");
+      try {
+        await context.sync();
+        frames.push({ range, before: range.text });
+      } catch (e) {
+        if (e.code !== "InvalidArgument") throw e; // a shape without text (picture, chart, SmartArt)
       }
+    }
+    const cells = [];
+    for (const shape of tables) {
+      const table = shape.getTable();
+      table.load("rowCount,columnCount");
+      await context.sync();
+      for (let r = 0; r < table.rowCount; r++)
+        for (let c = 0; c < table.columnCount; c++) {
+          const cell = table.getCellOrNullObject(r, c);
+          cell.load("text,textRuns");
+          cell.font.load(FONT_PROPS.join(","));
+          cells.push({ cell });
+        }
+    }
     await context.sync();
-    const before = cells.map(({ cell }) => ({ text: cell.text, font: cell.font.toJSON() }));
+    cells.forEach((x) => Object.assign(x, { before: x.cell.text, runs: x.cell.textRuns || [], font: x.cell.font.toJSON() }));
 
-    // No API reports which cell holds the cursor; insert, then find the one cell that changed (spike).
     await setSelectedData(text);
-    cells.forEach(({ cell }) => cell.load("text"));
+
+    slideShapes.load("items/id");
+    frames.forEach((f) => f.range.load("text"));
+    cells.forEach((x) => x.cell.load("text"));
     await context.sync();
-    const changed = cells.map((x, i) => i).filter((i) => cells[i].cell.text !== before[i].text);
-    if (changed.length === 0) {
-      return { ok: false, message: "Click inside a table cell so the cursor is blinking there (not the whole table), then insert again." };
-    }
-    if (changed.length > 1) return { ok: false, message: "Couldn't tell which cell received the symbol. Undo and try again." };
 
-    const i = changed[0];
-    const { r, c } = cells[i];
-    const afterText = cells[i].cell.text;
-    const span = insertedSpan(before[i].text, afterText);
-    const glyphSpan = { start: span.start, end: span.start + sym.char.length };
-    const font = {};
-    let mixed = false;
-    for (const p of FONT_PROPS) {
-      const v = before[i].font[p];
-      if (v === null || v === undefined) mixed = true;
-      else if (p !== "name") font[p] = v;
+    const stray = slideShapes.items.filter((s) => !shapeIdsBefore.has(s.id));
+    if (stray.length) {
+      // No real cursor after all: PowerPoint made a new text box for the symbol. Take it away again.
+      stray.forEach((s) => s.delete());
+      await context.sync();
+      return { ok: false, message: "Click into the text so the cursor is blinking there, then insert again." };
     }
-    if (before[i].font.name) font.name = before[i].font.name;
 
-    const apply = async (carry) => {
-      await PowerPoint.run(async (ctx) => {
-        const t = ctx.presentation.getSelectedSlides().getItemAt(0).shapes.getItem(shape.id).getTable();
-        t.getCellOrNullObject(r, c).textRuns = cellRuns(afterText, glyphSpan, carry);
-        await ctx.sync();
-      });
-    };
-    if (!mixed) {
-      await apply(font);
-      return { ok: true, message: `Inserted ${sym.name}` };
+    const changedFrames = frames.filter((f) => f.range.text !== f.before);
+    const changedCells = cells.filter((x) => x.cell.text !== x.before);
+    if (changedFrames.length + changedCells.length === 0) {
+      // Text the add-in can't see (SmartArt): see whether PowerPoint now reports the inserted text
+      // as the selection, and format it only if it's exactly what was inserted.
+      if (await pptFormatSelectionIfInserted(context, sym, text)) return { ok: true, message: `Inserted ${sym.name}` };
+      return { ok: true, next: {
+        title: "One more step: set the font",
+        html: `PowerPoint doesn't let add-ins format text here (SmartArt, for example). Select the new symbol if it isn't
+          already selected, then choose <b>SlideMarks</b> in the font box on the Home tab.`,
+      } };
     }
-    return {
-      ok: true,
-      warn: true,
-      message: "Inserted, but this cell has mixed formatting (for example one bold word), so the symbol isn't in SlideMarks yet.",
-      confirm: {
-        label: "Set the symbol's font (simplifies this cell's formatting)",
-        run: async () => { await apply(font); return { ok: true, message: "Symbol set to SlideMarks." }; },
-      },
-    };
+    if (changedFrames.length + changedCells.length > 1) {
+      return { ok: true, warn: true, message: "Inserted, but couldn't tell where, so its font isn't set. Select the symbol and choose SlideMarks in the font menu." };
+    }
+    if (changedFrames.length) {
+      const f = changedFrames[0];
+      const span = insertedSpan(f.before, f.range.text);
+      f.range.getSubstring(span.start, sym.char.length).font.name = SM.FONT;
+    } else {
+      // Cells have no substring API: rewrite the cell's runs, keeping each run's formatting.
+      const x = changedCells[0];
+      x.cell.textRuns = spliceRuns(x.runs, x.before, x.cell.text, sym.char.length, x.font);
+    }
+    await context.sync();
+    return { ok: true, message: `Inserted ${sym.name}` };
   });
 }
 
@@ -247,12 +286,14 @@ SM.hosts.powerpoint = {
   name: "PowerPoint",
   canInsert: true,
   async insert(sym, { label }) {
-    const text = label ? `${sym.char} ${SM.labelText(sym)}` : sym.char;
-    const where = await pptContext();
-    if (where.kind === "text") return pptInsertText(sym, text);
-    if (where.kind === "table") return pptInsertTable(sym, text);
-    // Never call setSelectedDataAsync without a text cursor: it creates a stray shape (spike).
-    return { ok: false, message: "Click into a text box or a table cell first, then insert." };
+    const selected = await pptSelectedText();
+    if (selected === null) return { ok: false, message: "Click into the text where the symbol should go, then insert." };
+    if (/[\r\n]/.test(selected)) {
+      // A whole text box or table: inserting would replace all of its text.
+      return { ok: false, message: "The whole text box or table is selected, so the symbol would replace all of it. "
+        + "Click where the symbol should go (or highlight just the text to replace), then insert." };
+    }
+    return pptInsert(sym, label ? `${sym.char} ${SM.labelText(sym)}` : sym.char);
   },
 };
 

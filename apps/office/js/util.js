@@ -13,7 +13,7 @@ SM.toast = (() => {
     el.textContent = message;
     el.className = `toast show ${kind}`;
     clearTimeout(timer);
-    timer = setTimeout(() => { el.className = "toast"; }, kind === "warn" ? 6000 : 2600);
+    timer = setTimeout(() => { el.className = "toast"; }, kind ? 7000 : 2600); // hints and errors need reading time
   };
 })();
 
@@ -25,11 +25,6 @@ SM.store = {
   set(key, value) {
     try { localStorage.setItem(`slidemarks.${key}`, JSON.stringify(value)); } catch { /* not persisted */ }
   },
-};
-
-SM.isSymbolChar = (ch) => {
-  const p = ch.codePointAt(0);
-  return p >= 0xe000 && p <= 0xf8ff;
 };
 
 // Visible text that carries a symbol's meaning when "Add a text label" is ticked.

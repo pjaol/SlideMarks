@@ -180,6 +180,8 @@ and reopen it</strong>. If you received the file from someone else, ask them to 
     <p><img src="../office/assets/walkthrough/powerpoint-paste-options.png" width="360" style="max-width:100%;height:auto;border-radius:8px"
       alt="PowerPoint's Paste Options menu with Keep Source Formatting highlighted, above Use Destination Theme and Keep Text Only"></p></li>
   <li><strong>Word:</strong> if the symbol shows as a box, use <em>Paste Options › Keep Source Formatting</em> too.</li>
+  <li><strong>PowerPoint SmartArt:</strong> pasting into SmartArt doesn't offer <em>Keep Source Formatting</em>, and add-ins can't format SmartArt text.
+    Select the symbol and choose <strong>SlideMarks</strong> in the font box. Inserting with the add-in works the same way: the symbol goes in, then set its font.</li>
   <li><strong>Alternative:</strong> set the text or table cell to the <em>SlideMarks</em> font first, then use <em>Edit › Paste Special › Unformatted Text</em>.</li>
 </ul>
 <p>The Office add-in avoids all of this: its <em>Insert</em> button sets the font for you.</p>

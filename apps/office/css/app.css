@@ -67,7 +67,8 @@ body[data-mode="office"] .paste-tip, body[data-mode="office"] .paste-help { disp
 
 .toast { position: fixed; left: 8px; right: 8px; bottom: 8px; padding: 8px 10px; border-radius: 6px; background: var(--fg); color: var(--bg); opacity: 0; transform: translateY(8px); transition: .2s; pointer-events: none; }
 .toast.show { opacity: 1; transform: none; }
-.toast.warn { background: var(--warn); color: #fff; }
+.toast.hint { background: var(--pend-bg); color: var(--fg); border: 1px solid var(--pend); } /* a next step, not a failure */
+.toast.error { background: var(--warn); color: #fff; }
 
 /* Setup checklist */
 .setup { padding: 8px; border-bottom: 1px solid var(--line); }
