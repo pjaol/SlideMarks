@@ -26,6 +26,8 @@ GITHUB_MARK = ('<svg aria-hidden="true" viewBox="0 0 16 16" width="20" height="2
     '.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>')
 ISSUES_URL = f"{REPO_URL}/issues"
 PKG_URL = f"{REPO_URL}/releases/latest/download/SlideMarks.pkg"  # signed, notarized; built with `slidemarks mac-pkg`
+VIDEO_URL = "https://vimeo.com/1243908122"
+VIDEO_EMBED = "https://player.vimeo.com/video/1243908122?badge=0&amp;autopause=0&amp;dnt=1"  # HTML-escaped: used only in markup
 
 CSS = """
 :root { --fg:#1f2328; --muted:#59636e; --line:#d1d9e0; --panel:#f6f8fa; --accent:#6d3b8e; --bg:#fff; color-scheme: light dark; }
@@ -58,6 +60,9 @@ table { border-collapse: collapse; width: 100%; font-size: .95rem; }
 th, td { border-bottom: 1px solid var(--line); padding: .35rem .5rem; text-align: left; vertical-align: middle; }
 td img { width: 32px; height: 32px; display: block; }
 .preview { max-width: 100%; height: auto; border-radius: 12px; }
+.video { position: relative; aspect-ratio: 16 / 9; margin: 1.5rem 0 .4rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(0, 0, 0, .12); background: var(--panel); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.credit { font-size: .8rem; color: var(--muted); margin: 0 0 1.5rem; }
 .preview.shot { border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(0, 0, 0, .12); }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; padding: 1.2rem 0; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -112,6 +117,10 @@ def _landing(manifest, version: str, zip_name: str, base_url: str) -> str:
 <h1>Presentation symbols that behave like text</h1>
 <p class="lede">Harvey balls, arrows, checks, ratings and trends for PowerPoint and Word tables.
 One consistent family of {count} symbols: type, paste, resize and recolor them like any character. Free and open source.</p>
+<div class="video"><iframe src="{VIDEO_EMBED}" title="SlideMarks: the icon grind in PowerPoint, then symbols that behave like text (1 minute)"
+  allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe></div>
+<p class="credit">Video on <a href="{VIDEO_URL}">Vimeo</a>. Click sound: "Single click mouse" by ScouseMouseJB,
+  <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 <p><img class="preview shot" src="word-addin.png" width="2000" height="1231"
   alt="SlideMarks in Word: a table comparing two products with Harvey balls, next to the SlideMarks pane. Callouts: 1, symbols are text, so they take the table cell's size, color and alignment. 2, open SlideMarks from the Home tab. 3, it checks the font is embedded so the file looks right everywhere. 4, insert at the cursor, or copy with the font already set."></p>
 
@@ -268,6 +277,8 @@ def _privacy() -> str:
   <li><strong>Hosting:</strong> the add-in and this site are static files served by GitHub Pages. GitHub may log requests, as for any website
     (see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>).
     The add-in loads Office.js from Microsoft's servers, as all Office add-ins do.</li>
+  <li><strong>The video</strong> on the home page is embedded from Vimeo with its do-not-track option on. Playing it loads Vimeo's player
+    (see <a href="https://vimeo.com/privacy">Vimeo's privacy policy</a>).</li>
 </ul>
 <p>Questions: <a href="{ISSUES_URL}">open an issue</a>.</p>
 """

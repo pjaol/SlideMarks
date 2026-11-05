@@ -1,0 +1,265 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "SlideMarks";
+      src: url("assets/fonts/SlideMarks-Regular.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+      --gs: 44px;
+    }
+    .panel {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(31, 35, 40, 0.14);
+      overflow: hidden;
+    }
+    #d-ribbon {
+      left: 96px;
+      top: 40px;
+      width: 1050px;
+      height: 113px;
+    }
+    #d-ribbon img {
+      display: block;
+      width: 100%;
+    }
+    .rb-hl {
+      position: absolute;
+      width: 36px;
+      height: 35px;
+      border-radius: 5px;
+      background: rgba(31, 35, 40, 0.1);
+    }
+    #d-size {
+      position: absolute;
+      left: 387px;
+      top: 56px;
+      width: 50px;
+      height: 29px;
+      background: #fff;
+      font-size: 21px;
+      line-height: 29px;
+      padding-left: 6px;
+      color: #1f2328;
+    }
+    #d-card {
+      left: 96px;
+      top: 176px;
+      width: 1250px;
+      height: 640px;
+    }
+    #d-pane {
+      left: 1371px;
+      top: 70px;
+      width: 453px;
+      height: 940px;
+    }
+    #d-pane img {
+      display: block;
+      width: 100%;
+    }
+    table {
+      position: absolute;
+      left: 40px;
+      top: 40px;
+      width: 1170px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th,
+    td {
+      border-bottom: 2px solid #d1d9e0;
+      padding: 0 22px;
+      vertical-align: middle;
+    }
+    th {
+      height: 60px;
+      background: #f6f8fa;
+      color: #59636e;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+    }
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+    td {
+      height: 80px;
+      font-size: 32px;
+      line-height: 1.25;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    td.gc {
+      text-align: center;
+    }
+    .g {
+      font-family: "SlideMarks";
+      font-size: var(--gs);
+      line-height: 1;
+    }
+    tr.sel td,
+    td.sel {
+      background: #f3dfd8;
+    }
+    tr.b td {
+      font-weight: 700;
+    }
+    tr.i td {
+      font-style: italic;
+    }
+    tr.u td {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+    .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 31px;
+      height: 46px;
+      z-index: 20;
+      transform-origin: 3px 3px;
+    }
+    .cap {
+      position: absolute;
+      left: 96px;
+      bottom: 108px;
+      z-index: 10;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 14px;
+      padding: 20px 36px 24px;
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.1);
+    }
+    .cap span {
+      display: inline-block;
+    }
+    .cap .hl {
+      color: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="demo" data-width="1920" data-height="1080">
+    <div id="d-ribbon" class="panel">
+      <img src="assets/shots/ribbon_font_para.png" alt="PowerPoint Home ribbon: font SlideMarks, size 28" />
+      <div id="d-al" class="rb-hl"></div>
+      <div id="d-hb" class="rb-hl" style="left: 25px; top: 59px"></div>
+      <div id="d-hi" class="rb-hl" style="left: 64px; top: 59px"></div>
+      <div id="d-hu" class="rb-hl" style="left: 101px; top: 59px"></div>
+      <div id="d-size">28</div>
+    </div>
+    <div id="d-card" class="panel">
+      <table>
+        <colgroup><col style="width: 650px" /><col style="width: 260px" /><col style="width: 260px" /></colgroup>
+        <tr><th>Requirement</th><th>Product A</th><th>Product B</th></tr>
+        <tr><td>SOC 2 Type II</td><td class="gc ca"><span class="g ga" id="d-g0"></span></td><td class="gc"><span class="g" id="d-g1"></span></td></tr>
+        <tr><td>GDPR data residency<span id="d-ext"></span></td><td class="gc ca"><span class="g ga" id="d-g2"></span></td><td class="gc"><span class="g" id="d-g3"></span></td></tr>
+        <tr id="d-sso"><td>SSO / SAML</td><td class="gc ca"><span class="g ga" id="d-g4"></span></td><td class="gc"><span class="g" id="d-g5"></span></td></tr>
+        <tr><td>Audit log coverage</td><td class="gc ca"><span class="g ga" id="d-g6"></span></td><td class="gc"><span class="g" id="d-g7"></span></td></tr>
+        <tr><td>Encryption at rest</td><td class="gc ca"><span class="g ga" id="d-g8"></span></td><td class="gc"><span class="g" id="d-g9"></span></td></tr>
+      </table>
+    </div>
+    <div id="d-pane" class="panel"><img src="assets/shots/pane_ppt.png" alt="The SlideMarks pane in PowerPoint" /></div>
+    <svg id="d-cursor" class="cursor" viewBox="0 0 24 36"><path d="M2 2 L2 28 L8.5 22 L13 33 L17.5 31 L13 20.5 L22 20.5 Z" fill="#000" stroke="#fff" stroke-width="2" stroke-linejoin="round" /></svg>
+
+    <div id="d-cap1" class="cap clip" data-start="0.4" data-duration="4" data-track-index="2"><span>Pick</span> <span>it.</span> <span>It's</span> <span class="hl">text.</span></div>
+    <div id="d-cap2" class="cap clip" data-start="4.5" data-duration="2.7" data-track-index="2"><span>Text</span> <span>grows.</span> <span>Symbols</span> <span class="hl">follow.</span></div>
+    <div id="d-cap3" class="cap clip" data-start="7.3" data-duration="2.4" data-track-index="2"><span>Align</span> <span>it</span> <span>like</span> <span class="hl">text.</span></div>
+    <div id="d-cap4" class="cap clip" data-start="9.8" data-duration="2.5" data-track-index="2"><span>Size</span> <span>it</span> <span>like</span> <span class="hl">text.</span></div>
+    <div id="d-cap5" class="cap clip" data-start="12.4" data-duration="3.6" data-track-index="2"><span>Bold.</span> <span>Italic.</span> <span>Underline.</span> <span class="hl">Colour.</span></div>
+  </div>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const root = $("root");
+      const GLYPH = ["", "", "", "", "", "", "", "", "", ""];
+      // when each cell gets its symbol: the inserted one first, then the rest typed in
+      const appear = [3.0, 3.15, 3.3, 2.45, 3.45, 3.6, 3.75, 3.9, 4.05, 4.2];
+      const ext = " (EU and UK regions, customer-managed keys)";
+      const alignX = { left: 633, center: 672, right: 711 }; // ribbon highlight x per align button
+      const step = (t, marks, values) => values[marks.filter((m) => t >= m).length];
+
+      const tl = gsap.timeline({ paused: true });
+
+      // workspace arrives; the pane opens from the right
+      tl.fromTo(["#d-ribbon", "#d-card"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25 }, 0);
+      tl.fromTo("#d-pane", { x: 520 }, { x: 0, duration: 0.55, ease: "expo.out" }, 0.1);
+
+      // cursor: pick Harvey ball 0 %, then Insert into PowerPoint
+      const click = (at) => tl.to("#d-cursor", { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, at);
+      const go = (x, y, at, d = 0.45) => tl.to("#d-cursor", { x: x - 3, y: y - 3, duration: d, ease: "power3.inOut" }, at);
+      tl.fromTo("#d-cursor", { x: 1700, y: 1150, opacity: 1 }, { x: 1700, y: 1150, duration: 0.01 }, 0);
+      go(1412, 473, 0.7, 0.7); click(1.5);
+      go(1560, 963, 1.75); click(2.35);
+      go(1180, 720, 2.6, 0.5);
+      // align: left, right, centre
+      go(651, 117, 7.45); click(8.0);
+      go(729, 117, 8.2, 0.35); click(8.6);
+      go(690, 117, 8.8, 0.35); click(9.2);
+      // size up three times, down twice
+      go(483, 70, 9.7); click(10.3); click(10.6); click(10.9);
+      go(526, 70, 11.15, 0.25); click(11.5); click(11.8);
+      // select the SSO row, then B, I, U
+      go(150, 420, 12.05, 0.35); go(1290, 420, 12.45, 0.35);
+      go(139, 117, 12.75); click(13.1);
+      go(178, 117, 13.35, 0.2); click(13.6);
+      go(215, 117, 13.85, 0.2); click(14.1);
+      // Product A column, then font colour
+      go(900, 300, 14.35, 0.3); go(900, 700, 14.65, 0.25);
+      go(565, 117, 14.95, 0.3); click(15.3);
+      tl.to("#d-cursor", { opacity: 0, duration: 0.2 }, 15.65);
+
+      ["#d-cap1", "#d-cap2", "#d-cap3", "#d-cap4", "#d-cap5"].forEach((c, n) =>
+        tl.fromTo(`${c} span`, { opacity: 0, filter: "blur(6px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.07, ease: "power2.out" }, [0.4, 4.5, 7.3, 9.8, 12.4][n]));
+
+      const render = () => {
+        const t = tl.time();
+        GLYPH.forEach((g, k) => { $(`d-g${k}`).textContent = t >= appear[k] ? g : ""; });
+        const p = Math.min(Math.max((t - 4.7) / 1.5, 0), 1);
+        $("d-ext").textContent = ext.slice(0, Math.round(p * ext.length));
+
+        const align = step(t, [8.0, 8.6, 9.2], ["center", "left", "right", "center"]);
+        document.querySelectorAll("#root td.gc").forEach((td) => { td.style.textAlign = align; });
+        const cols = t >= 7.9 && t < 9.5; // product cells selected while aligning
+        document.querySelectorAll("#root td.gc").forEach((td) => td.classList.toggle("sel", cols || (t >= 14.6 && t < 15.55 && td.classList.contains("ca"))));
+        $("d-al").style.left = alignX[align] + "px";
+        $("d-al").style.top = "59px";
+        $("d-al").style.opacity = cols ? 1 : 0;
+
+        const pt = step(t, [10.3, 10.6, 10.9, 11.5, 11.8], [28, 32, 36, 40, 36, 32]);
+        root.style.setProperty("--gs", (pt * 44) / 28 + "px");
+        $("d-size").textContent = pt;
+        $("d-size").style.opacity = t >= 10.0 && t < 12.2 ? 1 : 0;
+
+        const sso = $("d-sso");
+        const rowSel = t >= 12.5 && t < 14.35;
+        sso.classList.toggle("sel", rowSel);
+        sso.classList.toggle("b", t >= 13.1);
+        sso.classList.toggle("i", t >= 13.6);
+        sso.classList.toggle("u", t >= 14.1);
+        $("d-hb").style.opacity = rowSel && t >= 13.1 ? 1 : 0;
+        $("d-hi").style.opacity = rowSel && t >= 13.6 ? 1 : 0;
+        $("d-hu").style.opacity = rowSel && t >= 14.1 ? 1 : 0;
+
+        document.querySelectorAll("#root .ga").forEach((g) => { g.style.color = t >= 15.3 ? "#6d3b8e" : "#1f2328"; });
+      };
+      tl.eventCallback("onUpdate", render);
+      tl.set({}, {}, 16);
+      render();
+      window.__timelines["demo"] = tl;
+    })();
+  </script>
+</template>

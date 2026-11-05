@@ -1,0 +1,38 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #ffffff;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+    }
+    #o-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 470px;
+      text-align: center;
+      font-size: 104px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #o-line span {
+      display: inline-block;
+      white-space: pre;
+    }
+  </style>
+  <div id="root" data-composition-id="onemore" data-width="1920" data-height="1080">
+    <div id="o-line"><span>O</span><span>n</span><span>e</span><span> </span><span>m</span><span>o</span><span>r</span><span>e</span><span> </span><span>t</span><span>h</span><span>i</span><span>n</span><span>g</span><span style="color: #6d3b8e">…</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#o-line span", { opacity: 0.08, filter: "blur(3px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.12, stagger: 0.055, ease: "power2.out" }, 0.35);
+      tl.to("#o-line", { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 2.75);
+      window.__timelines["onemore"] = tl;
+    })();
+  </script>
+</template>

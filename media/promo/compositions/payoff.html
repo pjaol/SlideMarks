@@ -1,0 +1,157 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "SlideMarks";
+      src: url("assets/fonts/SlideMarks-Regular.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+    }
+    #p-claim {
+      position: absolute;
+      left: 96px;
+      top: 92px;
+      font-size: 88px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+    #p-claim span {
+      display: inline-block;
+    }
+    .card {
+      position: absolute;
+      left: 96px;
+      top: 250px;
+      width: 1728px;
+      height: 720px;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(31, 35, 40, 0.14);
+      overflow: hidden;
+    }
+    table {
+      position: absolute;
+      left: 48px;
+      top: 44px;
+      width: 1630px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th,
+    td {
+      border-bottom: 2px solid #d1d9e0;
+      padding: 0 24px;
+      vertical-align: middle;
+    }
+    th {
+      height: 64px;
+      background: #f6f8fa;
+      color: #59636e;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+    }
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+    td {
+      height: 80px;
+      font-size: 36px;
+      line-height: 1.25;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      text-align: center;
+    }
+    .g {
+      font-family: "SlideMarks";
+      font-size: 54px;
+      line-height: 1;
+    }
+    .ga {
+      color: #6d3b8e;
+    }
+    .ic {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+    }
+    #p-div {
+      position: absolute;
+      top: 250px;
+      left: 0;
+      width: 4px;
+      height: 720px;
+      background: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="payoff" data-width="1920" data-height="1080">
+    <div id="p-claim"><span>Symbols</span> <span>that</span> <span>behave</span> <span>like</span> <span style="color: #6d3b8e">text.</span></div>
+    <div class="card" id="p-before">
+      <table id="p-tb" data-layout-ignore>
+        <colgroup><col style="width: 990px" /><col style="width: 320px" /><col style="width: 320px" /></colgroup>
+        <tr><th>Requirement</th><th>Product A</th><th>Product B</th></tr>
+        <tr><td>SOC 2 Type II</td><td></td><td></td></tr>
+        <tr><td id="p-gdpr">GDPR data residency</td><td></td><td></td></tr>
+        <tr><td>SSO / SAML</td><td></td><td></td></tr>
+        <tr><td>Audit log coverage</td><td></td><td></td></tr>
+        <tr><td>Encryption at rest</td><td></td><td></td></tr>
+      </table>
+      <img class="ic" src="assets/icons/harvey-100.png" alt="" />
+      <img class="ic" src="assets/icons/harvey-50.png" alt="" />
+      <img class="ic" src="assets/icons/harvey-75.png" alt="" />
+      <img class="ic" src="assets/icons/harvey-0.png" alt="" />
+      <img class="ic" src="assets/icons/status-check.png" alt="" />
+      <img class="ic" src="assets/icons/status-cross.png" alt="" />
+      <img class="ic" src="assets/icons/trend-up.png" alt="" />
+      <img class="ic" src="assets/icons/trend-down.png" alt="" />
+      <img class="ic" src="assets/icons/harvey-100.png" alt="" />
+      <img class="ic" src="assets/icons/harvey-25.png" alt="" />
+    </div>
+    <div class="card" id="p-after" data-layout-allow-occlusion>
+      <table>
+        <colgroup><col style="width: 990px" /><col style="width: 320px" /><col style="width: 320px" /></colgroup>
+        <tr><th>Requirement</th><th>Product A</th><th>Product B</th></tr>
+        <tr><td>SOC 2 Type II</td><td><span class="g ga">&#xE004;</span></td><td><span class="g">&#xE002;</span></td></tr>
+        <tr><td>GDPR data residency (EU and UK regions, customer-managed keys)</td><td><span class="g ga">&#xE003;</span></td><td><span class="g">&#xE000;</span></td></tr>
+        <tr><td style="font-weight: 700; font-style: italic; text-decoration: underline">SSO / SAML</td><td style="font-weight: 700; font-style: italic; text-decoration: underline"><span class="g ga">&#xE050;</span></td><td style="font-weight: 700; font-style: italic; text-decoration: underline"><span class="g">&#xE051;</span></td></tr>
+        <tr><td>Audit log coverage</td><td><span class="g ga">&#xE070;</span></td><td><span class="g">&#xE071;</span></td></tr>
+        <tr><td>Encryption at rest</td><td><span class="g ga">&#xE004;</span></td><td><span class="g">&#xE001;</span></td></tr>
+      </table>
+    </div>
+    <div id="p-div"></div>
+  </div>
+  <script>
+    (function () {
+      // Place the pictures where the short-text layout put their cells, then lengthen the text:
+      // the table grows and the pictures stay, as in PowerPoint.
+      const card = document.getElementById("p-before");
+      const rows = document.querySelectorAll("#p-tb tr");
+      const jitter = [[0, 3], [-8, 5], [6, -4], [-3, 8], [9, 0], [-5, -6], [4, 4], [-9, 3], [3, -8], [8, 6]];
+      // offsets, not client rects, so a scaled preview doesn't skew the placement
+      const tb = document.getElementById("p-tb");
+      document.querySelectorAll("#p-before .ic").forEach((ic, k) => {
+        const cell = rows[1 + Math.floor(k / 2)].children[1 + (k % 2)];
+        ic.style.left = tb.offsetLeft + cell.offsetLeft + cell.offsetWidth / 2 - 35 + jitter[k][0] + "px";
+        ic.style.top = tb.offsetTop + cell.offsetTop + cell.offsetHeight / 2 - 35 + jitter[k][1] + "px";
+      });
+      document.getElementById("p-gdpr").textContent = "GDPR data residency (EU and UK regions, customer-managed keys)";
+
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#p-after", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.1, ease: "power2.inOut" }, 0.35);
+      tl.fromTo("#p-div", { x: 96, opacity: 1 }, { x: 96 + 1728, duration: 1.1, ease: "power2.inOut" }, 0.35);
+      tl.to("#p-div", { opacity: 0, duration: 0.15 }, 1.45);
+      tl.set("#p-before", { opacity: 0 }, 1.5);
+      tl.fromTo("#p-claim span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.07, ease: "power2.out" }, 1.25);
+      tl.set({}, {}, 3.5);
+      window.__timelines["payoff"] = tl;
+    })();
+  </script>
+</template>

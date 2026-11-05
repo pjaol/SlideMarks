@@ -9,3 +9,14 @@ dist/*.zip
 docs/sample-vo/
 dist/site/
 dist/*.pkg
+# promo video (media/): renders, HyperFrames caches, generated decks, licensed catalog audio
+media/promo/renders/
+media/promo/.media/
+media/promo/.hyperframes/
+media/promo/.thumbnails/
+media/promo/.waveform-cache/
+media/promo/assets/bgm/
+media/promo/assets/sfx/
+media/capture/*.pptx
+media/capture/*.docx
+media/capture/raw/dark/

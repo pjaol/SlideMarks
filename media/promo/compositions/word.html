@@ -1,0 +1,80 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "SlideMarks";
+      src: url("assets/fonts/SlideMarks-Regular.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+    }
+    .cam {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+    }
+    .win {
+      position: absolute;
+      left: 140px;
+      top: 28px;
+      width: 1640px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #d1d9e0;
+      box-shadow: 0 30px 80px rgba(31, 35, 40, 0.16);
+    }
+    .win img {
+      display: block;
+      width: 100%;
+    }
+    .cap {
+      position: absolute;
+      left: 96px;
+      bottom: 108px;
+      z-index: 10;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 14px;
+      padding: 20px 36px 24px;
+      color: #1f2328;
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.1);
+    }
+    .cap span {
+      display: inline-block;
+    }
+    .cap .hl {
+      color: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="word" data-width="1920" data-height="1080">
+    <div id="w-cam" class="cam">
+      <div class="win"><img id="w-img" src="assets/shots/word_after_pane.jpg" alt="Word with the same table and the SlideMarks pane" /></div>
+    </div>
+    <div id="w-cap" class="cap"><span>Works</span> <span>in</span> <span class="hl">Word</span> <span>too.</span></div>
+  </div>
+  <script>
+    (function () {
+      // Word capture: 3024 x 1890 px shown 1640 wide at (140, 28); screenshot space is 1372 wide
+      const D = (x, y) => [140 + 1.1953 * x, 28 + 1.1953 * y - 39.6];
+      const L = 140, T = 28, R = 1780, B = 28 + 1025;
+      const cam = (x, y, k) => {
+        const [px, py] = D(x, y);
+        const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+        return { x: clamp(960 - k * px, 1920 - k * R - 40, 40 - k * L), y: clamp(540 - k * py, 1080 - k * B - 40, 40 - k * T), scale: k };
+      };
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#w-cam", { x: 0, y: 0, scale: 1 }, { ...cam(440, 400, 2.3), duration: 0.7, ease: "power2.inOut" }, 1.0);
+      tl.to("#w-cam", { ...cam(560, 600, 1.6), duration: 0.7, ease: "power2.inOut" }, 3.0);
+      tl.fromTo("#w-cap span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.07, ease: "power2.out" }, 0.35);
+      tl.set({}, {}, 5.5);
+      window.__timelines["word"] = tl;
+    })();
+  </script>
+</template>

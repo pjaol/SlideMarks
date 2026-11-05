@@ -1,0 +1,89 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "SlideMarks";
+      src: url("assets/fonts/SlideMarks-Regular.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+    }
+    #rv-flood {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+    }
+    #rv-line {
+      position: absolute;
+      left: 160px;
+      top: 470px;
+      font-size: 96px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+    #rv-line span {
+      display: inline-block;
+    }
+    #rv-lock {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 380px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 44px;
+    }
+    #rv-mark {
+      font-family: "SlideMarks";
+      font-size: 300px;
+      line-height: 1;
+      color: #9b5cc8;
+      transform: translateY(26px);
+    }
+    #rv-word {
+      font-size: 168px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+    }
+  </style>
+  <div id="root" data-composition-id="reveal" data-width="1920" data-height="1080">
+    <div id="rv-flood"></div>
+    <div id="rv-line"><span>What</span> <span>if</span> <span>symbols</span> <span>were</span> <span>just</span> <span style="color: #6d3b8e">text?</span></div>
+    <div id="rv-lock">
+      <div id="rv-mark">&#xE000;</div>
+      <div id="rv-word">SlideMarks</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      // Harvey ball code points in fill order: 0, 10, 20, 25, 30, 40, 50, 60, 70, 75 %
+      const steps = ["", "", "", "", "", "", "", "", "", ""];
+      const mark = document.getElementById("rv-mark");
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#rv-flood", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 0.45, ease: "power2.inOut" }, 0);
+      tl.fromTo("#rv-line span", { color: "#d1d9e0" }, { color: "#1f2328", duration: 0.1, stagger: 0.09 }, 0.3);
+      tl.set("#rv-line span:last-child", { color: "#d1d9e0" }, 0.3);
+      tl.to("#rv-line span:last-child", { color: "#6d3b8e", duration: 0.1 }, 0.3 + 0.09 * 5);
+      tl.to("#rv-line", { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 1.85);
+
+      tl.fromTo("#rv-lock", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 2.05);
+      tl.fromTo("#rv-mark", { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 2.05);
+      tl.fromTo("#rv-word", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "power3.out" }, 2.4);
+
+      const render = () => {
+        const p = Math.min(Math.max((tl.time() - 2.1) / 0.6, 0), 1);
+        mark.textContent = steps[Math.round(p * (steps.length - 1))];
+      };
+      tl.eventCallback("onUpdate", render);
+      tl.set({}, {}, 3.5);
+      window.__timelines["reveal"] = tl;
+    })();
+  </script>
+</template>

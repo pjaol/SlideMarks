@@ -1,0 +1,113 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+    }
+    .shot {
+      position: absolute;
+      inset: 0;
+    }
+    .cam {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+    }
+    .win {
+      position: absolute;
+      left: 110px;
+      top: 34px;
+      width: 1700px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #d1d9e0;
+      box-shadow: 0 30px 80px rgba(31, 35, 40, 0.16);
+    }
+    .win img {
+      display: block;
+      width: 100%;
+    }
+    .cap {
+      position: absolute;
+      left: 96px;
+      bottom: 96px;
+      z-index: 10;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 14px;
+      padding: 20px 36px 24px;
+      color: #1f2328;
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.1);
+    }
+    .cap span {
+      display: inline-block;
+    }
+    .cap .hl {
+      color: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="hunt" data-width="1920" data-height="1080">
+    <div id="h-a" class="clip shot" data-start="0" data-duration="3.2" data-track-index="1">
+      <div id="h-a-cam" class="cam">
+        <div class="win"><img id="h-a-img" src="assets/shots/ppt_icons_nomatch.jpg" alt="PowerPoint icon search: harvey ball, no match" /></div>
+      </div>
+      <div id="h-a-cap" class="cap"><span>Need</span> <span>a</span> <span class="hl">Harvey</span> <span class="hl">ball?</span></div>
+    </div>
+    <div id="h-b" class="clip shot" data-start="3.2" data-duration="3" data-track-index="1">
+      <div id="h-b-cam" class="cam">
+        <div class="win"><img id="h-b-img" src="assets/shots/ppt_icons_pie.jpg" alt="PowerPoint icon search: pie chart" /></div>
+      </div>
+      <div id="h-b-cap" class="cap"><span>Try</span> <span>“pie</span> <span>chart”?</span></div>
+    </div>
+    <div id="h-c" class="clip shot" data-start="6.2" data-duration="3.4" data-track-index="1">
+      <div id="h-c-cam" class="cam">
+        <div class="win"><img id="h-c-img" src="assets/shots/ppt_icon_dropped.jpg" alt="An icon dropped at 1 inch across two table rows" /></div>
+      </div>
+      <div id="h-c-cap" class="cap"><span>Insert.</span> <span>Resize.</span> <span>Nudge.</span></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      // Screenshot point (1372-wide capture space) -> frame point, window at left 110, width 1700.
+      const D = (x, y) => [110 + 1.2391 * x, 34 + 1.2391 * y - 41.04];
+      const L = 110, T = 34, R = 1810, B = 1046;
+      const cam = (x, y, k) => {
+        const [px, py] = D(x, y);
+        const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+        return {
+          x: clamp(960 - k * px, 1920 - k * R - 40, 40 - k * L),
+          y: clamp(540 - k * py, 1080 - k * B - 40, 40 - k * T),
+          scale: k,
+        };
+      };
+      const words = (sel, at, gap) =>
+        tl.fromTo(sel + " span", { opacity: 0, filter: "blur(6px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: gap, ease: "power2.out" }, at);
+
+      const tl = gsap.timeline({ paused: true });
+
+      // A: empty table, then the search that finds nothing
+      tl.fromTo("#h-a-cam", cam(870, 500, 1.5), { ...cam(870, 500, 1.5), duration: 0.9 }, 0);
+      tl.to("#h-a-cam", { ...cam(1226, 322, 2.4), duration: 0.6, ease: "power2.inOut" }, 0.9);
+      words("#h-a-cap", 0.15, 0.08);
+
+      // B: near-miss icons
+      tl.fromTo("#h-b-cam", cam(1238, 340, 2.6), { ...cam(1238, 355, 2.4), duration: 3, ease: "power1.out" }, 3.2);
+      words("#h-b-cap", 3.35, 0.1);
+
+      // C: the dropped icon, then its size boxes
+      tl.fromTo("#h-c-cam", cam(675, 482, 1.3), { ...cam(675, 482, 2.2), duration: 0.6, ease: "power2.inOut" }, 6.3);
+      tl.to("#h-c-cam", { ...cam(1215, 124, 2.6), duration: 0.6, ease: "power2.inOut" }, 7.9);
+      tl.fromTo("#h-c-cap span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.75, ease: "power2.out" }, 6.45);
+
+      window.__timelines["hunt"] = tl;
+    })();
+  </script>
+</template>

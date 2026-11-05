@@ -1,0 +1,209 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "SlideMarks";
+      src: url("assets/fonts/SlideMarks-Regular.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f6f8fa;
+      font-family: Inter, sans-serif;
+      color: #1f2328;
+    }
+    .card {
+      position: absolute;
+      left: 96px;
+      width: 1220px;
+      height: 300px;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(31, 35, 40, 0.14);
+      overflow: hidden;
+    }
+    #i-pic {
+      top: 120px;
+    }
+    #i-sm {
+      top: 470px;
+    }
+    .lbl {
+      position: absolute;
+      left: 60px;
+      top: 34px;
+      font-size: 30px;
+      font-weight: 700;
+      color: #59636e;
+    }
+    .box {
+      position: absolute;
+      left: 60px;
+      top: 104px;
+      width: 900px;
+      height: 120px;
+      border: 2px dashed #9aa4ae;
+    }
+    .line {
+      position: absolute;
+      left: 22px;
+      top: 22px;
+      font-size: 64px;
+      line-height: 76px;
+      white-space: pre;
+    }
+    .g {
+      font-family: "SlideMarks";
+    }
+    .caret {
+      display: inline-block;
+      width: 3px;
+      height: 64px;
+      margin-left: 1px;
+      vertical-align: -10px;
+      background: #1f2328;
+    }
+    #i-ic {
+      position: absolute;
+      left: 4px;
+      top: 14px;
+      width: 100px;
+      height: 100px;
+    }
+    #i-ic img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hdl {
+      position: absolute;
+      inset: -4px;
+      border: 1px solid #59636e;
+    }
+    #d-pane {
+      position: absolute;
+      left: 1371px;
+      top: 70px;
+      width: 453px;
+      height: 940px;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(31, 35, 40, 0.14);
+      overflow: hidden;
+    }
+    #d-pane img {
+      display: block;
+      width: 100%;
+    }
+    .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 31px;
+      height: 46px;
+      z-index: 20;
+      transform-origin: 3px 3px;
+    }
+    .cap {
+      position: absolute;
+      left: 96px;
+      bottom: 108px;
+      z-index: 10;
+      background: #fff;
+      border: 1px solid #d1d9e0;
+      border-radius: 14px;
+      padding: 20px 36px 24px;
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.1);
+    }
+    .cap span {
+      display: inline-block;
+    }
+    .cap .hl {
+      color: #6d3b8e;
+    }
+  </style>
+  <div id="root" data-composition-id="inline" data-width="1920" data-height="1080">
+    <div class="card" id="i-pic">
+      <div class="lbl">With a picture</div>
+      <div class="box">
+        <div class="line"><span id="i-pic-text"></span><span class="caret" id="i-pic-caret"></span></div>
+        <div id="i-ic" data-layout-allow-occlusion><img src="assets/icons/harvey-100.png" alt="" /><div class="hdl" id="i-hdl"></div></div>
+      </div>
+    </div>
+    <div class="card" id="i-sm">
+      <div class="lbl" style="color: #6d3b8e">With SlideMarks</div>
+      <div class="box">
+        <div class="line"><span class="g" id="i-sm-g"></span><span id="i-sm-text"></span><span class="caret" id="i-sm-caret"></span></div>
+      </div>
+    </div>
+    <div id="d-pane"><img src="assets/shots/pane_ppt.png" alt="The SlideMarks pane in PowerPoint" /></div>
+    <svg id="i-cursor" class="cursor" viewBox="0 0 24 36"><path d="M2 2 L2 28 L8.5 22 L13 33 L17.5 31 L13 20.5 L22 20.5 Z" fill="#000" stroke="#fff" stroke-width="2" stroke-linejoin="round" /></svg>
+
+    <div id="i-cap1" class="cap clip" data-start="0.4" data-duration="1.7" data-track-index="2"><span>Add</span> <span>an</span> <span>icon.</span> <span>Type.</span></div>
+    <div id="i-cap2" class="cap clip" data-start="2.1" data-duration="0.85" data-track-index="2"><span>It's</span> <span class="hl">hidden.</span></div>
+    <div id="i-cap3" class="cap clip" data-start="2.95" data-duration="1.15" data-track-index="2"><span>Space.</span> <span>Drag.</span> <span>Nudge.</span></div>
+    <div id="i-cap4" class="cap clip" data-start="4.1" data-duration="2.9" data-track-index="2"><span>Click.</span> <span>Type.</span> <span class="hl">Done.</span></div>
+  </div>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const words = "Fully compliant";
+      const clamp01 = (v) => Math.min(Math.max(v, 0), 1);
+      const tl = gsap.timeline({ paused: true });
+
+      const click = (at) => tl.to("#i-cursor", { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, at);
+      const go = (x, y, at, d = 0.4) => tl.to("#i-cursor", { x: x - 3, y: y - 3, duration: d, ease: "power3.inOut" }, at);
+
+      // top: the picture lands at the start of the text box; typing runs underneath it
+      tl.fromTo("#i-ic", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 0.3);
+      tl.fromTo("#i-cursor", { x: 1100, y: 900 }, { x: 1100, y: 900, duration: 0.01 }, 0);
+      go(205, 270, 0.55); click(0.9);
+      tl.to("#i-cursor", { opacity: 0, duration: 0.1 }, 1.0);
+      // the fix: spaces push the words right, then the picture is dragged into the gap and nudged
+      tl.to("#i-cursor", { opacity: 1, x: 205 - 3, y: 275 - 3, duration: 0.1 }, 3.35);
+      tl.to("#i-hdl", { opacity: 1, duration: 0.01 }, 3.4);
+      tl.to("#i-ic", { x: 30, y: 4, duration: 0.25, ease: "power3.inOut" }, 3.45);
+      tl.to("#i-cursor", { x: 235 - 3, y: 279 - 3, duration: 0.25, ease: "power3.inOut" }, 3.45);
+      tl.to("#i-ic", { x: 24, duration: 0.05 }, 3.75);
+      tl.to("#i-ic", { y: 1, duration: 0.05 }, 3.85);
+      tl.to("#i-ic", { x: 20, duration: 0.05 }, 3.95);
+      tl.to("#i-hdl", { opacity: 0, duration: 0.01 }, 4.05);
+
+      // bottom: click in the box, pick a symbol in the pane, insert, type
+      tl.fromTo("#i-sm", { opacity: 0.35 }, { opacity: 1, duration: 0.2 }, 4.0);
+      go(205, 620, 4.05, 0.35); click(4.45);
+      go(1689, 473, 4.6, 0.4); click(5.05);
+      go(1560, 963, 5.15, 0.3); click(5.5);
+      tl.to("#i-cursor", { x: 1250, y: 760, duration: 0.4, ease: "power3.inOut" }, 5.65);
+
+      ["#i-cap1", "#i-cap2", "#i-cap3", "#i-cap4"].forEach((c, n) =>
+        tl.fromTo(`${c} span`, { opacity: 0, filter: "blur(6px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.07, ease: "power2.out" }, [0.4, 2.1, 2.95, 4.1][n]));
+
+      tl.set("#i-hdl", { opacity: 1 }, 0);
+      tl.set("#i-hdl", { opacity: 0 }, 0.7);
+
+      const render = () => {
+        const t = tl.time();
+        const typed = words.slice(0, Math.round(clamp01((t - 1.1) / 0.9) * words.length));
+        const spaces = " ".repeat(Math.round(clamp01((t - 3.0) / 0.35) * 6));
+        $("i-pic-text").textContent = spaces + typed;
+        $("i-pic-caret").style.opacity = t >= 0.95 && t < 4.0 && Math.floor(t * 4) % 2 === 0 ? 1 : 0;
+
+        $("i-sm-g").textContent = t >= 5.55 ? "" : "";
+        $("i-sm-text").textContent = (t >= 5.55 ? " " : "") + words.slice(0, Math.round(clamp01((t - 5.75) / 0.8) * words.length));
+        $("i-sm-caret").style.opacity = t >= 4.5 && Math.floor(t * 4) % 2 === 0 ? 1 : 0;
+      };
+      tl.eventCallback("onUpdate", render);
+      tl.set({}, {}, 7);
+      render();
+      window.__timelines["inline"] = tl;
+    })();
+  </script>
+</template>
